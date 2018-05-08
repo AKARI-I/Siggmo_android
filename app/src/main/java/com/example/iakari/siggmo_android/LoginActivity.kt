@@ -6,6 +6,7 @@ import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
 import android.app.LoaderManager.LoaderCallbacks
 import android.content.CursorLoader
+import android.content.Intent
 import android.content.Loader
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -46,7 +47,12 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             false
         })
 
-        email_sign_in_button.setOnClickListener { attemptLogin() }
+        // とりあえずボタンを押したらログインできるようにしておく
+        // TODO:ログイン機能の実装
+        email_sign_in_button.setOnClickListener { //attemptLogin()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun populateAutoComplete() {
