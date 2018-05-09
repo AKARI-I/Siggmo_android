@@ -40,15 +40,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // メニューを膨張させます。アクションバーが存在する場合、アクションバーに項目が追加される
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // アクションバー(ホームボタンとかある場所)のアイテムのクリックをここで処理
+        // アクションバーは、AndroidManifest.xmlで親アクティビティを指定する限り
+        // Home / Upボタンのクリックを自動的に処理する
         when (item.itemId) {
             R.id.action_settings -> return true
             else -> return super.onOptionsItemSelected(item)
@@ -56,10 +56,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
+        //ここでナビゲーションビューアイテムのクリックを処理
         when (item.itemId) {
             R.id.nav_camera -> {
-                // Handle the camera action
+
             }
             R.id.nav_gallery -> {
 

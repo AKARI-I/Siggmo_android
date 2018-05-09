@@ -26,11 +26,12 @@ import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 
 /**
- * A login screen that offers login via email/password.
+ * 電子メール/パスワードによるログインを提供するログイン画面
  */
 class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     /**
-     * Keep track of the login task to ensure we can cancel it if requested.
+     * ログインタスクを追跡
+     * して、リクエストがあった場合にキャンセルできるようにする
      */
     private var mAuthTask: UserLoginTask? = null
 
@@ -81,7 +82,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     }
 
     /**
-     * Callback received when a permissions request has been completed.
+     * アクセス許可要求が完了したときにコールバックを受信した時
      */
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
                                             grantResults: IntArray) {
@@ -94,9 +95,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
+     * ログインフォームで指定されたアカウントへのサインインまたは登録を試みる
+     * フォームエラー（無効な電子メール、フィールドの欠落など）がある場合
+     * エラーが表示され、実際のログイン試行は行われません
      */
     private fun attemptLogin() {
         if (mAuthTask != null) {
@@ -146,23 +147,24 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     }
 
     private fun isEmailValid(email: String): Boolean {
-        //TODO: Replace this with your own logic
+        //TODO: あなたのロジックに置き換えてください
         return email.contains("@")
     }
 
     private fun isPasswordValid(password: String): Boolean {
-        //TODO: Replace this with your own logic
+        //TODO: あなたのロジックに置き換えてください
+        // 4文字以下のパスワードは無効
         return password.length > 4
     }
 
     /**
-     * Shows the progress UI and hides the login form.
+     *これを置き換えると、進行状況のUIが表示され、ログインフォームが非表示になる
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private fun showProgress(show: Boolean) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
+        // Honeycomb MR2には、ViewPropertyAnimator APIがあります。
+        // 非常に簡単なアニメーション。可能であれば、これらのAPIを使用して
+        // 進行スピナーをフェードインします。
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
@@ -195,16 +197,16 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     override fun onCreateLoader(i: Int, bundle: Bundle?): Loader<Cursor> {
         return CursorLoader(this,
-                // Retrieve data rows for the device user's 'profile' contact.
+                // デバイスユーザーの「プロファイル」連絡先のデータ行を取得
                 Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
                         ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
 
-                // Select only email addresses.
+                // 電子メールアドレスのみを選択
                 ContactsContract.Contacts.Data.MIMETYPE + " = ?", arrayOf(ContactsContract.CommonDataKinds.Email
                 .CONTENT_ITEM_TYPE),
 
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
+                // 最初にプライマリ電子メールアドレスを表示します。ユーザーがメールアドレスを指定していない場合
+                // プライマリメールアドレスはありません。
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC")
     }
 
@@ -224,7 +226,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     }
 
     private fun addEmailsToAutoComplete(emailAddressCollection: List<String>) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
+        //ドロップダウンリストに何を表示するかを
+        // AutoCompleteTextViewに通知するアダプタを作成
         val adapter = ArrayAdapter(this@LoginActivity,
                 android.R.layout.simple_dropdown_item_1line, emailAddressCollection)
 
@@ -240,16 +243,15 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
+     * ユーザーの認証に使用される非同期ログイン/登録タスクを表す
      */
     inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
         override fun doInBackground(vararg params: Void): Boolean? {
-            // TODO: attempt authentication against a network service.
+            // TODO: ネットワークサービスに対して認証を試みる
 
             try {
-                // Simulate network access.
+                // ネットワークアクセスをシミュレート
                 Thread.sleep(2000)
             } catch (e: InterruptedException) {
                 return false
@@ -259,7 +261,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                     .map { it.split(":") }
                     .firstOrNull { it[0] == mEmail }
                     ?.let {
-                        // Account exists, return true if the password matches.
+                        // アカウントが存在し、パスワードが一致する場合trueを返す
                         it[1] == mPassword
                     }
                     ?: true
@@ -286,13 +288,13 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     companion object {
 
         /**
-         * Id to identity READ_CONTACTS permission request.
+         * IdはREAD_CONTACTS許可要求を識別
          */
         private val REQUEST_READ_CONTACTS = 0
 
         /**
-         * A dummy authentication store containing known user names and passwords.
-         * TODO: remove after connecting to a real authentication system.
+         * 既知のユーザー名とパスワードを含むダミー認証ストア
+         * TODO: 実際の認証システムに接続した後に削除してください。
          */
         private val DUMMY_CREDENTIALS = arrayOf("foo@example.com:hello", "bar@example.com:world")
     }
