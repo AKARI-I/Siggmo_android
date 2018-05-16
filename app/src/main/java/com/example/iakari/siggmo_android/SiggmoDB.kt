@@ -3,5 +3,19 @@ package com.example.iakari.siggmo_android
 /**
  * Created by iakari on 2018/05/16.
  */
-class SiggmoDB {
-}
+
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
+import io.realm.annotations.Required
+import java.util.*
+
+// openをとると継承ができなくなるらしい
+open class SiggmoDB (
+    // キー値をランダムで決める(とりあえず)
+    @PrimaryKey open var id : String = UUID.randomUUID().toString(),
+
+    // 多分このへんが項目名
+    @Required
+        open var name : String = "",
+        open var price : Long = 0
+) : RealmObject(){}
