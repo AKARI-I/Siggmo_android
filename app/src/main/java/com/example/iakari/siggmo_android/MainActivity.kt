@@ -60,8 +60,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    //ここでナビゲーションビューアイテムのクリックを処理
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        //ここでナビゲーションビューアイテムのクリックを処理
         when (item.itemId) {
             R.id.nav_camera -> {
 
@@ -85,5 +85,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    // Realmの削除についての定義
+    override fun onDestroy(){
+        super.onDestroy()
+        mRealm.close()
     }
 }
