@@ -12,6 +12,7 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var mRealm: Realm
@@ -38,6 +39,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .deleteRealmIfMigrationNeeded()
                 .build()
         mRealm = Realm.getInstance(realmConfig)
+
+        // createテスト
+        create("test1", 1)
+        create("test2")
     }
 
     override fun onBackPressed() {
@@ -92,7 +97,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     // データベースにレコードを追加する
-    
+    fun create(name:String, price:Long = 0){
+        mRealm.executeTransaction{
+            var siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
+            siggmoDB.name = name
+            siggmoDB.price = price
+            mRealm.copyToRealm(siggmoDB)
+        }
+    }
 
     // Realmの削除についての定義
     override fun onDestroy(){
