@@ -45,14 +45,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mRealm = Realm.getInstance(realmConfig)
 
         // createテスト
-        create("hogehoge", 100)
+        create("hogehoge", "fugafuga")
 
         // readテスト
         val getData = read()
         getData.forEach{
-            Log.d("debug", "name :" + it.name + "price : " + it.price.toString())
+            Log.d("debug", "name :" + it.name + "price : " + it.price)
             nameTest.text = it.name
-            priceTest.text = it.price.toString()
+            priceTest.text = it.price
         }
     }
 
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     // データベースにレコードを追加する
-    fun create(name:String, price:Long = 0){
+    fun create(name:String, price:String){
         mRealm.executeTransaction{
             var siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
             siggmoDB.name = name

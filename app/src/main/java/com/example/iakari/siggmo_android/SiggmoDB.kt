@@ -17,5 +17,5 @@ open class SiggmoDB (
     // 多分このへんが項目名
     @Required
         open var name : String = "",
-        open var price : Long = 0
+        open var price : String = ""
 ) : RealmObject(){}
