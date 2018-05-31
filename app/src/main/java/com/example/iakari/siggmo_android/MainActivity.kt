@@ -19,6 +19,15 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var mRealm: Realm
+    val MName       = "打上花火"
+    val MPhonetic   = "うちあげはなび"
+    val SName       = "米津玄師"
+    val SPhonetic   = "よねづけんし"
+    val FLine       = "あの日見渡した渚を 今も思い出すんだ"
+    val PKey        = 0
+    val MLink       = "https://youtu.be/-tKVN2mAKRI"
+    val Score       = 85.579F
+    val FMemo       = "一緒に歌う人がいない(´・ω・｀)"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +53,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .build()
         mRealm = Realm.getInstance(realmConfig)
 
-        // createテスト
-        create("花に嵐", "はなにあらし")
+        // createテスト(テスト用データの追加)
+        // 入力された文字列を渡す
+        // ※ここではテスト用データを事前に宣言し突っ込む
+        // ToDo: 変数名が紛らわしいため変更の必要ありかも
+        create(MName, MPhonetic, SName, SPhonetic, FLine, PKey, MLink, Score, FMemo)
 
         // readテスト
         val getData = read()
@@ -108,11 +120,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     // データベースにレコードを追加する
-    fun create(mName:String, mPhonetic:String){
+    fun create(mName:String, mPhonetic:String, sName:String, sPhonetic:String,
+               fLine:String, pKey:Int, mLink:String, Score:Float, fMemo:String){
         mRealm.executeTransaction{
             var siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
             siggmoDB.music_name = mName
             siggmoDB.music_phonetic = mPhonetic
+            siggmoDB.singer_name = sName
+            siggmoDB.singer_phonetic = sPhonetic
+            siggmoDB.first_line = fLine
+            siggmoDB.proper_key = pKey
+            siggmoDB.movie_link = mLink
+            siggmoDB.score = Score
+            siggmoDB.free_memo = fMemo
             mRealm.copyToRealm(siggmoDB)
         }
     }
