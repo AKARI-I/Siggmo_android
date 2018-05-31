@@ -8,8 +8,9 @@
     tools:context="com.example.iakari.siggmo_android.MainActivity">
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/MainListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:ignore="InvalidId" />
 
 </LinearLayout>
