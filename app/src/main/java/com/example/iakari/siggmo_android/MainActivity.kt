@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import io.realm.Realm
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val PKey        = 0
     val MLink       = "https://youtu.be/-tKVN2mAKRI"
     val Score       = 85.579F
-    val FMemo       = "一緒に歌う人がいない(´・ω・｀)"
+    val FMemo       = "1人で歌う時の忙しさ半端ないシリーズ代表"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,9 +61,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // readテスト
         val getData = read()
         getData.forEach{
-            Log.d("debug", "name :" + it.music_name + "price : " + it.music_phonetic)
-            nameTest.text = it.music_name
-            priceTest.text = it.music_phonetic
+            mNameText.text = it.music_name
+            mPhoneText.text = it.music_phonetic
+            sNameText.text = it.singer_name
+            sPhoneText.text = it.singer_phonetic
+            fLineText.text = it.first_line
+            pKeyText.text = it.proper_key.toString()
+            mLinkText.text = it.movie_link
+            scoreText.text = it.score.toString()
+            fMemoText.text = it.free_memo
         }
     }
 
