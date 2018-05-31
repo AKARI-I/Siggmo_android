@@ -6,11 +6,16 @@ import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import io.realm.Realm
+import io.realm.RealmConfiguration
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var mRealm: Realm
@@ -19,7 +24,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
@@ -32,9 +36,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        // Realmの初期化
+        // Realmのセットアップ
+        // realmConfigにRealmの設定を書き込む
         Realm.init(this)
-        mRealm = Realm.getDefaultInstance()
+        val realmConfig = RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build()
+        mRealm = Realm.getInstance(realmConfig)
+
+        // createテスト
+        create("hogehoge", 100)
+
+        // readテスト
+        val getData = read()
+        getData.forEach{
+            Log.d("debug", "name :" + it.name + "price : " + it.price.toString())
+            nameTest.text = it.name
+            priceTest.text = it.price.toString()
+        }
     }
 
     override fun onBackPressed() {
@@ -86,6 +105,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    // データベースにレコードを追加する
+    fun create(name:String, price:Long = 0){
+        mRealm.executeTransaction{
+            var siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
+            siggmoDB.name = name
+            siggmoDB.price = price
+            mRealm.copyToRealm(siggmoDB)
+        }
+    }
+
+    // データベースから値を読み取る
+    fun read() : RealmResults<SiggmoDB> {
+        return mRealm.where(SiggmoDB::class.java).findAll()
     }
 
     // Realmの削除についての定義
