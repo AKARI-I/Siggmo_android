@@ -13,7 +13,6 @@ import io.realm.RealmConfiguration
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -55,21 +54,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // createテスト(テスト用データの追加)
         // 入力された文字列を渡す
         // ※ここではテスト用データを事前に宣言し突っ込む
-        // ToDo: 変数名が紛らわしいため変更の必要ありかも
+        // ToDo: 変数名が紛らわしいから変更の必要ありかも
         create(MName, MPhonetic, SName, SPhonetic, FLine, PKey, MLink, Score, FMemo)
 
         // readテスト
         val getData = read()
         getData.forEach{
-            mNameText.text = it.music_name
-            mPhoneText.text = it.music_phonetic
-            sNameText.text = it.singer_name
-            sPhoneText.text = it.singer_phonetic
-            fLineText.text = it.first_line
-            pKeyText.text = it.proper_key.toString()
-            mLinkText.text = it.movie_link
-            scoreText.text = it.score.toString()
-            fMemoText.text = it.free_memo
         }
     }
 
@@ -125,6 +115,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     // データベースにレコードを追加する
+    // ToDo:曲の追加画面の処理に移す
     fun create(mName:String, mPhonetic:String, sName:String, sPhonetic:String,
                fLine:String, pKey:Int, mLink:String, Score:Float, fMemo:String){
         mRealm.executeTransaction{
