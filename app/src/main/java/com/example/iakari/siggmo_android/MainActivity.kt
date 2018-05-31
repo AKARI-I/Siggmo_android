@@ -45,14 +45,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mRealm = Realm.getInstance(realmConfig)
 
         // createテスト
-        create("hogehoge", 100)
+        create("花に嵐", "はなにあらし")
 
         // readテスト
         val getData = read()
         getData.forEach{
-            Log.d("debug", "name :" + it.name + "price : " + it.price.toString())
-            nameTest.text = it.name
-            priceTest.text = it.price.toString()
+            Log.d("debug", "name :" + it.music_name + "price : " + it.music_phonetic)
+            nameTest.text = it.music_name
+            priceTest.text = it.music_phonetic
         }
     }
 
@@ -108,11 +108,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     // データベースにレコードを追加する
-    fun create(name:String, price:Long = 0){
+    fun create(mName:String, mPhonetic:String){
         mRealm.executeTransaction{
             var siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
-            siggmoDB.name = name
-            siggmoDB.price = price
+            siggmoDB.music_name = mName
+            siggmoDB.music_phonetic = mPhonetic
             mRealm.copyToRealm(siggmoDB)
         }
     }
