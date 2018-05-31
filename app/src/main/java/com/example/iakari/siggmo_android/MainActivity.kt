@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         create(MName2, MPhonetic2, SName2, SPhonetic2, FLine2, PKey2, MLink2, Score2, FMemo2)
 
         /*---------- ListView ----------*/
-        // データベースの値をとってきて表示
+        // 曲名をリスト表示
         val getData = read()
         val dataList: MutableList<String> = mutableListOf()
 
@@ -80,6 +80,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dataList)
         MainListView.adapter = arrayAdapter
+
+        // ToDo:仕様に合わせて編集・移動
+        // 長押しで削除する
     }
 
     override fun onBackPressed() {
@@ -154,11 +157,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // データベースから全てのデータを取り出す
     fun read() : RealmResults<SiggmoDB> {
-        return mRealm.where(SiggmoDB::class.java).findAll()
-    }
-
-    // 条件つきでデータを取りだす
-    fun searchDB(column:String) : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
 
