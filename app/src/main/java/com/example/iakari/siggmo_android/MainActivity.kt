@@ -56,8 +56,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         /*---------- Realm ----------*/
         // Realmのセットアップ
-        // realmConfigにRealmの設定を書き込む
-
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
@@ -65,7 +63,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mRealm = Realm.getInstance(realmConfig)
 
         // createテスト(テスト用レコードの追加)
-        // ※ここではテスト用データを事前に宣言し突っ込む
+        // ※ここではテスト用データを事前に宣言してレコードを作成
         create(MName, MPhonetic, SName, SPhonetic, FLine, PKey, MLink, Score, FMemo)
         create(MName2, MPhonetic2, SName2, SPhonetic2, FLine2, PKey2, MLink2, Score2, FMemo2)
 
@@ -166,13 +164,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun read() : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
-
-    // 条件つきでデータを取りだす
-    fun searchDB(column:String) : RealmResults<SiggmoDB> {
-        return mRealm.where(SiggmoDB::class.java).findAll()
-    }
-    // データベースのレコードを削除する
-    fun delete(){}
 
     // Realmの削除についての定義
     override fun onDestroy(){
