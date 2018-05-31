@@ -6,9 +6,9 @@ import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
@@ -19,41 +19,67 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var mRealm: Realm
+    val MName       = "春雷"
+    val MPhonetic   = "しゅんらい"
+    val SName       = "米津玄師"
+    val SPhonetic   = "よねづけんし"
+    val FLine       = "現れたそれは春のまっ最中"
+    val PKey        = 3
+    val MLink       = "https://www.youtube.com/watch?v=zkNzxsaCunU"
+    val Score       = 87.261F
+    val FMemo       = "口が回らない"
+
+    val MName2      = "打上花火"
+    val MPhonetic2  = "うちあげはなび"
+    val SName2      = "米津玄師"
+    val SPhonetic2  = "よねづけんし"
+    val FLine2      = "あの日見渡した渚を 今も思い出すんだ"
+    val PKey2       = 0
+    val MLink2      = "https://youtu.be/-tKVN2mAKRI"
+    val Score2      = 85.579F
+    val FMemo2      = "1人で歌う時の忙しさ半端ないシリーズ代表"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
-
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-
         nav_view.setNavigationItemSelectedListener(this)
 
+        /*---------- Realm ----------*/
         // Realmのセットアップ
         // realmConfigにRealmの設定を書き込む
+
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build()
         mRealm = Realm.getInstance(realmConfig)
 
-        // createテスト
-        create("花に嵐", "はなにあらし")
+        // createテスト(テスト用レコードの追加)
+        // ※ここではテスト用データを事前に宣言し突っ込む
+        // ToDo: 変数名が紛らわしいから変更の必要ありかも
+        create(MName, MPhonetic, SName, SPhonetic, FLine, PKey, MLink, Score, FMemo)
+        create(MName2, MPhonetic2, SName2, SPhonetic2, FLine2, PKey2, MLink2, Score2, FMemo2)
 
-        // readテスト
+        /*---------- ListView ----------*/
+        // データベースの値をとってきて表示
         val getData = read()
+        val dataList: MutableList<String> = mutableListOf()
+
         getData.forEach{
-            Log.d("debug", "name :" + it.music_name + "price : " + it.music_phonetic)
-            nameTest.text = it.music_name
-            priceTest.text = it.music_phonetic
+            dataList.add(it.music_name)
         }
+        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dataList)
+        MainListView.adapter = arrayAdapter
     }
 
     override fun onBackPressed() {
@@ -108,17 +134,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     // データベースにレコードを追加する
-    fun create(mName:String, mPhonetic:String){
+    // ToDo:曲の追加画面の処理に移す
+    fun create(mName:String, mPhonetic:String, sName:String, sPhonetic:String,
+               fLine:String, pKey:Int, mLink:String, Score:Float, fMemo:String){
         mRealm.executeTransaction{
             var siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
-            siggmoDB.music_name = mName
-            siggmoDB.music_phonetic = mPhonetic
+            siggmoDB.music_name      = mName
+            siggmoDB.music_phonetic  = mPhonetic
+            siggmoDB.singer_name     = sName
+            siggmoDB.singer_phonetic = sPhonetic
+            siggmoDB.first_line      = fLine
+            siggmoDB.proper_key      = pKey
+            siggmoDB.movie_link      = mLink
+            siggmoDB.score           = Score
+            siggmoDB.free_memo       = fMemo
             mRealm.copyToRealm(siggmoDB)
         }
     }
 
-    // データベースから値を読み取る
+    // データベースから全てのデータを取り出す
     fun read() : RealmResults<SiggmoDB> {
+        return mRealm.where(SiggmoDB::class.java).findAll()
+    }
+
+    // 条件つきでデータを取りだす
+    fun searchDB(column:String) : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
 
