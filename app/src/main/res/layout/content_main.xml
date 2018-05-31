@@ -97,5 +97,6 @@
             android:text="free memo"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scoreText" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
