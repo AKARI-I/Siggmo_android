@@ -83,6 +83,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // ToDo:仕様に合わせて編集・移動
         // 長押しで削除する
+        MainListView.setOnItemLongClickListener{parent, view, position, id ->
+            arrayAdapter.remove(arrayAdapter.getItem(position))
+            arrayAdapter.notifyDataSetChanged()
+
+            return@setOnItemLongClickListener true
+        }
     }
 
     override fun onBackPressed() {
@@ -159,6 +165,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun read() : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
+
+    // データベースのレコードを削除する
+    fun delete(){}
 
     // Realmの削除についての定義
     override fun onDestroy(){
