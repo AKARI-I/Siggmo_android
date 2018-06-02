@@ -54,10 +54,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
 
+
+
         /*---------- Realm ----------*/
         // Realmのセットアップ
-        // realmConfigにRealmの設定を書き込む
-
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
@@ -65,14 +65,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mRealm = Realm.getInstance(realmConfig)
 
         // createテスト(テスト用レコードの追加)
-        // ※ここではテスト用データを事前に宣言し突っ込む
-        // ToDo: 変数名が紛らわしいから変更の必要ありかも
+        // ※ここではテスト用データを事前に宣言してレコードを作成
         create(MName, MPhonetic, SName, SPhonetic, FLine, PKey, MLink, Score, FMemo)
         create(MName2, MPhonetic2, SName2, SPhonetic2, FLine2, PKey2, MLink2, Score2, FMemo2)
 
+        // データベースの値をすべて取り出す
+        val getData = read()
+
+
+
         /*---------- ListView ----------*/
         // 曲名をリスト表示
-        val getData = read()
         val dataList: MutableList<String> = mutableListOf()
 
         getData.forEach{
@@ -165,9 +168,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun read() : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
-
-    // データベースのレコードを削除する
-    fun delete(){}
 
     // Realmの削除についての定義
     override fun onDestroy(){
