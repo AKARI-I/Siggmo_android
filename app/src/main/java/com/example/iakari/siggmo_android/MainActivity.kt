@@ -19,25 +19,17 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var mRealm: Realm
-    val MName       = "春雷"
-    val MPhonetic   = "しゅんらい"
-    val SName       = "米津玄師"
-    val SPhonetic   = "よねづけんし"
-    val FLine       = "現れたそれは春のまっ最中"
-    val PKey        = 3
-    val MLink       = "https://www.youtube.com/watch?v=zkNzxsaCunU"
-    val Score       = 87.261F
-    val FMemo       = "口が回らない"
 
-    val MName2      = "打上花火"
-    val MPhonetic2  = "うちあげはなび"
-    val SName2      = "米津玄師"
-    val SPhonetic2  = "よねづけんし"
-    val FLine2      = "あの日見渡した渚を 今も思い出すんだ"
-    val PKey2       = 0
-    val MLink2      = "https://youtu.be/-tKVN2mAKRI"
-    val Score2      = 85.579F
-    val FMemo2      = "1人で歌う時の忙しさ半端ないシリーズ代表"
+    val MName     = arrayOf("春雷","君の知らない物語")
+    val MPhonetic = arrayOf("しゅんらい", "きみのしらないものがたり")
+    val SName     = arrayOf("米津玄師", "supercell")
+    val SPhonetic = arrayOf("よねづけんし", "すーぱーせる")
+    val FLine     = arrayOf("現れたそれは春のまっ最中", "いつも通りのある日のこと")
+    val PKey      = arrayOf(3, 0)
+    val MLink     = arrayOf("https://www.youtube.com/watch?v=zkNzxsaCunU",
+                            "https://www.youtube.com/watch?v=CEwQ-xp7aiU")
+    val Score     = arrayOf(87.261F, 85.579F)
+    val FMemo     = arrayOf("口が回らない", "1人で歌う時の忙しさ半端ないシリーズ代表")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,8 +56,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // createテスト(テスト用レコードの追加)
         // ※ここではテスト用データを事前に宣言してレコードを作成
-        create(MName, MPhonetic, SName, SPhonetic, FLine, PKey, MLink, Score, FMemo)
-        create(MName2, MPhonetic2, SName2, SPhonetic2, FLine2, PKey2, MLink2, Score2, FMemo2)
+
+        create(MName[0], MPhonetic[0], SName[0], SPhonetic[0], FLine[0], PKey[0],
+                MLink[0], Score[0], FMemo[0])
+        create(MName[1], MPhonetic[1], SName[1], SPhonetic[1], FLine[1], PKey[1],
+                MLink[1], Score[1], FMemo[1])
 
         // データベースの値をすべて取り出す
         val getData = read()
