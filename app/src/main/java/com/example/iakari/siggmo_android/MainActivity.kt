@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
@@ -74,6 +75,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dataList)
         MainListView.adapter = arrayAdapter
+
+        // 各項目をタップで詳細画面に遷移
+        MainListView.setOnItemClickListener{adapterView, view, i, l ->
+            Toast.makeText(this, "Clicked: ListView Item", Toast.LENGTH_SHORT).show()
+        }
 
         // ToDo:仕様に合わせて編集・移動
         // 長押しで削除する
