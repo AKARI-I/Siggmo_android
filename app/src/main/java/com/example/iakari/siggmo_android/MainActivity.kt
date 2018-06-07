@@ -1,5 +1,6 @@
 package com.example.iakari.siggmo_android
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
@@ -77,7 +78,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // 各項目をタップで詳細画面に遷移
         MainListView.setOnItemClickListener{adapterView, view, i, l ->
-            
+            val intent: Intent = Intent(this, DetailActivity::class.java)
+            startActivity(intent)
         }
 
         // ToDo:仕様に合わせて編集・移動
