@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
 
-        /*---------- Realm ----------*/
+        /*-------------------- Realm --------------------*/
         // Realmのセットアップ
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // データベースの値をすべて取り出す
         val getData = read()
 
-        /*---------- ListView ----------*/
+        /*-------------------- ListView --------------------*/
         // 曲名をリスト表示
         val dataList: MutableList<String> = mutableListOf()
 
@@ -163,7 +163,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    // データベースから全てのデータを取り出す
+    // データベースから "全ての" データを取り出す
     fun read() : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
