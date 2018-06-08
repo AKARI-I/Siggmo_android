@@ -77,15 +77,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         MainListView.adapter = arrayAdapter
 
         // 各項目をタップで詳細画面に遷移
-        MainListView.setOnItemClickListener{adapterView, view, i, l ->
+        MainListView.setOnItemClickListener{_, _, _, _ ->
             val intent: Intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("DB_ID", "タップした項目のID")
+            intent.putExtra("TapID", "タップした項目のID")
             startActivity(intent)
         }
 
-        // ToDo:仕様に合わせて編集・移動
+        // ToDo:その場では消えるけど多分データベースからは消えてないし、微妙に挙動がおかしい
         // 長押しで削除する
-        MainListView.setOnItemLongClickListener{parent, view, position, id ->
+        MainListView.setOnItemLongClickListener{_, _, position, _ ->
             arrayAdapter.remove(arrayAdapter.getItem(position))
             arrayAdapter.notifyDataSetChanged()
 
