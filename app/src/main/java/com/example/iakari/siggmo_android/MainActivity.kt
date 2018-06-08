@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // 各項目をタップで詳細画面に遷移
         MainListView.setOnItemClickListener{adapterView, view, i, l ->
             val intent: Intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("DB_ID", "タップした項目のID")
             startActivity(intent)
         }
 
