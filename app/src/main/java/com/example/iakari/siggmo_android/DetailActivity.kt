@@ -10,7 +10,7 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        Toast.makeText(this, "${intent.extras.get("DB_ID")}",
+        Toast.makeText(this, "${intent.extras.get("TapID")}",
                 Toast.LENGTH_SHORT).show()
     }
 }

@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dataList)
         MainListView.adapter = arrayAdapter
 
-        // 各項目をタップで詳細画面に遷移
+        // 各項目をタップ → 詳細画面に遷移
         MainListView.setOnItemClickListener{_, _, _, _ ->
             val intent: Intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("TapID", "タップした項目のID")
