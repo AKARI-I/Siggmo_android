@@ -104,6 +104,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // メニューを膨張させます。アクションバーが存在する場合、アクションバーに項目が追加される
         menuInflater.inflate(R.menu.main, menu)
+
+        /*-------------------- SearchView --------------------*/
+        // ToDo: SearchViewのセットアップを記述
+        // listSearch.setIconifiedByDefault(false)         // SearchViewの初期表示状態を設定
+        // listSearch.setOnQueryTextListener()         // テキストが入力される度に呼ばれるメソッド
+        // listSearch.isSubmitButtonEnabled = false        // Submitボタン(何それ)を使用不可にする
+
         return true
     }
 
