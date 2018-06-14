@@ -1,6 +1,5 @@
 package com.example.iakari.siggmo_android
 
-import android.content.ClipData
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -69,9 +68,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val getData = read()
 
         /*-------------------- ListView --------------------*/
-        // 曲名をリスト表示
+        // 全データをdataListに取り出す
         val dataList: MutableList<String> = mutableListOf()
 
+        // 曲名をリスト表示
         getData.forEach{
             dataList.add(it.music_name)
         }
@@ -81,15 +81,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // 各項目をタップしたときの処理
         MainListView.setOnItemClickListener{parent, _, position, _ ->
             val listView = parent as ListView
-            val item = listView.getItemAtPosition(position) as Item
+            val item = listView.getItemAtPosition(position).toString()     // タップした項目の要素名を取得
 
             // idを渡す
-            // val intent: Intent = Intent(this, DetailActivity::class.java)
-            // intent.putExtra("TapID", item.id)
-            // startActivity(intent)
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("TapID", item)
+            startActivity(intent)
         }
 
-        // ToDo:その場では消えるけど多分データベースからは消えてないし、微妙に挙動がおかしい
+        // ToDo:その場では消えるけどデータベースからは消えてないし、微妙に挙動がおかしい気がする
         // 長押しで削除する
         MainListView.setOnItemLongClickListener{_, _, position, _ ->
             arrayAdapter.remove(arrayAdapter.getItem(position))
