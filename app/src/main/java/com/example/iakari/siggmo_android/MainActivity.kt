@@ -1,5 +1,6 @@
 package com.example.iakari.siggmo_android
 
+import android.content.ClipData
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.ListView
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
@@ -76,11 +78,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dataList)
         MainListView.adapter = arrayAdapter
 
-        // 各項目をタップ → 詳細画面に遷移
-        MainListView.setOnItemClickListener{_, _, _, _ ->
-            val intent: Intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("TapID", "タップした項目のID")
-            startActivity(intent)
+        // 各項目をタップしたときの処理
+        MainListView.setOnItemClickListener{parent, _, position, _ ->
+            val listView = parent as ListView
+            val item = listView.getItemAtPosition(position) as Item
+
+            // idを渡す
+            // val intent: Intent = Intent(this, DetailActivity::class.java)
+            // intent.putExtra("TapID", item.id)
+            // startActivity(intent)
         }
 
         // ToDo:その場では消えるけど多分データベースからは消えてないし、微妙に挙動がおかしい
