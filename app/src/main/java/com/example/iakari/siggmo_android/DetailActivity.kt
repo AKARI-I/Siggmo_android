@@ -14,7 +14,6 @@ class DetailActivity : AppCompatActivity() {
         //        Toast.LENGTH_SHORT).show()
 
         // 受け取ったIDをToastで表示
-        val intent = getIntent()
         val tapid = intent.getStringExtra("TapID")
         Toast.makeText(this, tapid, Toast.LENGTH_SHORT).show()
     }
