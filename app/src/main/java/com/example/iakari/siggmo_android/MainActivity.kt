@@ -82,10 +82,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         MainListView.setOnItemClickListener{parent, _, position, _ ->
             val listView = parent as ListView
             // ToDo:タップ項目のIDを取得する
-            val item = listView.getItemAtPosition(position).toString()     // タップした項目の要素名を取得
+            val item = listView.getItemAtPosition(position) as String    // タップした項目の要素名を取得
 
             // idを渡す
-            val intent = Intent(this, DetailActivity::class.java)
+            val intent: Intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("TapID", item)
             startActivity(intent)
         }
