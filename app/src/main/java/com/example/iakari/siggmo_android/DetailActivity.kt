@@ -10,10 +10,7 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        //Toast.makeText(this, "${intent.extras.get("TapID")}",
-        //        Toast.LENGTH_SHORT).show()
-
-        // 受け取ったIDをToastで表示
+        // 受け取ったIDをToastで表示(したかった)
         val tapid = intent.getStringExtra("TapID")
         Toast.makeText(this, tapid, Toast.LENGTH_SHORT).show()
     }
