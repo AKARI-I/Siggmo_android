@@ -164,7 +164,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun create(mName:String, mPhonetic:String, sName:String, sPhonetic:String,
                fLine:String, pKey:Int, mLink:String, Score:Float, fMemo:String){
         mRealm.executeTransaction{
-            var siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
+            // ランダムなidを設定
+            var siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID() as Long)
+
+            // 各項目を設定
             siggmoDB.music_name      = mName
             siggmoDB.music_phonetic  = mPhonetic
             siggmoDB.singer_name     = sName
