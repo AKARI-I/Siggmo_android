@@ -64,18 +64,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         create(MName[1], MPhonetic[1], SName[1], SPhonetic[1], FLine[1], PKey[1],
                 MLink[1], Score[1], FMemo[1])
 
+        /*-------------------- ListView --------------------*/
         // データベースの値をすべて取り出す
         val getData = read()
-
-        /*-------------------- ListView --------------------*/
         // 全データをdataListに取り出す
-        val dataList: MutableList<String> = mutableListOf()
+        val dataList: MutableList<Item> = mutableListOf()
 
         // 曲名をリスト表示
         getData.forEach{
-            dataList.add(it.music_name)
+            dataList.add(Item(it.id, it.music_name))
         }
-        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dataList)
+        val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
         MainListView.adapter = arrayAdapter
 
         // 各項目をタップしたときの処理
