@@ -183,6 +183,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
 
+    // 表示する項目名とidをペアにして扱うためのクラス
+    private inner class Item(val id: Long, val name: String){
+        override fun toString(): String{
+            return name
+        }
+    }
+
     // Realmの削除についての定義
     override fun onDestroy(){
         super.onDestroy()
