@@ -12,7 +12,7 @@ import java.util.*
 // openをとると継承ができなくなるらしい
 open class SiggmoDB (
     // キー値をランダムで決める(とりあえず)
-        @PrimaryKey open var id : String = UUID.randomUUID().toString(),
+        @PrimaryKey open var id : Long = UUID.randomUUID() as Long,
 
     // 多分このへんが項目名
         @Required
