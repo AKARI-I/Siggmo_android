@@ -2,6 +2,7 @@ package com.example.iakari.siggmo_android
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+// import kotlinx.android.synthetic.main.activity_detail
 
 class DetailActivity : AppCompatActivity() {
 
