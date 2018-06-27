@@ -96,8 +96,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(intent)
         }
 
-        // ToDo: その場では消えるけどデータベースからは消えてないので修正の必要あり
-        // ToDo: 長押し削除すると削除しようとした項目と同じものをリストの上から探して最初に見つけたやつを消してるっぽい
         // 長押しで削除する
         MainListView.setOnItemLongClickListener{_, _, position, _ ->
             arrayAdapter.remove(arrayAdapter.getItem(position))
