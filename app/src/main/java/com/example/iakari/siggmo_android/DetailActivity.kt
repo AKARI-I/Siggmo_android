@@ -2,6 +2,8 @@ package com.example.iakari.siggmo_android
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_detail.*
+
 
 class DetailActivity : AppCompatActivity() {
 
@@ -9,9 +11,8 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        // 受け取ったIDをToastで表示
+        // 受け取ったIDをTextViewで表示
         val tapid = intent.getStringExtra("TapID")
-        //Toast.makeText(this, tapid, Toast.LENGTH_SHORT).show()
-
+        testTextView.text = tapid
     }
 }
