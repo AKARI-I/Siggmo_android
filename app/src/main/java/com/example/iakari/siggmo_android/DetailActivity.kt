@@ -2,7 +2,6 @@ package com.example.iakari.siggmo_android
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 
 class DetailActivity : AppCompatActivity() {
 
@@ -12,6 +11,7 @@ class DetailActivity : AppCompatActivity() {
 
         // 受け取ったIDをToastで表示
         val tapid = intent.getStringExtra("TapID")
-        Toast.makeText(this, tapid, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, tapid, Toast.LENGTH_SHORT).show()
+
     }
 }
