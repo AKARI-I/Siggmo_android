@@ -26,11 +26,11 @@ class DetailActivity : AppCompatActivity() {
 
         // 受け取ったIDをTextViewで表示
         val tapid = intent.getStringExtra("TapID")
-        Log.d("TAG", "clear intent")
         val record = quaryById(tapid)
-        Log.d("TAG", "clear quaryById method")
-        testTextView.text = record.toString()
-        Log.d("TAG", "clear textview.text set")
+        // レコードが返されたら曲名を表示
+        if (record != null) {
+            testTextView.text = record.music_name
+        }
     }
 
     // 渡されたidからデータベースを検索してレコードを返す
