@@ -38,8 +38,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        // 新規登録画面に遷移
         fab.setOnClickListener { view ->
-
+            val intent: Intent = Intent(this , NewAdditionActivity::class.java)
+            startActivity(intent)
         }
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
