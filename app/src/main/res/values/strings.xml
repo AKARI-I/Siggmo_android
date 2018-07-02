@@ -19,4 +19,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="music_name">曲名</string>
+    <string name="music_phonetic">よみがな(曲名)</string>
+    <string name="singer_name">歌手名</string>
+    <string name="singer_phonetic">よみがな(歌手名)</string>
+    <string name="first_line">歌いだし</string>
+    <string name="proper_key">適正キー</string>
+    <string name="movie_link">動画のリンク</string>
+    <string name="score">採点結果</string>
+    <string name="free_memo">自由記入欄</string>
 </resources>
