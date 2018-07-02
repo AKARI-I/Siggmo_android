@@ -11,40 +11,40 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/new_add_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="16dp">
 
-            <LinearLayout
-                android:id="@+id/music_name_layout"
+            <TextView
+                android:id="@+id/item_music_name"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="0dp"
-                android:orientation="vertical"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="16dp">
+                android:layout_height="wrap_content"
+                android:text="@string/music_name" />
 
-                <TextView
-                    android:id="@+id/item_music_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/music_name"
-                    tools:layout_editor_absoluteX="16dp"
-                    tools:layout_editor_absoluteY="16dp" />
+            <EditText
+                android:id="@+id/edit_music_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text|textPersonName" />
 
-                <EditText
-                    android:id="@+id/edit_music_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="text|textPersonName"
-                    android:textSize="12sp"
-                    tools:layout_editor_absoluteX="16dp"
-                    tools:layout_editor_absoluteY="35dp" />
+            <TextView
+                android:id="@+id/item_music_phonetic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/music_phonetic" />
 
-            </LinearLayout>
-
+            <EditText
+                android:id="@+id/edit_music_phonetic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text" />
         </LinearLayout>
+
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
