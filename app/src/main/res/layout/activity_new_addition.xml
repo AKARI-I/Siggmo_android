@@ -19,6 +19,7 @@
             android:paddingRight="8dp"
             android:paddingTop="16dp">
 
+            <!-- 曲名 -->
             <TextView
                 android:id="@+id/item_music_name"
                 android:layout_width="match_parent"
@@ -30,8 +31,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text|textPersonName" />
+                android:inputType="text|textPersonName"
+                android:maxLines="1" />
 
+            <!-- よみがな(曲名) -->
             <TextView
                 android:id="@+id/item_music_phonetic"
                 android:layout_width="match_parent"
@@ -43,7 +46,114 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="text"
+                android:maxLines="1" />
+
+            <!-- 歌手名 -->
+            <TextView
+                android:id="@+id/item_singer_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/singer_name" />
+
+            <EditText
+                android:id="@+id/edit_singer_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text|textPersonName"
+                android:maxLines="1" />
+
+            <!-- よみがな(歌手名) -->
+            <TextView
+                android:id="@+id/item_singer_phonetic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/singer_phonetic" />
+
+            <EditText
+                android:id="@+id/edit_singer_phonetic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:maxLines="1" />
+
+            <!-- 歌いだし -->
+            <TextView
+                android:id="@+id/item_first_line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/first_line" />
+
+            <EditText
+                android:id="@+id/edit_first_line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:maxLines="1" />
+
+            <!-- 適正キー -->
+            <TextView
+                android:id="@+id/item_proper_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/proper_key" />
+
+            <EditText
+                android:id="@+id/edit_proper_key"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned"
+                android:maxLength="1"
+                android:maxLines="1" />
+
+            <!-- 動画のリンク -->
+            <TextView
+                android:id="@+id/item_movie_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/movie_link" />
+
+            <EditText
+                android:id="@+id/edit_movie_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:maxLines="1" />
+
+            <!-- 採点結果 -->
+            <TextView
+                android:id="@+id/item_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score" />
+
+            <EditText
+                android:id="@+id/edit_score"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:maxLines="1" />
+
+            <!-- 自由記入欄 -->
+            <TextView
+                android:id="@+id/item_free_memo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/free_memo" />
+
+            <EditText
+                android:id="@+id/edit_free_memo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:maxLines="10" />
         </LinearLayout>
 
     </ScrollView>
