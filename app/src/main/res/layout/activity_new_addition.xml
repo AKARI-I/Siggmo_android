@@ -12,13 +12,18 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/music_name_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="70dp"
+                android:layout_marginTop="0dp"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="16dp">
 
                 <TextView
                     android:id="@+id/item_music_name"
@@ -37,9 +42,9 @@
                     android:textSize="12sp"
                     tools:layout_editor_absoluteX="16dp"
                     tools:layout_editor_absoluteY="35dp" />
+
             </LinearLayout>
+
         </LinearLayout>
-
     </ScrollView>
-
 </android.support.constraint.ConstraintLayout>
