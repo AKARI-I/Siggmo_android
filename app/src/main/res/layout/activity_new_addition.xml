@@ -149,4 +149,14 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/saveButon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:text="保存"
+        android:textColor="@android:color/background_light"
+        tools:layout_editor_absoluteX="307dp"
+        tools:layout_editor_absoluteY="539dp" />
 </android.support.constraint.ConstraintLayout>
