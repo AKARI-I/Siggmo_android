@@ -25,7 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/music_name" />
-
             <EditText
                 android:id="@+id/edit_music_name"
                 android:layout_width="match_parent"
@@ -40,7 +39,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/music_phonetic" />
-
             <EditText
                 android:id="@+id/edit_music_phonetic"
                 android:layout_width="match_parent"
@@ -55,7 +53,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/singer_name" />
-
             <EditText
                 android:id="@+id/edit_singer_name"
                 android:layout_width="match_parent"
@@ -70,7 +67,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/singer_phonetic" />
-
             <EditText
                 android:id="@+id/edit_singer_phonetic"
                 android:layout_width="match_parent"
@@ -85,7 +81,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/first_line" />
-
             <EditText
                 android:id="@+id/edit_first_line"
                 android:layout_width="match_parent"
@@ -100,7 +95,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/proper_key" />
-
             <EditText
                 android:id="@+id/edit_proper_key"
                 android:layout_width="100dp"
@@ -116,7 +110,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/movie_link" />
-
             <EditText
                 android:id="@+id/edit_movie_link"
                 android:layout_width="match_parent"
@@ -131,7 +124,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/score" />
-
             <EditText
                 android:id="@+id/edit_score"
                 android:layout_width="100dp"
@@ -146,7 +138,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/free_memo" />
-
             <EditText
                 android:id="@+id/edit_free_memo"
                 android:layout_width="match_parent"
@@ -155,7 +146,7 @@
                 android:inputType="textMultiLine"
                 android:maxLength="500"
                 android:maxLines="10" />
-        </LinearLayout>
 
+        </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

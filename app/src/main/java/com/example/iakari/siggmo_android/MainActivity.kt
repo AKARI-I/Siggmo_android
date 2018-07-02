@@ -21,17 +21,6 @@ import kotlinx.android.synthetic.main.content_main.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var mRealm: Realm
 
-    val MName     = arrayOf("春雷","君の知らない物語")
-    val MPhonetic = arrayOf("しゅんらい", "きみのしらないものがたり")
-    val SName     = arrayOf("米津玄師", "supercell")
-    val SPhonetic = arrayOf("よねづけんし", "すーぱーせる")
-    val FLine     = arrayOf("現れたそれは春のまっ最中", "いつも通りのある日のこと")
-    val PKey      = arrayOf(3, 0)
-    val MLink     = arrayOf("https://www.youtube.com/watch?v=zkNzxsaCunU",
-                            "https://www.youtube.com/watch?v=CEwQ-xp7aiU")
-    val Score     = arrayOf(87.261F, 85.579F)
-    val FMemo     = arrayOf("口が回らない", "1人で歌う時の忙しさ半端ないシリーズ代表")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
