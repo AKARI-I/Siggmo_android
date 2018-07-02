@@ -17,7 +17,6 @@ import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var mRealm: Realm
@@ -58,17 +57,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .build()
         mRealm = Realm.getInstance(realmConfig)
         Log.d("TAG", "Realmセットアップ終了")
-
-
-        // createテスト(テスト用レコードの追加)
-        // ※ここではテスト用データを事前に宣言してレコードを作成
-
-        Log.d("TAG", "createメソッド開始")
-        create(MName[0], MPhonetic[0], SName[0], SPhonetic[0], FLine[0], PKey[0],
-                MLink[0], Score[0], FMemo[0])
-        create(MName[1], MPhonetic[1], SName[1], SPhonetic[1], FLine[1], PKey[1],
-                MLink[1], Score[1], FMemo[1])
-        Log.d("TAG", "createメソッド終了")
 
 
         /*-------------------- ListView --------------------*/
@@ -161,28 +149,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
-    }
-
-    // データベースにレコードを追加する
-    // ToDo:曲の追加画面の処理に移す
-    fun create(mName:String, mPhonetic:String, sName:String, sPhonetic:String,
-               fLine:String, pKey:Int, mLink:String, Score:Float, fMemo:String){
-        mRealm.executeTransaction{
-            // ランダムなidを設定
-            var siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
-
-            // 各項目を設定
-            siggmoDB.music_name      = mName
-            siggmoDB.music_phonetic  = mPhonetic
-            siggmoDB.singer_name     = sName
-            siggmoDB.singer_phonetic = sPhonetic
-            siggmoDB.first_line      = fLine
-            siggmoDB.proper_key      = pKey
-            siggmoDB.movie_link      = mLink
-            siggmoDB.score           = Score
-            siggmoDB.free_memo       = fMemo
-            mRealm.copyToRealm(siggmoDB)
-        }
     }
 
     // データベースから "全ての" データを取り出す
