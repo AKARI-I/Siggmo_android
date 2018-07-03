@@ -45,6 +45,7 @@ class NewAdditionActivity : AppCompatActivity() {
             create(MName[1], MPhonetic[1], SName[1], SPhonetic[1], FLine[1], PKey[1],
                     MLink[1], Score[1], FMemo[1])
             Log.d("TAG", "createメソッド終了")
+
         }
     }
 
