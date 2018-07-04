@@ -46,6 +46,7 @@ class NewAdditionActivity : AppCompatActivity() {
                     MLink[1], Score[1], FMemo[1])
             Log.d("TAG", "createメソッド終了")
 
+            finish()
         }
     }
 
