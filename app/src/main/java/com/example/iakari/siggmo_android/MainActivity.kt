@@ -57,9 +57,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // 曲名をリスト表示
         getData.forEach{
             dataList.add(Item(it.id, it.music_name))
-            Log.d("TAG", "getData.forEach -> it.id=" + it.id + " it.music_name=" + it.music_name)
-        }
-        val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
+        }        val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
         MainListView.adapter = arrayAdapter
 
         // 各項目をタップしたときの処理
