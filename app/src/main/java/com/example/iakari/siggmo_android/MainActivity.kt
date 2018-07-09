@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        /*-------------------- 新規登録画面 --------------------*/
         // 新規登録画面に遷移
         fab.setOnClickListener { view ->
             val intent: Intent = Intent(this , NewAdditionActivity::class.java)
@@ -50,6 +51,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         /*-------------------- ListView --------------------*/
+        // 必要ないかも
+        setList()
+    }
+
+    /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
+    override fun onResume() {
+        super.onResume()
+
+        // リストの再表示
+        setList()
+    }
+
+    fun setList(){
         // データベースの値をすべて取り出す
         val getData = read()
         // 全データをdataListに取り出す
@@ -80,11 +94,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             return@setOnItemLongClickListener true
         }
-    }
-
-    /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onBackPressed() {
@@ -157,7 +166,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    // Realmの削除についての定義
+    // Realmの削除についての定義(よくわかんない)
     override fun onDestroy(){
         super.onDestroy()
         mRealm.close()
