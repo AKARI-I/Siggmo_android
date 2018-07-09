@@ -2,6 +2,7 @@ package com.example.iakari.siggmo_android
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils.isEmpty
 import android.util.Log
 import android.widget.Toast
 import io.realm.Realm
@@ -12,16 +13,19 @@ import java.util.*
 class NewAdditionActivity : AppCompatActivity() {
     lateinit var mRealm: Realm
 
-    val MName     = arrayOf("春雷","君の知らない物語")
-    val MPhonetic = arrayOf("しゅんらい", "きみのしらないものがたり")
-    val SName     = arrayOf("米津玄師", "supercell")
-    val SPhonetic = arrayOf("よねづけんし", "すーぱーせる")
-    val FLine     = arrayOf("現れたそれは春のまっ最中", "いつも通りのある日のこと")
-    val PKey      = arrayOf(3, 0)
-    val MLink     = arrayOf("https://www.youtube.com/watch?v=zkNzxsaCunU",
-            "https://www.youtube.com/watch?v=CEwQ-xp7aiU")
-    val Score     = arrayOf(87.261F, 85.579F)
-    val FMemo     = arrayOf("口が回らない", "1人で歌う時の忙しさ半端ないシリーズ代表")
+    // String型データ用
+    val musicInfo_s: MutableMap<String, String> = mutableMapOf(
+            "mn" to "music",         // 曲名
+            "mp" to "m_phone",       // よみがな(曲名)
+            "sn" to "singer",        // 歌手名
+            "sp" to "s_phone",       // よみがな(歌手名)
+            "fl" to "first_line",    // 歌い出し
+            "ml" to "movie_link",    // 動画のリンク
+            "fm" to "free_memo")     // 自由記入欄
+    // Int型データ用(適正キー)
+    val musicInfo_i: MutableMap<String, Int> = mutableMapOf("pk" to 0)
+    // Float型データ用(採点結果)
+    val musicInfo_f: MutableMap<String, Float> = mutableMapOf("sc" to 999F)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,13 +44,6 @@ class NewAdditionActivity : AppCompatActivity() {
         /* 保存ボタンがクリックされたらレコードを追加する */
         // ※ここではテスト用データを事前に宣言してレコードを作成
         saveButon.setOnClickListener {
-            Log.d("TAG", "createメソッド開始")
-            create(MName[0], MPhonetic[0], SName[0], SPhonetic[0], FLine[0], PKey[0],
-                    MLink[0], Score[0], FMemo[0])
-            create(MName[1], MPhonetic[1], SName[1], SPhonetic[1], FLine[1], PKey[1],
-                    MLink[1], Score[1], FMemo[1])
-            Log.d("TAG", "createメソッド終了")
-
             // 保存処理
             save()
 
@@ -80,8 +77,28 @@ class NewAdditionActivity : AppCompatActivity() {
     fun save(){
         Log.d("TAG", "start save method")
         // 入力があれば
-        if(edit_music_name.text != null){
+        Log.d("TAG", "isEmpty is ${isEmpty(edit_music_name.text)}")
+        if(!isEmpty(edit_music_name.text)){
+            musicInfo_s["mn"] = edit_music_name.text.toString()
+            Log.d("TAG", "曲名：${musicInfo_s["mn"]}")
+
+            // 新規登録処理
+            Log.d("TAG", "")
+            create(
+                    musicInfo_s["mn"].toString(),
+                    musicInfo_s["mp"].toString(),
+                    musicInfo_s["sn"].toString(),
+                    musicInfo_s["sp"].toString(),
+                    musicInfo_s["fl"].toString(),
+                    musicInfo_i["pk"] as Int,
+                    musicInfo_s["ml"].toString(),
+                    musicInfo_f["sc"] as Float,
+                    musicInfo_s["fm"].toString()
+            )
             Toast.makeText(this, "保存しました", Toast.LENGTH_LONG).show()
+
+        } else {
+            Toast.makeText(this, "曲名の入力がありませんでした", Toast.LENGTH_LONG).show()
         }
         Log.d("TAG", "finish save method")
     }
