@@ -1,10 +1,12 @@
 package com.example.iakari.siggmo_android
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
@@ -82,10 +84,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(intent)
         }
 
-        // 長押しで削除する
+        // 長\押しで削除する
         MainListView.setOnItemLongClickListener{_, _, position, _ ->
-            arrayAdapter.remove(arrayAdapter.getItem(position))
-            arrayAdapter.notifyDataSetChanged()
+            // アラートの表示
+            AlertDialog.Builder(this).apply {
+                setTitle("Are you sure?")
+                setMessage("削除しますか？")
+                setPositiveButton("Yes", DialogInterface.OnClickListener{_, _ ->
+                    // Yesを選択したときの処理
+                    Log.d("TAG", "YES!!")
+                })
+                setNegativeButton("Cancel", null)
+                show()
+            }
 
             return@setOnItemLongClickListener true
         }
