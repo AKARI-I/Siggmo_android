@@ -44,9 +44,10 @@ class NewAdditionActivity : AppCompatActivity() {
         /* 保存ボタンがクリックされたらレコードを追加する */
         // ※ここではテスト用データを事前に宣言してレコードを作成
         saveButon.setOnClickListener {
-            // 保存処理
+            // 新規登録処理
             save()
 
+            // メイン画面に戻る
             finish()
         }
     }
@@ -84,8 +85,7 @@ class NewAdditionActivity : AppCompatActivity() {
 
             // 新規登録処理
             Log.d("TAG", "")
-            create(
-                    musicInfo_s["mn"].toString(),
+            create( musicInfo_s["mn"].toString(),
                     musicInfo_s["mp"].toString(),
                     musicInfo_s["sn"].toString(),
                     musicInfo_s["sp"].toString(),
