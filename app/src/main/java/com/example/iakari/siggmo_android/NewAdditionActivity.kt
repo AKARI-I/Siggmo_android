@@ -3,6 +3,7 @@ package com.example.iakari.siggmo_android
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.activity_new_addition.*
@@ -46,6 +47,9 @@ class NewAdditionActivity : AppCompatActivity() {
                     MLink[1], Score[1], FMemo[1])
             Log.d("TAG", "createメソッド終了")
 
+            // 保存処理
+            save()
+
             finish()
         }
     }
@@ -70,5 +74,15 @@ class NewAdditionActivity : AppCompatActivity() {
             siggmoDB.free_memo       = fMemo
             mRealm.copyToRealm(siggmoDB)
         }
+    }
+
+    // 保存ボタンが押されたらinsert処理をしてメイン画面に戻る
+    fun save(){
+        Log.d("TAG", "start save method")
+        // 入力があれば
+        if(edit_music_name.text != null){
+            Toast.makeText(this, "保存しました", Toast.LENGTH_LONG).show()
+        }
+        Log.d("TAG", "finish save method")
     }
 }

@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         /*-------------------- ListView --------------------*/
+        // 必要ないかも
         setList()
     }
 
@@ -165,7 +166,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    // Realmの削除についての定義
+    // Realmの削除についての定義(よくわかんない)
     override fun onDestroy(){
         super.onDestroy()
         mRealm.close()
