@@ -48,11 +48,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .build()
         mRealm = Realm.getInstance(realmConfig)
         Log.d("TAG", "Realmセットアップ終了")
-
-
-        /*-------------------- ListView --------------------*/
-        // 必要ないかも
-        setList()
     }
 
     /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */

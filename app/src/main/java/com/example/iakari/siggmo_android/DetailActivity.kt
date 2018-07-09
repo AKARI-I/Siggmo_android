@@ -27,6 +27,7 @@ class DetailActivity : AppCompatActivity() {
         // 受け取ったIDをTextViewで表示
         val tapid = intent.getStringExtra("TapID")
         val record = quaryById(tapid)
+
         // レコードが返されたら曲名を表示
         if (record != null) {
             testTextView.text = record.music_name
