@@ -25,16 +25,7 @@ class DetailActivity : AppCompatActivity() {
                 .build()
         mRealm = Realm.getInstance(realmConfig)
         Log.d("TAG", "Realmセットアップ終了(DetailActivity)")
-        /*------------------- Button --------------------*/
-        val button: Button = findViewById(R.id.send_button)
-        button.setOnClickListener {
-            //新しく開くアクティビティに渡す値
-            val intent: Intent = Intent(this, EditActivity::class.java)
-            intent.putExtra("TapID", item.id)
 
-            //新しくアクティビティを開く
-            startActivity(intent)
-        }
         // 受け取ったIDをTextViewで表示
         val tapid = intent.getStringExtra("TapID")
         val record = quaryById(tapid)
@@ -42,6 +33,18 @@ class DetailActivity : AppCompatActivity() {
         if (record != null) {
             testTextView.text = record.music_name
         }
+
+        /*------------------- Button --------------------*/
+        val button: Button = findViewById(R.id.send_button)
+        button.setOnClickListener {
+            //新しく開くアクティビティに渡す値
+            val intent: Intent = Intent(this, EditActivity::class.java)
+            intent.putExtra("TapID",tapid)
+
+            //新しくアクティビティを開く
+            startActivity(intent)
+        }
+
     }
 
     // 渡されたidからデータベースを検索してレコードを返す
