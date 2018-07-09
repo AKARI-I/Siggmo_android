@@ -44,9 +44,10 @@ class NewAdditionActivity : AppCompatActivity() {
         /* 保存ボタンがクリックされたらレコードを追加する */
         // ※ここではテスト用データを事前に宣言してレコードを作成
         saveButon.setOnClickListener {
-            // 保存処理
+            // 新規登録処理
             save()
 
+            // メイン画面に戻る
             finish()
         }
     }
