@@ -71,4 +71,9 @@ class NewAdditionActivity : AppCompatActivity() {
             mRealm.copyToRealm(siggmoDB)
         }
     }
+
+    // 保存ボタンが押されたらinsert処理をしてメイン画面に戻る
+    fun save(){
+        
+    }
 }
