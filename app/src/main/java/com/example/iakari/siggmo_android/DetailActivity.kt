@@ -10,12 +10,12 @@ import kotlinx.android.synthetic.main.activity_detail.*
 class DetailActivity : AppCompatActivity() {
     lateinit var mRealm: Realm
 
+    /* ここでActivityが初めて生成される。初期化は全てここに書く。 */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
         /*-------------------- Realm --------------------*/
-        // Realmのセットアップ
         Log.d("TAG", "Realmセットアップ開始(DetailActivity)")
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
