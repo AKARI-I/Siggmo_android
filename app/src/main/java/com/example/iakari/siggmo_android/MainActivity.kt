@@ -165,6 +165,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
 
+    fun delete() : RealmResults<SiggmoDB>{
+        
+    }
+
     // 表示する項目名とidをペアにして扱うためのクラス
     private inner class Item(val id: String, val name: String){
         override fun toString(): String{
