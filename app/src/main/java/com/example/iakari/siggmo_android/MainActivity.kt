@@ -84,15 +84,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(intent)
         }
 
-        // 長\押しで削除する
-        MainListView.setOnItemLongClickListener{_, _, position, _ ->
+        // 長押しで削除する
+        MainListView.setOnItemLongClickListener{_, _, position: Int, _ ->
             // アラートの表示
             AlertDialog.Builder(this).apply {
                 setTitle("Are you sure?")
                 setMessage("削除しますか？")
                 setPositiveButton("Yes", DialogInterface.OnClickListener{_, _ ->
-                    // Yesを選択したときの処理
                     Log.d("TAG", "YES!!")
+                    // クエリを発行し結果を取得
+                    val results: RealmResults<SiggmoDB> = mRealm.where(SiggmoDB::class.java).findAll()
+                    mRealm.executeTransaction(Realm.Transaction {
+                        Log.d("TAG", "in realm delete process")
+                        results.deleteFromRealm(0)
+                        results.deleteLastFromRealm()
+                    })
                 })
                 setNegativeButton("Cancel", null)
                 show()
@@ -163,10 +169,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // データベースから "全ての" データを取り出す
     fun read() : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
-    }
-
-    fun delete() : RealmResults<SiggmoDB>{
-        
     }
 
     // 表示する項目名とidをペアにして扱うためのクラス
