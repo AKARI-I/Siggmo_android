@@ -32,7 +32,7 @@ class DetailActivity : AppCompatActivity() {
 
         // レコードが返されたら曲名を表示
         if (record != null) {
-            testTextView.text = record.music_name
+            music_name.text = record.music_name
         }
 
         /*------------------- Button --------------------*/
