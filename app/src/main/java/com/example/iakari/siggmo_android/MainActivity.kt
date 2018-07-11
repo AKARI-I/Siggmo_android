@@ -31,8 +31,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         /*-------------------- 新規登録画面 --------------------*/
         // 新規登録画面に遷移
-        fab.setOnClickListener { view ->
-            val intent: Intent = Intent(this , NewAdditionActivity::class.java)
+        fab.setOnClickListener { _ ->
+            val intent = Intent(this , NewAdditionActivity::class.java)
             startActivity(intent)
         }
         val toggle = ActionBarDrawerToggle(
@@ -79,13 +79,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val item = listView.getItemAtPosition(position) as Item    // タップした項目の要素名を取得
 
             // idを渡す
-            val intent: Intent = Intent(this, DetailActivity::class.java)
+            val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("TapID", item.id)
             startActivity(intent)
         }
 
         // 長押しで削除する
-        MainListView.setOnItemLongClickListener{_, _, position: Int, _ ->
+        MainListView.setOnItemLongClickListener{_, _, _, _ ->
             // アラートの表示
             AlertDialog.Builder(this).apply {
                 setTitle("Are you sure?")
