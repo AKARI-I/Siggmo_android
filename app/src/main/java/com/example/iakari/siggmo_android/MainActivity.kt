@@ -1,10 +1,12 @@
 package com.example.iakari.siggmo_android
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
@@ -83,9 +85,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         // 長押しで削除する
-        MainListView.setOnItemLongClickListener{_, _, position, _ ->
-            arrayAdapter.remove(arrayAdapter.getItem(position))
-            arrayAdapter.notifyDataSetChanged()
+        MainListView.setOnItemLongClickListener{_, _, position: Int, _ ->
+            // アラートの表示
+            AlertDialog.Builder(this).apply {
+                setTitle("Are you sure?")
+                setMessage("削除しますか？")
+                setPositiveButton("Yes", DialogInterface.OnClickListener{_, _ ->
+                    Log.d("TAG", "YES!!")
+                    // クエリを発行し結果を取得
+                    val results: RealmResults<SiggmoDB> = mRealm.where(SiggmoDB::class.java).findAll()
+                    mRealm.executeTransaction(Realm.Transaction {
+                        Log.d("TAG", "in realm delete process")
+                        results.deleteFromRealm(0)
+                        results.deleteLastFromRealm()
+                    })
+                })
+                setNegativeButton("Cancel", null)
+                show()
+            }
 
             return@setOnItemLongClickListener true
         }
