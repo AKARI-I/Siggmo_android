@@ -1,8 +1,10 @@
 package com.example.iakari.siggmo_android
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Button
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -30,8 +32,20 @@ class DetailActivity : AppCompatActivity() {
 
         // レコードが返されたら曲名を表示
         if (record != null) {
-            testTextView.text = record.music_name
+            music_name.text = record.music_name
         }
+
+        /*------------------- Button --------------------*/
+        val button: Button = findViewById(R.id.send_button)
+        button.setOnClickListener {
+            //新しく開くアクティビティに渡す値
+            val intent: Intent = Intent(this, EditActivity::class.java)
+            intent.putExtra("TapID",tapid)
+
+            //新しくアクティビティを開く
+            startActivity(intent)
+        }
+
     }
 
     // 渡されたidからデータベースを検索してレコードを返す

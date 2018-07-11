@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         /*-------------------- 新規登録画面 --------------------*/
         // 新規登録画面に遷移
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener { _ ->
             val intent: Intent = Intent(this , NewAdditionActivity::class.java)
             startActivity(intent)
         }
