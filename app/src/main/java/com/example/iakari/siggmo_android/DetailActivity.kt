@@ -33,6 +33,15 @@ class DetailActivity : AppCompatActivity() {
         // レコードが返されたら曲名を表示
         if (record != null) {
             music_name.text = record.music_name
+            music_phonetic.text = record.music_phonetic
+            singer_name.text = record.singer_name
+            singer_phonetic.text = record.singer_phonetic
+            first_line.text = record.first_line
+            //proper_key.text = record.proper_key
+            movie_link.text = record.movie_link
+            //score. = record.score
+            free_memo.text = record.free_memo
+
         }
 
         /*------------------- Button --------------------*/
