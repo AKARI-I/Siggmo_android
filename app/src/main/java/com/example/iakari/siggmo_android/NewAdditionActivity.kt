@@ -85,8 +85,7 @@ class NewAdditionActivity : AppCompatActivity() {
 
             // 新規登録処理
             Log.d("TAG", "")
-            create(
-                    musicInfo_s["mn"].toString(),
+            create( musicInfo_s["mn"].toString(),
                     musicInfo_s["mp"].toString(),
                     musicInfo_s["sn"].toString(),
                     musicInfo_s["sp"].toString(),

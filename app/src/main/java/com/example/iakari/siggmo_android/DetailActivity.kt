@@ -28,9 +28,11 @@ class DetailActivity : AppCompatActivity() {
 
         // 受け取ったIDをTextViewで表示
         val tapid = intent.getStringExtra("TapID")
+        // idで検索をかけて、その曲の情報がrecordに入る(はず)
         val record = quaryById(tapid)
 
         // レコードが返されたら曲名を表示
+        // ToDo:多分、他の項目もrecord.music_phoneticって感じに参照できるはずなので他の項目も表示できるようにしてみて
         if (record != null) {
             music_name.text = record.music_name
         }
@@ -48,7 +50,8 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-    // 渡されたidからデータベースを検索してレコードを返す
+    // 渡されたidからデータベースを検索して曲の情報を返す
+    // select * from SiggmoDB where id = idと同じ意味
     fun quaryById(id: String): SiggmoDB? {
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("id", id)
