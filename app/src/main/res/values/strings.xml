@@ -28,4 +28,5 @@
     <string name="movie_link">動画のリンク</string>
     <string name="score">採点結果</string>
     <string name="free_memo">自由記入欄</string>
+    <string name="submit">送信</string>
 </resources>
