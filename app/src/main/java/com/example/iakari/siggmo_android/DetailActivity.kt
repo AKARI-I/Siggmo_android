@@ -32,7 +32,7 @@ class DetailActivity : AppCompatActivity() {
         val record = quaryById(tapid)
 
         // レコードが返されたら曲名を表示
-        // ToDo:多分、他の項目もrecord.music_phoneticって感じに参照できるはずなので他の項目も表示できるようにしてみて
+        // ToDo: proper_keyとscoreはそれぞれInt型とFloat型だからString型にキャストしてやればいけるはず
         if (record != null) {
             music_name.text = record.music_name
             music_phonetic.text = record.music_phonetic
