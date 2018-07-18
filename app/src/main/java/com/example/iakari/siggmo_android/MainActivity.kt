@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         // 長押しで削除する
-        MainListView.setOnItemLongClickListener{_, _, _, _ ->
+        MainListView.setOnItemLongClickListener{_, _, position, _ ->
             // アラートの表示
             AlertDialog.Builder(this).apply {
                 setTitle("Are you sure?")
@@ -102,9 +102,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                     // ListViewの更新
                     Log.d("TAG", "start update listview")
-                    arrayAdapter.clear()
-                    arrayAdapter.addAll()
+                    arrayAdapter.remove(arrayAdapter.getItem(position))
                     arrayAdapter.notifyDataSetChanged()
+                    MainListView.invalidateViews()
                 })
                 setNegativeButton("Cancel", null)
                 show()
