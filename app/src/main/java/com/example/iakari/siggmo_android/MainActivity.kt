@@ -99,6 +99,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         results.deleteFromRealm(0)
                         results.deleteLastFromRealm()
                     })
+
+                    // ListViewの更新
+                    Log.d("TAG", "start update listview")
+                    arrayAdapter.clear()
+                    arrayAdapter.addAll()
+                    arrayAdapter.notifyDataSetChanged()
                 })
                 setNegativeButton("Cancel", null)
                 show()
@@ -106,11 +112,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             return@setOnItemLongClickListener true
         }
-    }
-
-    // 画面の更新(してほしい)
-    fun reflesh(){
-        
     }
 
     override fun onBackPressed() {
