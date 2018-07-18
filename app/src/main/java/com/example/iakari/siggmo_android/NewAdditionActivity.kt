@@ -15,15 +15,15 @@ class NewAdditionActivity : AppCompatActivity() {
 
     // String型データ用
     val musicInfo_s: MutableMap<String, String> = mutableMapOf(
-            "mn" to "music",         // 曲名
-            "mp" to "m_phone",       // よみがな(曲名)
-            "sn" to "singer",        // 歌手名
-            "sp" to "s_phone",       // よみがな(歌手名)
-            "fl" to "first_line",    // 歌い出し
-            "ml" to "movie_link",    // 動画のリンク
-            "fm" to "free_memo")     // 自由記入欄
+            "mn" to "曲名",           // 曲名
+            "mp" to "よみがな(曲名)",  // よみがな(曲名)
+            "sn" to "歌手名",         // 歌手名
+            "sp" to "よみがな(歌手名)",// よみがな(歌手名)
+            "fl" to "歌いだし",       // 歌い出し
+            "ml" to "動画のリンク",    // 動画のリンク
+            "fm" to "自由記入欄")     // 自由記入欄
     // Int型データ用(適正キー)
-    val musicInfo_i: MutableMap<String, Int> = mutableMapOf("pk" to 0)
+    val musicInfo_i: MutableMap<String, Int> = mutableMapOf("pk" to 10)
     // Float型データ用(採点結果)
     val musicInfo_f: MutableMap<String, Float> = mutableMapOf("sc" to 999F)
 
