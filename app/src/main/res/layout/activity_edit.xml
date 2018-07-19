@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:text="曲名"
                 tools:ignore="HardcodedText" />
-            <!--
+
                         <EditText
                             android:id="@+id/music_name"
                             android:layout_width="match_parent"
@@ -37,8 +37,7 @@
                             android:id="@+id/music_phonetic_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/textview"
-                            tools:text="曲名（よみがな）" />
+                            android:text="曲名（よみがな）" />
 
                         <EditText
                             android:id="@+id/music_phonetic"
@@ -153,7 +152,7 @@
                             android:ems="10"
                             android:inputType="textMultiLine|textPersonName"
                             android:text="Name" />
-            -->
+
         </LinearLayout>
     </ScrollView>
 
