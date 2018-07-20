@@ -148,28 +148,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     //ここでナビゲーションビューアイテムのクリックを処理
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_camera -> {
+            R.id.nav_favorite -> {
 
             }
-            R.id.nav_gallery -> {
+            R.id.nav_practice_list -> {
 
             }
-            R.id.nav_slideshow -> {
+            R.id.nav_new_list -> {
 
             }
-            R.id.nav_manage -> {
 
+            R.id.nav_add -> {
+                val intent = Intent(this , NewAdditionActivity::class.java)
+                startActivity(intent)
             }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
+            R.id.nav_config -> {
 
             }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+    fun setListNew(){
+
     }
 
     // データベースから "全ての" データを取り出す
