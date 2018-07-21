@@ -17,6 +17,8 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
+        Log.d("activity", "start DetailActivity")
+
         /*-------------------- Realm --------------------*/
         Log.d("TAG", "Realmセットアップ開始(DetailActivity)")
         Realm.init(this)
@@ -57,7 +59,7 @@ class DetailActivity : AppCompatActivity() {
             //新しくアクティビティを開く
             startActivity(intent)
         }
-
+        Log.d("activity", "finish DetailActivity")
     }
 
     // 渡されたidからデータベースを検索して曲の情報を返す
