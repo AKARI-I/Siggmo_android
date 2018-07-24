@@ -34,16 +34,15 @@ class DetailActivity : AppCompatActivity() {
         val record = quaryById(tapid)
 
         // レコードが返されたら曲名を表示
-        // ToDo: proper_keyとscoreはそれぞれInt型とFloat型だからString型にキャストしてやればいけるはず
         if (record != null) {
             music_name.text = record.music_name
             music_phonetic.text = record.music_phonetic
             singer_name.text = record.singer_name
             singer_phonetic.text = record.singer_phonetic
             first_line.text = record.first_line
-            //proper_key.text = record.proper_key
+            proper_key.text = record.proper_key.toString()
             movie_link.text = record.movie_link
-            //score. = record.score
+            score.text = record.score.toString()
             free_memo.text = record.free_memo
             Log.d("TAG", "proper_key is ${record.proper_key}")
             Log.d("TAG", "score is ${record.score}")
