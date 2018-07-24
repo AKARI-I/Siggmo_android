@@ -27,6 +27,7 @@ class NewAdditionActivity : AppCompatActivity() {
     val musicInfo_i: MutableMap<String, Int> = mutableMapOf("pk" to 10)
     // Float型データ用(採点結果)
     val musicInfo_f: MutableMap<String, Float> = mutableMapOf("sc" to 999F)
+    var insertFlg = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +49,9 @@ class NewAdditionActivity : AppCompatActivity() {
         // ※ここではテスト用データを事前に宣言してレコードを作成
         saveButon.setOnClickListener {
             save()      // 新規登録処理
-            finish()    // メイン画面に戻る
+            if(insertFlg) {
+                finish()    // メイン画面に戻る
+            }
         }
 
         Log.d("activity", "finish NewAdditionActivity")
@@ -58,6 +61,7 @@ class NewAdditionActivity : AppCompatActivity() {
     // 保存ボタンが押されたらinsert処理をしてメイン画面に戻る
     // 数値は一度String型に変換してから元の型に戻す必要があるみたい(参考：https://appcoding.net/string-to-int-kotlin/)
     fun save(){
+        // 入力値を取得
         musicInfo_s["mn"] = edit_music_name.text.toString()
         musicInfo_s["mp"] = edit_music_phonetic.text.toString()
         musicInfo_s["sn"] = edit_singer_name.text.toString()
@@ -70,7 +74,8 @@ class NewAdditionActivity : AppCompatActivity() {
 
         if(isEmpty(edit_music_name.text)){
             // 曲名の入力がなかった場合
-            Toast.makeText(this, "曲名の入力がありませんでした", Toast.LENGTH_LONG).show()
+            Log.d("TAG", "edit_music_name is empty")
+            edit_music_name.error = "曲名を入力してください"
         } else {
             // 曲名の入力があった場合
             // 新規登録処理
@@ -85,6 +90,7 @@ class NewAdditionActivity : AppCompatActivity() {
                     musicInfo_s["fm"].toString() )
 
             Toast.makeText(this, "保存しました", Toast.LENGTH_LONG).show()
+            insertFlg = true
         }
     }
 
