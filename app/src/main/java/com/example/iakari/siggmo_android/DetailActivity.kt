@@ -44,8 +44,6 @@ class DetailActivity : AppCompatActivity() {
             movie_link.text = record.movie_link
             score.text = record.score.toString()
             free_memo.text = record.free_memo
-            Log.d("TAG", "proper_key is ${record.proper_key}")
-            Log.d("TAG", "score is ${record.score}")
         }
 
         /*------------------- Button --------------------*/
