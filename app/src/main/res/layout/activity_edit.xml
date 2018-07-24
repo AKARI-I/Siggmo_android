@@ -28,11 +28,12 @@
                 tools:ignore="HardcodedText" />
 
             <EditText
-                android:id="@+id/music_name"
+                android:id="@+id/m_name_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:text="@string/music_name"
                 tools:ignore="LabelFor" />
 
             <TextView
@@ -42,7 +43,7 @@
                 android:text="@string/music_phonetic" />
 
             <EditText
-                android:id="@+id/music_phonetic"
+                android:id="@+id/m_phonetic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
