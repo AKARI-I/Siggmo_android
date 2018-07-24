@@ -34,11 +34,6 @@ class NewAdditionActivity : AppCompatActivity() {
 
         Log.d("activity", "start NewAdditionActivity")
 
-        // debug
-        debugText.text = "musicInfo_s → ${musicInfo_s["mn"]}"
-        musicInfo_s["mn"] = "hoge"
-        debugText2.text = "update musicInfo_s → ${musicInfo_s["mn"]}"
-
         /*-------------------- Realm --------------------*/
         // Realmのセットアップ
         Log.d("TAG", "Realmセットアップ開始(NewAdditionActivity)")
@@ -62,54 +57,34 @@ class NewAdditionActivity : AppCompatActivity() {
 
     // 保存ボタンが押されたらinsert処理をしてメイン画面に戻る
     fun save(){
-        // 入力があれば
-        if(!isEmpty(edit_music_name.text)) {
-            musicInfo_s["mn"] = edit_music_name.text.toString()
-            // 他の項目の取得
-            /*if(!isEmpty(edit_music_phonetic.text)) {
-                Log.d("TAG", "music phonetic -> ${musicInfo_s["mp"]}")
-                musicInfo_s["mp"] = edit_music_phonetic.text.toString() }*/
-            /*if(!isEmpty(edit_singer_name.text)){
-                Log.d("TAG", "singer name -> ${musicInfo_s["sn"]}")
-                musicInfo_s["sn"] = edit_singer_name.text.toString() }*/
-            /*if(!isEmpty(edit_singer_phonetic.text)) {
-                Log.d("TAG", "singer_phonetic -> ${musicInfo_s["sp"]}")
-                musicInfo_s["sp"] = edit_singer_phonetic.text.toString() }*/
-            /*if(!isEmpty(edit_first_line.text)) {
-                Log.d("TAG", "first line -> ${musicInfo_s["fl"]}")
-                musicInfo_s["fl"] = edit_first_line.text.toString() }*/
-            /*if(!isEmpty(edit_proper_key.text)) {
-                Log.d("TAG", "proper key -> ${musicInfo_i["pk"]}")
-                musicInfo_i["pk"] = edit_proper_key as Int }*/
-            /*if(!isEmpty(edit_movie_link.text)) {
-                Log.d("TAG", "movie link -> ${musicInfo_s["ml"]}")
-                musicInfo_s["ml"] = edit_movie_link.text.toString() }*/
-            /*if(!isEmpty(edit_score.text)) {
-                Log.d("TAG", "score -> ${musicInfo_f["sc"]}")
-                musicInfo_f["sc"] = edit_score as Float }*/
-            /*if(!isEmpty(edit_free_memo.text)) {
-                Log.d("TAG", "free memo -> ${musicInfo_s["fm"]}")
-                musicInfo_s["fm"] = edit_free_memo.text.toString() }*/
-            Log.d("TAG", "insert if check clear")
-        } else {
-            Log.d("TAG", "not insert")
+        musicInfo_s["mn"] = edit_music_name.text.toString()
+        musicInfo_s["mp"] = edit_music_phonetic.text.toString()
+        musicInfo_s["sn"] = edit_singer_name.text.toString()
+        musicInfo_s["sp"] = edit_singer_phonetic.text.toString()
+        musicInfo_s["fl"] = edit_first_line.text.toString()
+        //musicInfo_i["pk"] = edit_proper_key as Int
+        musicInfo_s["ml"] = edit_movie_link.text.toString()
+        //musicInfo_f["sc"] = edit_score as Float
+        musicInfo_s["fm"] = edit_free_memo.text.toString()
+
+        if(isEmpty(edit_music_name.text)){
+            // 曲名の入力がなかった場合
             Toast.makeText(this, "曲名の入力がありませんでした", Toast.LENGTH_LONG).show()
+        } else {
+            // 曲名の入力があった場合
+            // 新規登録処理
+            create( musicInfo_s["mn"].toString(),
+                    musicInfo_s["mp"].toString(),
+                    musicInfo_s["sn"].toString(),
+                    musicInfo_s["sp"].toString(),
+                    musicInfo_s["fl"].toString(),
+                    musicInfo_i["pk"] as Int,
+                    musicInfo_s["ml"].toString(),
+                    musicInfo_f["sc"] as Float,
+                    musicInfo_s["fm"].toString() )
+
+            Toast.makeText(this, "保存しました", Toast.LENGTH_LONG).show()
         }
-        Log.d("TAG", "finish save method")
-
-        // 新規登録処理
-        create( musicInfo_s["mn"].toString(),
-                musicInfo_s["mp"].toString(),
-                musicInfo_s["sn"].toString(),
-                musicInfo_s["sp"].toString(),
-                musicInfo_s["fl"].toString(),
-                musicInfo_i["pk"] as Int,
-                musicInfo_s["ml"].toString(),
-                musicInfo_f["sc"] as Float,
-                musicInfo_s["fm"].toString()
-        )
-        Toast.makeText(this, "保存しました", Toast.LENGTH_LONG).show()
-
     }
 
     // データベースにレコードを追加する
