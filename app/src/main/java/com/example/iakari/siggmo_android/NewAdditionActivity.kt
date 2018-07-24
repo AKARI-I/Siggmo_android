@@ -14,6 +14,7 @@ class NewAdditionActivity : AppCompatActivity() {
     lateinit var mRealm: Realm
 
     // String型データ用　入力値がない場合ここに設定したデフォルト値が入る
+    // mutableMapOf：書き込み可能なコレクションを生成する(mapOfは読み取り専用)
     val musicInfo_s: MutableMap<String, String> = mutableMapOf(
             "mn" to "曲名",           // 曲名
             "mp" to "よみがな(曲名)",  // よみがな(曲名)
@@ -32,6 +33,11 @@ class NewAdditionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_addition)
 
         Log.d("activity", "start NewAdditionActivity")
+
+        // debug
+        debugText.text = "musicInfo_s → ${musicInfo_s["mn"]}"
+        musicInfo_s["mn"] = "hoge"
+        debugText2.text = "update musicInfo_s → ${musicInfo_s["mn"]}"
 
         /*-------------------- Realm --------------------*/
         // Realmのセットアップ
