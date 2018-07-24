@@ -17,6 +17,8 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
+        Log.d("activity", "start DetailActivity")
+
         /*-------------------- Realm --------------------*/
         Log.d("TAG", "Realmセットアップ開始(DetailActivity)")
         Realm.init(this)
@@ -32,18 +34,16 @@ class DetailActivity : AppCompatActivity() {
         val record = quaryById(tapid)
 
         // レコードが返されたら曲名を表示
-        // ToDo: proper_keyとscoreはそれぞれInt型とFloat型だからString型にキャストしてやればいけるはず
         if (record != null) {
             music_name.text = record.music_name
             music_phonetic.text = record.music_phonetic
             singer_name.text = record.singer_name
             singer_phonetic.text = record.singer_phonetic
             first_line.text = record.first_line
-            //proper_key.text = record.proper_key
+            proper_key.text = record.proper_key.toString()
             movie_link.text = record.movie_link
-            //score. = record.score
+            score.text = record.score.toString()
             free_memo.text = record.free_memo
-
         }
 
         /*------------------- Button --------------------*/
@@ -56,7 +56,7 @@ class DetailActivity : AppCompatActivity() {
             //新しくアクティビティを開く
             startActivity(intent)
         }
-
+        Log.d("activity", "finish DetailActivity")
     }
 
     // 渡されたidからデータベースを検索して曲の情報を返す
