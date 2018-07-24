@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        Log.d("activity", "start MainActivity")
+
         /*-------------------- 新規登録画面 --------------------*/
         // 新規登録画面に遷移
         fab.setOnClickListener { _ ->
@@ -50,6 +52,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .build()
         mRealm = Realm.getInstance(realmConfig)
         Log.d("TAG", "Realmセットアップ終了")
+
+        Log.d("activity", "finish DetailActivity")
     }
 
     /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
