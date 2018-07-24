@@ -36,15 +36,15 @@ class EditActivity : AppCompatActivity() {
         val record = quaryById(tapid)
 
         if (record != null) {
-            music_name.text = record.music_name
-            music_phonetic.text = record.music_phonetic
-            singer_name.text = record.singer_name
-            singer_phonetic.text = record.singer_phonetic
-            first_line.text = record.first_line
+            m_name_edit.text = record.music_name
+            m_phone.text = record.music_phonetic
+            s_name.text = record.singer_name
+            s_phone.text = record.singer_phonetic
+            f_line.text = record.first_line
             //proper_key.text = record.proper_key
-            movie_link.text = record.movie_link
+            m_link.text = record.movie_link
             //score. = record.score
-            free_memo.text = record.free_memo
+            f_memo.text = record.free_memo
 
         }
 
