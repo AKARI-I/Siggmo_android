@@ -46,7 +46,6 @@ class NewAdditionActivity : AppCompatActivity() {
         saveButon.setOnClickListener {
             // 新規登録処理
             save()
-
             // メイン画面に戻る
             finish()
         }

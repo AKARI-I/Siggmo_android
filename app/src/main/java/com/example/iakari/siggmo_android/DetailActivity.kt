@@ -43,7 +43,6 @@ class DetailActivity : AppCompatActivity() {
             movie_link.text = record.movie_link
             //score. = record.score
             free_memo.text = record.free_memo
-
         }
 
         /*------------------- Button --------------------*/
