@@ -4,13 +4,21 @@
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_menu_search"
+            android:title="検索" />
+        <item
+            android:id="@+id/nav_sort"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="ソート" />
+        <item
             android:id="@+id/nav_lists"
-            android:icon="@drawable/ic_menu_send"
-            android:title="曲リスト一覧" />
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="リスト一覧" />
         <item
             android:id="@+id/nav_add"
             android:icon="@drawable/ic_menu_send"
-            android:title="曲リストの追加" />
+            android:title="曲の追加" />
         <item
             android:id="@+id/nav_config"
             android:icon="@drawable/ic_menu_manage"

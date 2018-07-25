@@ -72,7 +72,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // データベースの値をすべて取り出す
         val getData = read()
         // 全データをdataListに取り出す
-        val dataList: MutableList<Item> = mutableListOf()
+        val dataList: MutableList<Item>
+        dataList = mutableListOf()
 
         // 曲名をリスト表示
         getData.forEach{
@@ -121,63 +122,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun setLists(){
-        // データベースの値をすべて取り出す
-        val getData = readList()
-        // 全データをdataListに取り出す
-        val dataList: MutableList<Item> = mutableListOf()
-
-        // 曲名をリスト表示
-        getData.forEach{
-            dataList.add(Item(it.list_id, it.list_name))
-        }
-        val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
-        MainListView.adapter = arrayAdapter
-
-        // 各項目をタップしたときの処理
-        MainListView.setOnItemClickListener{parent, _, position, _ ->
-            val listView = parent as ListView
-            val item = listView.getItemAtPosition(position) as Item    // タップした項目の要素名を取得
-
-            // idを渡す
-            val intent = Intent(this, ListsActivity::class.java)
-            intent.putExtra("TapID", item.id)
-            startActivity(intent)
-        }
-
-        // 長押しで削除する
-        MainListView.setOnItemLongClickListener{parent, _, position, _ ->
-            val listView = parent as ListView
-            val item = listView.getItemAtPosition(position) as Item    // タップした項目の要素名を取得
-            // アラートの表示
-            AlertDialog.Builder(this).apply {
-                setTitle("Are you sure?")
-                setMessage("削除しますか？")
-                setPositiveButton("Yes", DialogInterface.OnClickListener{_, _ ->
-                    Log.d("TAG", "YES!!")
-                    // クエリを発行し結果を取得
-                    val results: RealmResults<ListDB> = mRealm.where(ListDB::class.java)
-                            .equalTo("list_id", item.id).findAll()
-                    mRealm.executeTransaction(Realm.Transaction {
-                        Log.d("TAG", "in realm delete process")
-                        //results.deleteFromRealm(0)
-                        results.deleteLastFromRealm()
-                    })
-
-                    //
-                    arrayAdapter.remove(arrayAdapter.getItem(position))
-                    arrayAdapter.notifyDataSetChanged()
-                    MainListView.invalidateViews()
-                })
-                setNegativeButton("Cancel", null)
-                show()
-            }
-
-            return@setOnItemLongClickListener true
-        }
-    }
-
-
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -212,48 +156,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     //ここでナビゲーションビューアイテムのクリックを処理
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.nav_search -> {
+
+            }
+            R.id.nav_sort -> {
+
+            }
             R.id.nav_lists -> {
-                setLists()
+                // リスト画面に遷移
+                val intent = Intent(this , ListsActivity::class.java)
+                startActivity(intent)
             }
 
             R.id.nav_add -> {
-                // 曲リストの追加
-                // テキスト入力用Viewの作成
-                val editView = EditText(this@MainActivity)
-
-                val dialog = AlertDialog.Builder(this@MainActivity)
-
-                dialog.setTitle("テキストを入力してください")
-                dialog.setView(editView)
-
-                // OKボタンの設定
-                dialog.setPositiveButton("OK") { dialog, whichButton ->
-                    // OKボタンをタップした時の処理をここに記述
-                    /*-------------------- Realm --------------------*/
-                    // Realmのセットアップ
-                    Log.d("TAG", "Realmセットアップ開始(リスト追加)")
-                    Realm.init(this)
-                    val realmConfig = RealmConfiguration.Builder()
-                            .deleteRealmIfMigrationNeeded()
-                            .build()
-                    mRealm = Realm.getInstance(realmConfig)
-                    Log.d("TAG", "Realmセットアップ終了(リスト追加)")
-                    mRealm.executeTransaction {
-                        // ListDBをlist_idをランダムで作成
-                        var listDB = mRealm.createObject(ListDB::class.java, UUID.randomUUID().toString())
-                        val sb = editView.getText() as SpannableStringBuilder
-                        // Listの名前をListDB.list_nameに保存
-                        listDB.list_name = sb.toString()
-                    }
-                }
-
-                // キャンセルボタンの設定
-                dialog.setNegativeButton("キャンセル") { dialog, whichButton ->
-                    // キャンセルボタンをタップした時の処理をここに記述
-                }
-
-                dialog.show()
-
+                // 曲の追加：新規登録画面に遷移
+                val intent = Intent(this , NewAdditionActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_config -> {
 
@@ -269,9 +187,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
 
-    fun readList() : RealmResults<ListDB> {
-        return mRealm.where(ListDB::class.java).findAll()
-    }
 
     // 表示する項目名とidをペアにして扱うためのクラス
     private inner class Item(val id: String, val name: String){

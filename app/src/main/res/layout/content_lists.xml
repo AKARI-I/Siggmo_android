@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:layout_marginTop="56dp"
     android:orientation="vertical"
-    tools:context="com.example.iakari.siggmo_android.MainActivity">
+    tools:context="com.example.iakari.siggmo_android.ListsActivity">
 
     <ListView
-        android:id="@+id/MainListView"
+        android:id="@+id/ListsView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:baselineAligned="false"
