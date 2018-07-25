@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.activity_edit.*
@@ -36,7 +37,6 @@ class EditActivity : AppCompatActivity() {
         val record = quaryById(tapid)
 
         if (record != null) {
-        //record.music_phoneticはStringなのにEditable!に代入しようとしているエラー
             m_name_edit.setText(record.music_name)
             m_phone.setText(record.music_phonetic)
             s_name.setText(record.singer_name)
@@ -47,6 +47,33 @@ class EditActivity : AppCompatActivity() {
             s_edit.setText(record.score.toString())
             f_memo.setText(record.free_memo)
 
+        }
+        val button: Button = findViewById(R.id.editbutton)
+        button.setOnClickListener{
+            //editにとりあえず今は曲名だけを入れてupdateに渡す
+            val edit = m_name_edit.text.toString()
+            update(tapid, record, edit)
+            //DetailActivityにもどる
+            val intent: Intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("TapID",tapid)
+            startActivity(intent)
+        }
+
+
+    }
+
+        //id(tapid),record,曲名を渡す
+    fun update(id: String,record: SiggmoDB?, edit: String){
+        mRealm.executeTransaction{
+            //sgm配列に項目を入れて曲名から順番にDB(record)の中身と一緒かどうかを調べる
+            //今は項目一つしか入れてないのでループとかはせず曲名だけ見てる
+            val sgm = arrayOf(edit)
+            if (record != null) {
+                //sgmとrecordが違ったらsgmの中身をrecordに入れる
+                if(record.music_name != sgm[0]){
+                    record.music_name = sgm[0]
+                }
+            }
         }
 
     }
