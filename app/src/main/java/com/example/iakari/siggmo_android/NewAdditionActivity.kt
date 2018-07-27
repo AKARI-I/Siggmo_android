@@ -100,7 +100,7 @@ class NewAdditionActivity : AppCompatActivity() {
         Log.d("TAG", "start create method")
         mRealm.executeTransaction{
             // ランダムなidを設定
-            var siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
+            val siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
 
             // 各項目を設定
             siggmoDB.music_name      = mName

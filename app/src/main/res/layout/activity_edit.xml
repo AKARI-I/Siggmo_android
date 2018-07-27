@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@string/singer_name" />
+                android:text="@string/no_data" />
 
             <TextView
                 android:id="@+id/s_phone_text"
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@string/singer_name"
+                android:text="@string/no_data"
                 tools:ignore="TextFields" />
 
             <TextView
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@string/first_line" />
+                android:text="@string/no_data" />
 
             <TextView
                 android:id="@+id/p_key_text"
@@ -106,13 +106,13 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@string/proper_key" />
+                android:text="0" />
 
             <TextView
                 android:id="@+id/m_link_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/movie_link" />
+                android:text="@string/no_data" />
 
             <EditText
                 android:id="@+id/m_link"
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@string/movie_link" />
+                android:text="@string/no_data" />
 
             <TextView
                 android:id="@+id/s_text"
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@string/score" />
+                android:text="@string/no_data" />
 
             <TextView
                 android:id="@+id/f_memo_text"

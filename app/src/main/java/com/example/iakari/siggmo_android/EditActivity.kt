@@ -68,10 +68,22 @@ class EditActivity : AppCompatActivity() {
             //sgm配列に項目を入れて曲名から順番にDB(record)の中身と一緒かどうかを調べる
             //今は項目一つしか入れてないのでループとかはせず曲名だけ見てる
             val sgm = arrayOf(edit)
+            val list = listOf(record)
             if (record != null) {
-                //sgmとrecordが違ったらsgmの中身をrecordに入れる
-                if(record.music_name != sgm[0]){
+                for (item in list) {
+
+                    //ループと条件分岐が難しそうなので一気に全部更新
                     record.music_name = sgm[0]
+                    record.music_phonetic = sgm[1]
+                    record.singer_name = sgm[2]
+                    record.singer_phonetic = sgm[3]
+                    record.first_line = sgm[4]
+                    record.proper_key = sgm[5].toInt()
+                    record.movie_link = sgm[6]
+                    record.score = sgm[7].toFloat()
+                    record.free_memo = sgm[8]
+
+
                 }
             }
         }
