@@ -7,10 +7,12 @@
     tools:context=".EditActivity">
 
     <ScrollView
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -19,141 +21,140 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/music_name_text"
+                android:id="@+id/m_name_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="曲名"
+                android:text="@string/music_name"
                 tools:ignore="HardcodedText" />
-            <!--
-                        <EditText
-                            android:id="@+id/music_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName"
-                            tools:ignore="LabelFor" />
 
-                        <TextView
-                            android:id="@+id/music_phonetic_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/textview"
-                            tools:text="曲名（よみがな）" />
+            <EditText
+                android:id="@+id/m_name_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:text="@string/music_name"
+                tools:ignore="LabelFor" />
 
-                        <EditText
-                            android:id="@+id/music_phonetic"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="@string/name"
-                            tools:ignore="LabelFor" />
+            <TextView
+                android:id="@+id/m_phone_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/music_phonetic" />
 
-                        <TextView
-                            android:id="@+id/singer_name_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/textview"
-                            tools:text="歌手名" />
+            <EditText
+                android:id="@+id/m_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/music_phonetic"
+                tools:ignore="LabelFor,TextFields" />
 
-                        <EditText
-                            android:id="@+id/singer_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="@string/name" />
+            <TextView
+                android:id="@+id/s_name_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/singer_name" />
 
-                        <TextView
-                            android:id="@+id/singer_phonetic_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/textview"
-                            tools:text="歌手名（ふりがな）" />
+            <EditText
+                android:id="@+id/s_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/no_data" />
 
-                        <EditText
-                            android:id="@+id/singer_phonetic"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="@string/name" />
+            <TextView
+                android:id="@+id/s_phone_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/singer_phonetic" />
 
-                        <TextView
-                            android:id="@+id/first_line_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/textview"
-                            tools:text="歌いだし" />
+            <EditText
+                android:id="@+id/s_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/no_data"
+                tools:ignore="TextFields" />
 
-                        <EditText
-                            android:id="@+id/first_line"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="@string/name" />
+            <TextView
+                android:id="@+id/f_line_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/first_line" />
 
-                        <TextView
-                            android:id="@+id/proper_key_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/textview"
-                            tools:text="適正キー" />
+            <EditText
+                android:id="@+id/f_line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/no_data" />
 
-                        <EditText
-                            android:id="@+id/proper_key"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="@string/name" />
+            <TextView
+                android:id="@+id/p_key_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/proper_key" />
 
-                        <TextView
-                            android:id="@+id/movie_link_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/textview"
-                            tools:text="動画リンク" />
+            <EditText
+                android:id="@+id/p_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="0" />
 
-                        <EditText
-                            android:id="@+id/movie_link"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="@string/name" />
+            <TextView
+                android:id="@+id/m_link_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_data" />
 
-                        <TextView
-                            android:id="@+id/score_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/textview"
-                            tools:text="採点結果" />
+            <EditText
+                android:id="@+id/m_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/no_data" />
 
-                        <EditText
-                            android:id="@+id/score"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="@string/name" />
+            <TextView
+                android:id="@+id/s_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score" />
 
-                        <TextView
-                            android:id="@+id/free_memo_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/textview"
-                            tools:text="自由記入欄" />
+            <EditText
+                android:id="@+id/s_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/no_data" />
 
-                        <EditText
-                            android:id="@+id/free_memo"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:ems="10"
-                            android:inputType="textMultiLine|textPersonName"
-                            android:text="Name" />
-            -->
+            <TextView
+                android:id="@+id/f_memo_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/free_memo" />
+
+            <EditText
+                android:id="@+id/f_memo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:inputType="textMultiLine|textPersonName"
+                android:text="@string/free_memo" />
+
+            <Button
+                android:id="@+id/editbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dbup" />
         </LinearLayout>
     </ScrollView>
 
