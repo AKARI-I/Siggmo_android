@@ -29,7 +29,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".EditActivity" />
         <activity android:name=".DetailActivity" />
-        <activity android:name=".NewAdditionActivity"></activity>
+        <activity android:name=".NewAdditionActivity"/>
+        <activity android:name=".ListsActivity"/>
     </application>
 
 </manifest>

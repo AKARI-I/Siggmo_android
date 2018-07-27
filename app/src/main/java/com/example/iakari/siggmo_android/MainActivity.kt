@@ -19,6 +19,10 @@ import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import android.widget.EditText
+import java.util.*
+import android.text.SpannableStringBuilder
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var mRealm: Realm
@@ -68,7 +72,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // データベースの値をすべて取り出す
         val getData = read()
         // 全データをdataListに取り出す
-        val dataList: MutableList<Item> = mutableListOf()
+        val dataList: MutableList<Item>
+        dataList = mutableListOf()
 
         // 曲名をリスト表示
         getData.forEach{
@@ -104,8 +109,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         results.deleteLastFromRealm()
                     })
 
-                    // ListViewの更新
-                    Log.d("TAG", "start update listview")
+                    //
                     arrayAdapter.remove(arrayAdapter.getItem(position))
                     arrayAdapter.notifyDataSetChanged()
                     MainListView.invalidateViews()
@@ -152,17 +156,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     //ここでナビゲーションビューアイテムのクリックを処理
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_favorite -> {
+            R.id.nav_search -> {
 
             }
-            R.id.nav_practice_list -> {
+            R.id.nav_sort -> {
 
             }
-            R.id.nav_new_list -> {
-
+            R.id.nav_lists -> {
+                // リスト画面に遷移
+                val intent = Intent(this , ListsActivity::class.java)
+                startActivity(intent)
             }
 
             R.id.nav_add -> {
+                // 曲の追加：新規登録画面に遷移
                 val intent = Intent(this , NewAdditionActivity::class.java)
                 startActivity(intent)
             }
@@ -174,14 +181,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
-    fun setListNew(){
-
-    }
 
     // データベースから "全ての" データを取り出す
     fun read() : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
+
 
     // 表示する項目名とidをペアにして扱うためのクラス
     private inner class Item(val id: String, val name: String){

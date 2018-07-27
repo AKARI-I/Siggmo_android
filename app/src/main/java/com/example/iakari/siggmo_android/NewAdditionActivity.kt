@@ -79,18 +79,10 @@ class NewAdditionActivity : AppCompatActivity() {
         } else {
             // 曲名の入力があった場合
             // 新規登録処理
-            create( musicInfo_s["mn"].toString(),
-                    musicInfo_s["mp"].toString(),
-                    musicInfo_s["sn"].toString(),
-                    musicInfo_s["sp"].toString(),
-                    musicInfo_s["fl"].toString(),
-                    musicInfo_i["pk"] as Int,
-                    musicInfo_s["ml"].toString(),
-                    musicInfo_f["sc"] as Float,
-                    musicInfo_s["fm"].toString() )
+            save()
+            // メイン画面に戻る
+            finish()
 
-            Toast.makeText(this, "保存しました", Toast.LENGTH_LONG).show()
-            insertFlg = true
         }
     }
 
