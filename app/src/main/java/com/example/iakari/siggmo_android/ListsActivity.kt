@@ -1,10 +1,7 @@
 package com.example.iakari.siggmo_android
 
-import android.content.ClipData
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.SpannableStringBuilder
@@ -16,9 +13,7 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_lists.*
-import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_lists.*
-import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
 
 class ListsActivity : AppCompatActivity() {
@@ -38,8 +33,6 @@ class ListsActivity : AppCompatActivity() {
                 .build()
         mRealm = Realm.getInstance(realmConfig)
         Log.d("TAG", "Realmセットアップ終了")
-
-        Log.d("activity", "finish DetailActivity")
 
         // フローティングアクションボタン
         lists_fab.setOnClickListener{ _ ->

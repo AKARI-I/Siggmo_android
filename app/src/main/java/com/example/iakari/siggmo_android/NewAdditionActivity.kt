@@ -97,6 +97,7 @@ class NewAdditionActivity : AppCompatActivity() {
         mRealm.executeTransaction{
             // ランダムなidを設定
             val siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
+            var scoreResultDB = mRealm.createObject(ScoreResultDB::class.java, UUID.randomUUID().toString())
 
             // 各項目を設定
             siggmoDB.music_name      = mName
@@ -107,6 +108,7 @@ class NewAdditionActivity : AppCompatActivity() {
             siggmoDB.proper_key      = pKey
             siggmoDB.movie_link      = mLink
             siggmoDB.score           = Score
+            scoreResultDB.score2      = Score
             siggmoDB.free_memo       = fMemo
             mRealm.copyToRealm(siggmoDB)
         }
