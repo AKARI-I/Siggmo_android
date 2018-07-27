@@ -4,13 +4,10 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.activity_edit.*
-import android.widget.EditText
-import android.widget.TextView
 
 
 class EditActivity : AppCompatActivity() {
@@ -51,8 +48,16 @@ class EditActivity : AppCompatActivity() {
         val button: Button = findViewById(R.id.editbutton)
         button.setOnClickListener{
             //editにとりあえず今は曲名だけを入れてupdateに渡す
-            val edit = m_name_edit.text.toString()
-            update(tapid, record, edit)
+            val sgm = arrayOf(m_name_edit.text.toString(),
+                    m_phone.text.toString(),
+                    s_name.text.toString(),
+                    s_phone.text.toString(),
+                    f_line.text.toString(),
+                    p_key.text.toString(),
+                    m_link.text.toString(),
+                    s_edit.text.toString(),
+                    f_memo.text.toString())
+            update(tapid, record, sgm)
             //DetailActivityにもどる
             val intent: Intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("TapID",tapid)
@@ -63,11 +68,10 @@ class EditActivity : AppCompatActivity() {
     }
 
         //id(tapid),record,曲名を渡す
-    fun update(id: String,record: SiggmoDB?, edit: String){
+    fun update(id: String, record: SiggmoDB?, sgm: Array<String>){
         mRealm.executeTransaction{
             //sgm配列に項目を入れて曲名から順番にDB(record)の中身と一緒かどうかを調べる
             //今は項目一つしか入れてないのでループとかはせず曲名だけ見てる
-            val sgm = arrayOf(edit)
             val list = listOf(record)
             if (record != null) {
                 for (item in list) {
