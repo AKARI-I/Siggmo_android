@@ -1,5 +1,6 @@
 package com.example.iakari.siggmo_android
 
+import android.app.ListActivity
 import android.content.ClipData
 import android.content.DialogInterface
 import android.content.Intent
@@ -16,9 +17,7 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_lists.*
-import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_lists.*
-import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
 
 class ListsActivity : AppCompatActivity() {
@@ -100,16 +99,16 @@ class ListsActivity : AppCompatActivity() {
         val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
         ListsView.adapter = arrayAdapter
 
-        /* 各項目をタップしたときの処理
+        // 各項目をタップしたときの処理
         ListsView.setOnItemClickListener{parent, _, position, _ ->
             val listView = parent as ListView
             val item = listView.getItemAtPosition(position) as ListsActivity.Item    // タップした項目の要素名を取得
 
             // idを渡す
-            val intent = Intent(this, ListsActivity::class.java)
+            val intent = Intent(this, com.example.iakari.siggmo_android.ListActivity::class.java)
             intent.putExtra("TapID", item.id)
             startActivity(intent)
-        }*/
+        }
 
         // 長押しで削除する
         ListsView.setOnItemLongClickListener{parent, _, position, _ ->
