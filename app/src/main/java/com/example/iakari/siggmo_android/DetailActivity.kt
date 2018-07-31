@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.KeyEvent
 import android.widget.Button
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -57,6 +58,16 @@ class DetailActivity : AppCompatActivity() {
             startActivity(intent)
         }
         Log.d("activity", "finish DetailActivity")
+    }
+
+    // 標準Backkeyの遷移先変更
+    override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
+        if(keyCode==KeyEvent.KEYCODE_BACK) {
+            val intent: Intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+            return true
+        }
+        return false
     }
 
     // 渡されたidからデータベースを検索して曲の情報を返す
