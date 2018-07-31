@@ -5,17 +5,17 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.iakari.siggmo_android.ListsActivity">
+    tools:context="com.example.iakari.siggmo_android.SongAddActivity">
 
     <include
-        layout="@layout/content_lists"
+        layout="@layout/content_song_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="56dp"
         tools:ignore="MissingConstraints" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/lists_fab"
+        android:id="@+id/song_add_fab"
         android:layout_width="297dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
