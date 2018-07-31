@@ -61,15 +61,15 @@ class NewAdditionActivity : AppCompatActivity() {
     // 数値は一度String型に変換してから元の型に戻す必要があるみたい(参考：https://appcoding.net/string-to-int-kotlin/)
     fun save(){
         // 入力値を取得
-        musicInfo_s["mn"] = edit_music_name.text.toString()
-        musicInfo_s["mp"] = edit_music_phonetic.text.toString()
-        musicInfo_s["sn"] = edit_singer_name.text.toString()
-        musicInfo_s["sp"] = edit_singer_phonetic.text.toString()
-        musicInfo_s["fl"] = edit_first_line.text.toString()
-        musicInfo_i["pk"] = edit_proper_key.text.toString().toInt()
-        musicInfo_s["ml"] = edit_movie_link.text.toString()
-        musicInfo_f["sc"] = edit_score.text.toString().toFloat()
-        musicInfo_s["fm"] = edit_free_memo.text.toString()
+        if(!isEmpty(edit_music_name.text)){ musicInfo_s["mn"] = edit_music_name.text.toString() }
+        if(!isEmpty(edit_music_phonetic.text)){ musicInfo_s["mp"] = edit_music_phonetic.text.toString() }
+        if(!isEmpty(edit_singer_name.text)){ musicInfo_s["sn"] = edit_singer_name.text.toString() }
+        if(!isEmpty(edit_singer_phonetic.text)){ musicInfo_s["sp"] = edit_singer_phonetic.text.toString() }
+        if(!isEmpty(edit_first_line.text)){ musicInfo_s["fl"] = edit_first_line.text.toString() }
+        if(!isEmpty(edit_proper_key.text)){musicInfo_i["pk"] = edit_proper_key.text.toString().toInt()}
+        if(!isEmpty(edit_movie_link.text)){ musicInfo_s["ml"] = edit_movie_link.text.toString() }
+        if(!isEmpty(edit_score.text)){ musicInfo_f["sc"] = edit_score.text.toString().toFloat() }
+        if(!isEmpty(edit_free_memo.text)){ musicInfo_s["fm"] = edit_free_memo.text.toString() }
 
         if(isEmpty(edit_music_name.text)){
             // 曲名の入力がなかった場合

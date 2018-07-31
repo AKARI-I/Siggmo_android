@@ -60,7 +60,7 @@ class EditActivity : AppCompatActivity() {
                     m_link.text.toString(),
                     s_edit.text.toString(),
                     f_memo.text.toString())
-            update(tapid, record, sgm)
+            update(record, sgm)
             //DetailActivityにもどる
             val intent: Intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("TapID",tapid)
@@ -71,14 +71,13 @@ class EditActivity : AppCompatActivity() {
     }
 
         //id(tapid),record,曲名を渡す
-    fun update(id: String, record: SiggmoDB?, sgm: Array<String>){
+    fun update(record: SiggmoDB?, sgm: Array<String>){
         mRealm.executeTransaction{
             //sgm配列に項目を入れて曲名から順番にDB(record)の中身と一緒かどうかを調べる
             //今は項目一つしか入れてないのでループとかはせず曲名だけ見てる
             val list = listOf(record)
             if (record != null) {
                 for (item in list) {
-
                     //ループと条件分岐が難しそうなので一気に全部更新
                     record.music_name = sgm[0]
                     record.music_phonetic = sgm[1]
@@ -89,8 +88,6 @@ class EditActivity : AppCompatActivity() {
                     record.movie_link = sgm[6]
                     record.score = sgm[7].toFloat()
                     record.free_memo = sgm[8]
-
-
                 }
             }
         }
