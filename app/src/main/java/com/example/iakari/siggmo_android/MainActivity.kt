@@ -19,10 +19,6 @@ import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import android.widget.EditText
-import java.util.*
-import android.text.SpannableStringBuilder
-import kotlinx.android.synthetic.main.activity_list.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -96,7 +92,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         // 長押しで削除する
-        MainListView.setOnItemLongClickListener{_, _, position, _ ->
+        MainListView.setOnItemLongClickListener{parent, _, position, _ ->
+            val listView = parent as ListView
+            val item = listView.getItemAtPosition(position) as Item    // タップした項目の要素名を取得
             // アラートの表示
             AlertDialog.Builder(this).apply {
                 setTitle("Are you sure?")
@@ -104,14 +102,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 setPositiveButton("Yes", DialogInterface.OnClickListener{_, _ ->
                     Log.d("TAG", "YES!!")
                     // クエリを発行し結果を取得
-                    val results: RealmResults<SiggmoDB> = mRealm.where(SiggmoDB::class.java).findAll()
+                    val results: RealmResults<SiggmoDB> = mRealm.where(SiggmoDB::class.java)
+                            .equalTo("id", item.id)
+                            .findAll()
                     mRealm.executeTransaction(Realm.Transaction {
                         Log.d("TAG", "in realm delete process")
                         results.deleteFromRealm(0)
                         results.deleteLastFromRealm()
                     })
 
-                    //
                     arrayAdapter.remove(arrayAdapter.getItem(position))
                     arrayAdapter.notifyDataSetChanged()
                     MainListView.invalidateViews()
