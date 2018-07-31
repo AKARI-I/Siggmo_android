@@ -57,7 +57,7 @@ class EditActivity : AppCompatActivity() {
                     m_link.text.toString(),
                     s_edit.text.toString(),
                     f_memo.text.toString())
-            update(tapid, record, sgm)
+            update(record, sgm)
             //DetailActivityにもどる
             val intent: Intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("TapID",tapid)
@@ -68,7 +68,7 @@ class EditActivity : AppCompatActivity() {
     }
 
         //id(tapid),record,曲名を渡す
-    fun update(id: String, record: SiggmoDB?, sgm: Array<String>){
+    fun update(record: SiggmoDB?, sgm: Array<String>){
         mRealm.executeTransaction{
             //sgm配列に項目を入れて曲名から順番にDB(record)の中身と一緒かどうかを調べる
             //今は項目一つしか入れてないのでループとかはせず曲名だけ見てる
