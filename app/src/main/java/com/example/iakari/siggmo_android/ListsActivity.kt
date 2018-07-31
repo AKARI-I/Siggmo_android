@@ -1,11 +1,9 @@
 package com.example.iakari.siggmo_android
 
 import android.app.ListActivity
-import android.content.ClipData
-import android.content.DialogInterface
 import android.content.Intent
+import android.content.DialogInterface
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.SpannableStringBuilder
@@ -38,8 +36,43 @@ class ListsActivity : AppCompatActivity() {
         mRealm = Realm.getInstance(realmConfig)
         Log.d("TAG", "Realmセットアップ終了")
 
-        Log.d("activity", "finish DetailActivity")
 
+
+
+    }
+    /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
+    override fun onResume() {
+        super.onResume()
+
+        // リストの再表示
+        setLists()
+
+    }
+
+
+    fun setLists(){
+        // データベースの値をすべて取り出す
+        val getData = readList()
+        // 全データをdataListに取り出す
+        val dataList: MutableList<Item> = mutableListOf()
+
+        // リスト名をリスト表示
+        getData.forEach{
+            dataList.add(Item(it.list_id, it.list_name))
+        }
+        val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
+        ListsView.adapter = arrayAdapter
+
+        // 各項目をタップしたときの処理
+        ListsView.setOnItemClickListener{parent, _, position, _ ->
+            val listView = parent as ListView
+            val item = listView.getItemAtPosition(position) as ListsActivity.Item    // タップした項目の要素名を取得
+
+            // idを渡す
+            val intent = Intent(this, com.example.iakari.siggmo_android.ListActivity::class.java)
+            intent.putExtra("TapID", item.id)
+            startActivity(intent)
+        }
         // フローティングアクションボタン
         lists_fab.setOnClickListener{ _ ->
             // 曲リストの追加
@@ -74,42 +107,6 @@ class ListsActivity : AppCompatActivity() {
             dialog.show()
 
         }
-
-
-    }
-    /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
-    override fun onResume() {
-        super.onResume()
-
-        // リストの再表示
-        setLists()
-    }
-
-
-    fun setLists(){
-        // データベースの値をすべて取り出す
-        val getData = readList()
-        // 全データをdataListに取り出す
-        val dataList: MutableList<Item> = mutableListOf()
-
-        // リスト名をリスト表示
-        getData.forEach{
-            dataList.add(Item(it.list_id, it.list_name))
-        }
-        val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
-        ListsView.adapter = arrayAdapter
-
-        // 各項目をタップしたときの処理
-        ListsView.setOnItemClickListener{parent, _, position, _ ->
-            val listView = parent as ListView
-            val item = listView.getItemAtPosition(position) as ListsActivity.Item    // タップした項目の要素名を取得
-
-            // idを渡す
-            val intent = Intent(this, com.example.iakari.siggmo_android.ListActivity::class.java)
-            intent.putExtra("TapID", item.id)
-            startActivity(intent)
-        }
-
         // 長押しで削除する
         ListsView.setOnItemLongClickListener{parent, _, position, _ ->
             val listView = parent as ListView

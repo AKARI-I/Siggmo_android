@@ -75,7 +75,6 @@ class EditActivity : AppCompatActivity() {
             val list = listOf(record)
             if (record != null) {
                 for (item in list) {
-
                     //ループと条件分岐が難しそうなので一気に全部更新
                     record.music_name = sgm[0]
                     record.music_phonetic = sgm[1]
@@ -86,8 +85,6 @@ class EditActivity : AppCompatActivity() {
                     record.movie_link = sgm[6]
                     record.score = sgm[7].toFloat()
                     record.free_memo = sgm[8]
-
-
                 }
             }
         }

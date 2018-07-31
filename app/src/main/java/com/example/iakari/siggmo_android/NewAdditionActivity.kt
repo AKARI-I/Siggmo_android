@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils.isEmpty
 import android.util.Log
-import android.widget.Toast
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.activity_new_addition.*
@@ -78,11 +77,16 @@ class NewAdditionActivity : AppCompatActivity() {
             edit_music_name.error = "曲名を入力してください"
         } else {
             // 曲名の入力があった場合
-            // 新規登録処理
-            save()
-            // メイン画面に戻る
-            finish()
-
+            create(musicInfo_s["mn"].toString(),
+                   musicInfo_s["mp"].toString(),
+                   musicInfo_s["sn"].toString(),
+                   musicInfo_s["sp"].toString(),
+                   musicInfo_s["fl"].toString(),
+                   musicInfo_i["pk"] as Int,
+                   musicInfo_s["ml"].toString(),
+                   musicInfo_f["sc"] as Float,
+                   musicInfo_s["fm"].toString())
+            finish()    // メイン画面に戻る
         }
     }
 
@@ -93,6 +97,7 @@ class NewAdditionActivity : AppCompatActivity() {
         mRealm.executeTransaction{
             // ランダムなidを設定
             val siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
+            var scoreResultDB = mRealm.createObject(ScoreResultDB::class.java, UUID.randomUUID().toString())
 
             // 各項目を設定
             siggmoDB.music_name      = mName
@@ -103,6 +108,7 @@ class NewAdditionActivity : AppCompatActivity() {
             siggmoDB.proper_key      = pKey
             siggmoDB.movie_link      = mLink
             siggmoDB.score           = Score
+            scoreResultDB.score2      = Score
             siggmoDB.free_memo       = fMemo
             mRealm.copyToRealm(siggmoDB)
         }

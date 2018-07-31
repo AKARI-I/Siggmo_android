@@ -32,6 +32,7 @@
         <activity android:name=".NewAdditionActivity"/>
         <activity android:name=".ListsActivity"/>
         <activity android:name=".ListActivity"/>
+        <activity android:name=".SongAddActivity"/>
     </application>
 
 </manifest>

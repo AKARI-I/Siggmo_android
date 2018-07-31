@@ -39,21 +39,13 @@ class ListActivity : AppCompatActivity() {
 
         Log.d("activity", "finish DetailActivity")
 
-
-        // フローティングアクションボタン
-        list_fab.setOnClickListener{ _ ->
-            val intent = Intent(this , NewAdditionActivity::class.java)
-            startActivity(intent)
-        }
-
-
     }
     /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
     override fun onResume() {
         super.onResume()
 
         // リストの再表示
-        //setSongs()
+        setSongs()
     }
 
 
@@ -73,10 +65,10 @@ class ListActivity : AppCompatActivity() {
         }
         val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
         Log.d("array", arrayAdapter.toString())
-        MainListView.adapter = arrayAdapter
+        SongsListView.adapter = arrayAdapter
 
-        /*// 各項目をタップしたときの処理
-        MainListView.setOnItemClickListener{parent, _, position, _ ->
+        // 各項目をタップしたときの処理
+        SongsListView.setOnItemClickListener{parent, _, position, _ ->
             val listView = parent as ListView
             val item = listView.getItemAtPosition(position) as Item    // タップした項目の要素名を取得
 
@@ -84,10 +76,16 @@ class ListActivity : AppCompatActivity() {
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("TapID", item.id)
             startActivity(intent)
-        }*/
+        }
+        // フローティングアクションボタン
+        list_fab.setOnClickListener{ _ ->
+            val intent = Intent(this , SongAddActivity::class.java)
+            intent.putExtra("ListId", tapid)
+            startActivity(intent)
+        }
 
         // 長押しで削除する
-        MainListView.setOnItemLongClickListener{_, _, position, _ ->
+        SongsListView.setOnItemLongClickListener{_, _, position, _ ->
             val listView = parent as ListView
             val item = listView.getItemAtPosition(position) as Item
             // アラートの表示
@@ -109,7 +107,7 @@ class ListActivity : AppCompatActivity() {
                     //
                     arrayAdapter.remove(arrayAdapter.getItem(position))
                     arrayAdapter.notifyDataSetChanged()
-                    MainListView.invalidateViews()
+                    SongsListView.invalidateViews()
                 })
                 setNegativeButton("Cancel", null)
                 show()

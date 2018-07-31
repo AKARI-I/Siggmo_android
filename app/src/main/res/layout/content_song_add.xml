@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:layout_marginTop="56dp"
     android:orientation="vertical"
-    tools:context="com.example.iakari.siggmo_android.ListActivity">
+    tools:context="com.example.iakari.siggmo_android.SongAddActivity">
 
     <ListView
-        android:id="@+id/SongsListView"
+        android:id="@+id/SongsAddListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:baselineAligned="false"
+        android:choiceMode="multipleChoice"
         tools:ignore="InvalidId" />
-
 </LinearLayout>
