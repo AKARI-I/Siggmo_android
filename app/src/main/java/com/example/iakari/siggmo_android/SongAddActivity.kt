@@ -66,6 +66,7 @@ class SongAddActivity : AppCompatActivity() {
 
         // フローティングアクションボタン
         song_add_fab.setOnClickListener{ _ ->
+            // 歌のリスト追加機能
             val check = SongsAddListView.checkedItemPositions
             val cnt = SongsAddListView.count
             for (i in 0 until cnt){
