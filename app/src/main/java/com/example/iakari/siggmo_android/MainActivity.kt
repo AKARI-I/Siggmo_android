@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import android.widget.EditText
 import java.util.*
 import android.text.SpannableStringBuilder
+import kotlinx.android.synthetic.main.activity_list.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -71,6 +72,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun setList(){
         // データベースの値をすべて取り出す
         val getData = read()
+        Log.d("DBdata", getData.toString())
         // 全データをdataListに取り出す
         val dataList: MutableList<Item>
         dataList = mutableListOf()
