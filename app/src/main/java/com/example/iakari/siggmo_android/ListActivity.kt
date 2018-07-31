@@ -5,19 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.text.SpannableStringBuilder
 import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.ListView
-import com.example.iakari.siggmo_android.*
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.content_list.*
-import kotlinx.android.synthetic.main.content_main.*
-import java.util.*
 
 class ListActivity : AppCompatActivity() {
     lateinit var mRealm: Realm
