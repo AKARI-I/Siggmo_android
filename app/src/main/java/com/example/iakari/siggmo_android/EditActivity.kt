@@ -8,6 +8,7 @@ import android.widget.Button
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.activity_edit.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 
 
 class EditActivity : AppCompatActivity() {
@@ -16,8 +17,10 @@ class EditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
+        setSupportActionBar(toolbar)
 
- //       val editText = findViewById<EditText>(android.R.id.music_name_edit)
+
+        //       val editText = findViewById<EditText>(android.R.id.music_name_edit)
  //       val edit = m_name_edit.text.toString()
  //       m_name_edit.setText("==========")
 
