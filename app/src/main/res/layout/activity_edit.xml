@@ -149,13 +149,21 @@
                 android:ems="10"
                 android:inputType="textMultiLine|textPersonName"
                 android:text="@string/free_memo" />
-
-            <Button
-                android:id="@+id/editbutton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/dbup" />
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/editbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/darker_gray"
+        android:text="@string/dbup"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="16dp"
+        />
 
 </android.support.constraint.ConstraintLayout>
