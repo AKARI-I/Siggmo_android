@@ -29,6 +29,6 @@
     <string name="score">採点結果</string>
     <string name="free_memo">自由記入欄</string>
     <string name="edit">編集</string>
-    <string name="dbup">確定</string>
+    <string name="dbup">保存</string>
     <string name="no_data">情報なし</string>
 </resources>

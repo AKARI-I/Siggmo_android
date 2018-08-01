@@ -18,20 +18,18 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        Log.d("activity", "start DetailActivity")
+        Log.d("TAG", "start DetailActivity")
 
         /*-------------------- Realm --------------------*/
-        Log.d("TAG", "Realmセットアップ開始(DetailActivity)")
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build()
         mRealm = Realm.getInstance(realmConfig)
-        Log.d("TAG", "Realmセットアップ終了(DetailActivity)")
 
         // 受け取ったIDをTextViewで表示
         val tapid = intent.getStringExtra("TapID")
-        // idで検索をかけて、その曲の情報がrecordに入る(はず)
+        // idから曲の情報を取得
         val record = quaryById(tapid)
 
         // レコードが返されたら曲名を表示
@@ -45,6 +43,7 @@ class DetailActivity : AppCompatActivity() {
             movie_link.text = record.movie_link
             score.text = record.score.toString()
             free_memo.text = record.free_memo
+            debugText.text = record.score_id
         }
 
         /*------------------- Button --------------------*/
@@ -57,7 +56,7 @@ class DetailActivity : AppCompatActivity() {
             //新しくアクティビティを開く
             startActivity(intent)
         }
-        Log.d("activity", "finish DetailActivity")
+        Log.d("TAG", "finish DetailActivity")
     }
 
     // 標準Backkeyの遷移先変更
@@ -73,6 +72,7 @@ class DetailActivity : AppCompatActivity() {
     // 渡されたidからデータベースを検索して曲の情報を返す
     // select * from SiggmoDB where id = idと同じ意味
     fun quaryById(id: String): SiggmoDB? {
+        Log.d("TAG", "quaryById(DetailActivity)")
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("id", id)
                 .findFirst()

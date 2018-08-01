@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        Log.d("activity", "start MainActivity")
+        Log.d("TAG", "start MainActivity")
 
         /*-------------------- 新規登録画面 --------------------*/
         // 新規登録画面に遷移
@@ -46,15 +46,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         /*-------------------- Realm --------------------*/
         // Realmのセットアップ
-        Log.d("TAG", "Realmセットアップ開始")
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build()
         mRealm = Realm.getInstance(realmConfig)
-        Log.d("TAG", "Realmセットアップ終了")
 
-        Log.d("activity", "finish DetailActivity")
+        Log.d("TAG", "finish DetailActivity")
     }
 
     /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
@@ -68,7 +66,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun setList(){
         // データベースの値をすべて取り出す
         val getData = read()
-        Log.d("DBdata", getData.toString())
         // 全データをdataListに取り出す
         val dataList: MutableList<Item>
         dataList = mutableListOf()
@@ -188,7 +185,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun read() : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
-
 
     // 表示する項目名とidをペアにして扱うためのクラス
     private inner class Item(val id: String, val name: String){

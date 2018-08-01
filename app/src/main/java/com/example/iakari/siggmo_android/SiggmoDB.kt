@@ -29,7 +29,6 @@ open class SiggmoDB (
         open var score_id       : String = ""   // 採点結果照合用のID
 ) : RealmObject(){}
 
-
 // openをとると継承ができなくなるらしい
 open class ListDB (
         @PrimaryKey open var list_id : String = UUID.randomUUID().toString(),
