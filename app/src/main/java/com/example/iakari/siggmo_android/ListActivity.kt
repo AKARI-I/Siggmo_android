@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.KeyEvent
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import io.realm.Realm
@@ -42,7 +43,15 @@ class ListActivity : AppCompatActivity() {
         // リストの再表示
         setSongs()
     }
-
+    // 標準Backkeyの遷移先変更
+    override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
+        if(keyCode== KeyEvent.KEYCODE_BACK) {
+            val intent: Intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+            return true
+        }
+        return false
+    }
 
     fun setSongs(){
 
@@ -80,7 +89,7 @@ class ListActivity : AppCompatActivity() {
         }
 
         // 長押しで削除する
-        SongsListView.setOnItemLongClickListener{_, _, position, _ ->
+        SongsListView.setOnItemLongClickListener{parent, _, position, _ ->
             val listView = parent as ListView
             val item = listView.getItemAtPosition(position) as Item
             // アラートの表示
@@ -90,14 +99,12 @@ class ListActivity : AppCompatActivity() {
                 setPositiveButton("Yes", DialogInterface.OnClickListener{_, _ ->
                     Log.d("TAG", "YES!!")
                     // クエリを発行し結果を取得
-                    val results: RealmResults<SiggmoDB> = mRealm.where(SiggmoDB::class.java)
-                            .equalTo("id", item.id)
-                            .findAll()
-                    mRealm.executeTransaction(Realm.Transaction {
-                        Log.d("TAG", "in realm delete process")
-                        results.deleteFromRealm(0)
-                        results.deleteLastFromRealm()
-                    })
+                    val record = quaryById(item.id)
+                    mRealm.executeTransaction {
+                        if (record != null) {
+                            record.list_id = ""
+                        }
+                    }
 
                     //
                     arrayAdapter.remove(arrayAdapter.getItem(position))
@@ -118,7 +125,11 @@ class ListActivity : AppCompatActivity() {
             return name
         }
     }
-
+    fun quaryById(id: String): SiggmoDB? {
+        return mRealm.where(SiggmoDB::class.java)
+                .equalTo("id", id)
+                .findFirst()
+    }
     // データベースから "全ての" データを取り出す
     fun read(id: String) : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java)

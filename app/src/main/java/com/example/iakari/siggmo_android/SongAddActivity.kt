@@ -59,7 +59,7 @@ class SongAddActivity : AppCompatActivity() {
 
         // 曲名をリスト表示
         getData.forEach{
-            dataList.add(Item(it.id, it.music_name))
+            dataList.add(Item(it.id, it.music_name, it.list_id))
         }
         val arrayAdapter = ArrayAdapter<SongAddActivity.Item>(this,  android.R.layout.simple_list_item_multiple_choice, dataList)
         SongsAddListView.adapter = arrayAdapter
@@ -67,7 +67,7 @@ class SongAddActivity : AppCompatActivity() {
         // フローティングアクションボタン
         song_add_fab.setOnClickListener{ _ ->
             // 歌のリスト追加機能
-            val check = SongsAddListView.checkedItemPositions
+            val check = SongsAddListView.checkedItemPositions // チェックされているアイテムのポジションを
             val cnt = SongsAddListView.count
             for (i in 0 until cnt){
                 if (check.get(i)){
@@ -78,13 +78,23 @@ class SongAddActivity : AppCompatActivity() {
                             record.list_id = listid
                         }
                     }
+                }else{
+                    val item = SongsAddListView.getItemAtPosition(i) as Item
+                    val record = quaryById(item.id)
+                    mRealm.executeTransaction{
+                        if (record != null) {
+                            record.list_id = ""
+                        }
+                    }
                 }
             }
+            // リスト一覧に戻る
             val intent = Intent(this , ListActivity::class.java)
             intent.putExtra("TapID", listid)
             startActivity(intent)
         }
-
+    }
+    fun toCheck() {
 
     }
     // データベースから "全ての" データを取り出す
@@ -96,11 +106,18 @@ class SongAddActivity : AppCompatActivity() {
                 .equalTo("id", id)
                 .findFirst()
     }
+    // SiggmoDBからlist_idが一致したレコードだけ取り出す
+    fun quaryByListId(listId: String) : RealmResults<SiggmoDB> {
+        return mRealm.where(SiggmoDB::class.java)
+                .equalTo("list_id", listId)
+                .findAll()
+    }
 
     // 表示する項目名とidをペアにして扱うためのクラス
-    private inner class Item(val id: String, val name: String){
+    private inner class Item(val id: String, val name: String, val list_id: String){
         override fun toString(): String{
             return name
         }
+
     }
 }
