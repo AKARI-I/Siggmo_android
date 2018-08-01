@@ -63,12 +63,21 @@ class SongAddActivity : AppCompatActivity() {
         }
         val arrayAdapter = ArrayAdapter<SongAddActivity.Item>(this,  android.R.layout.simple_list_item_multiple_choice, dataList)
         SongsAddListView.adapter = arrayAdapter
+        val cnt = SongsAddListView.count // リストの中の曲の数
+
+        // リスト追加済みの曲をチェックする
+        for (i in 0 until cnt){
+            val item = SongsAddListView.getItemAtPosition(i) as Item
+            if(item.list_id == listid){
+                SongsAddListView.setItemChecked(i,true)
+            }
+        }
 
         // フローティングアクションボタン
         song_add_fab.setOnClickListener{ _ ->
             // 歌のリスト追加機能
+
             val check = SongsAddListView.checkedItemPositions // チェックされているアイテムのポジションを
-            val cnt = SongsAddListView.count
             for (i in 0 until cnt){
                 if (check.get(i)){
                     val item = SongsAddListView.getItemAtPosition(i) as Item
@@ -94,9 +103,7 @@ class SongAddActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-    fun toCheck() {
 
-    }
     // データベースから "全ての" データを取り出す
     fun read() : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
