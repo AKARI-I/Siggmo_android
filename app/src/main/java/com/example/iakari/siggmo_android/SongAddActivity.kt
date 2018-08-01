@@ -48,7 +48,7 @@ class SongAddActivity : AppCompatActivity() {
         // タイトルの表示
         val getListData = quaryByListId(listid)
         if (getListData != null) {
-            setTitle(getListData.list_name + "に曲追加")
+            title = getListData.list_name + "に曲追加"
         }
         // リストの再表示
         setSongs(listid)
@@ -77,10 +77,8 @@ class SongAddActivity : AppCompatActivity() {
             }
         }
 
-        // フローティングアクションボタン
-        song_add_fab.setOnClickListener{ _ ->
+        updatebutton.setOnClickListener{_ ->
             // 歌のリスト追加機能
-
             val check = SongsAddListView.checkedItemPositions // チェックされているアイテムのポジションを
             for (i in 0 until cnt){
                 if (check.get(i)){
