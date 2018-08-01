@@ -1,8 +1,8 @@
 package com.example.iakari.siggmo_android
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import io.realm.Realm
@@ -32,8 +32,9 @@ class EditActivity : AppCompatActivity() {
 
         val tapid = intent.getStringExtra("TapID")
         val record = quaryById(tapid)
+        val s_record = quaryByScore(record!!.score_id)
 
-        if (record != null) {
+        if (record != null && s_record != null) {
             m_name_edit.setText(record.music_name)
             m_phone.setText(record.music_phonetic)
             s_name.setText(record.singer_name)
@@ -41,7 +42,7 @@ class EditActivity : AppCompatActivity() {
             f_line.setText(record.first_line)
             p_key.setText(record.proper_key)
             m_link.setText(record.movie_link)
-            s_edit.setText(record.score.toString())
+            s_edit.setText(s_record.score.toString())
             f_memo.setText(record.free_memo)
 
         }
@@ -57,23 +58,21 @@ class EditActivity : AppCompatActivity() {
                     m_link.text.toString(),
                     s_edit.text.toString(),
                     f_memo.text.toString())
-            update(record, sgm)
+            update(record, s_record, sgm)
             //DetailActivityにもどる
             val intent: Intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("TapID",tapid)
             startActivity(intent)
         }
-
-
     }
 
         //id(tapid),record,曲名を渡す
-    fun update(record: SiggmoDB?, sgm: Array<String>){
+    fun update(record: SiggmoDB?, s_record: ScoreResultDB?, sgm: Array<String>){
         mRealm.executeTransaction{
             //sgm配列に項目を入れて曲名から順番にDB(record)の中身と一緒かどうかを調べる
             //今は項目一つしか入れてないのでループとかはせず曲名だけ見てる
             val list = listOf(record)
-            if (record != null) {
+            if (record != null && s_record != null) {
                 for (item in list) {
                     //ループと条件分岐が難しそうなので一気に全部更新
                     record.music_name = sgm[0]
@@ -83,12 +82,11 @@ class EditActivity : AppCompatActivity() {
                     record.first_line = sgm[4]
                     record.proper_key = sgm[5]
                     record.movie_link = sgm[6]
-                    record.score = sgm[7].toFloat()
+                    s_record.score = sgm[7].toFloat()
                     record.free_memo = sgm[8]
                 }
             }
         }
-
     }
 
 
@@ -99,5 +97,11 @@ class EditActivity : AppCompatActivity() {
                 .findFirst()
     }
 
-
+    // scoreを参照する
+    fun quaryByScore(s_id: String): ScoreResultDB? {
+        Log.d("TAG", "quaryByScore(DetailActivity)")
+        return mRealm.where(ScoreResultDB::class.java)
+                .equalTo("score_id", s_id)
+                .findFirst()
+    }
 }
