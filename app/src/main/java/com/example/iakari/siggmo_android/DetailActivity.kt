@@ -21,17 +21,15 @@ class DetailActivity : AppCompatActivity() {
         Log.d("activity", "start DetailActivity")
 
         /*-------------------- Realm --------------------*/
-        Log.d("TAG", "Realmセットアップ開始(DetailActivity)")
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build()
         mRealm = Realm.getInstance(realmConfig)
-        Log.d("TAG", "Realmセットアップ終了(DetailActivity)")
 
         // 受け取ったIDをTextViewで表示
         val tapid = intent.getStringExtra("TapID")
-        // idで検索をかけて、その曲の情報がrecordに入る(はず)
+        // idから曲の情報を取得
         val record = quaryById(tapid)
 
         // レコードが返されたら曲名を表示
@@ -45,6 +43,7 @@ class DetailActivity : AppCompatActivity() {
             movie_link.text = record.movie_link
             score.text = record.score.toString()
             free_memo.text = record.free_memo
+            debugText.text = record.score_id
         }
 
         /*------------------- Button --------------------*/

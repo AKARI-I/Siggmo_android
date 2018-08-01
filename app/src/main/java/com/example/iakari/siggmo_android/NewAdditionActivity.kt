@@ -36,13 +36,11 @@ class NewAdditionActivity : AppCompatActivity() {
 
         /*-------------------- Realm --------------------*/
         // Realmのセットアップ
-        Log.d("TAG", "Realmセットアップ開始(NewAdditionActivity)")
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build()
         mRealm = Realm.getInstance(realmConfig)
-        Log.d("TAG", "Realmセットアップ終了(NewAdditionActivity)")
 
         /* 保存ボタンがクリックされたらレコードを追加する */
         // ※ここではテスト用データを事前に宣言してレコードを作成
@@ -74,14 +72,14 @@ class NewAdditionActivity : AppCompatActivity() {
 
             // データ作成
             create(musicInfo_s["mn"].toString(),
-                    musicInfo_s["mp"].toString(),
-                    musicInfo_s["sn"].toString(),
-                    musicInfo_s["sp"].toString(),
-                    musicInfo_s["fl"].toString(),
-                    musicInfo_i["pk"] as Int,
-                    musicInfo_s["ml"].toString(),
-                    musicInfo_f["sc"] as Float,
-                    musicInfo_s["fm"].toString())
+                   musicInfo_s["mp"].toString(),
+                   musicInfo_s["sn"].toString(),
+                   musicInfo_s["sp"].toString(),
+                   musicInfo_s["fl"].toString(),
+                   musicInfo_i["pk"] as Int,
+                   musicInfo_s["ml"].toString(),
+                   musicInfo_f["sc"] as Float,
+                   musicInfo_s["fm"].toString())
             finish()    // メイン画面に戻る
         } else {
             // 曲名の入力がなかった場合
@@ -110,8 +108,10 @@ class NewAdditionActivity : AppCompatActivity() {
             siggmoDB.score           = Score
             scoreResultDB.score2     = Score
             siggmoDB.free_memo       = fMemo
+
+            // データベースに追加
             mRealm.copyToRealm(siggmoDB)
-            //mRealm.copyToRealm(scoreResultDB)
+            mRealm.copyToRealm(scoreResultDB)
         }
         Log.d("TAG", "finish create method")
 
