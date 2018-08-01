@@ -154,7 +154,8 @@
                 android:id="@+id/editbutton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/dbup" />
+                android:text="@string/dbup"
+                android:background="@color/colorPrimary"/>
         </LinearLayout>
     </ScrollView>
 

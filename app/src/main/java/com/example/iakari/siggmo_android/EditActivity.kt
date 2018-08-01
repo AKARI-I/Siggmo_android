@@ -9,7 +9,6 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.activity_edit.*
 
-
 class EditActivity : AppCompatActivity() {
     lateinit var mRealm: Realm
 
@@ -17,7 +16,8 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
- //       val editText = findViewById<EditText>(android.R.id.music_name_edit)
+
+        //       val editText = findViewById<EditText>(android.R.id.music_name_edit)
  //       val edit = m_name_edit.text.toString()
  //       m_name_edit.setText("==========")
 
