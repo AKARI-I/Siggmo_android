@@ -1,6 +1,5 @@
 package com.example.iakari.siggmo_android
 
-import android.app.ListActivity
 import android.content.Intent
 import android.content.DialogInterface
 import android.os.Bundle
