@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.util.SparseBooleanArray
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import io.realm.Realm
@@ -43,13 +42,18 @@ class SongAddActivity : AppCompatActivity() {
     /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
     override fun onResume() {
         super.onResume()
-
-        // リストの再表示
-        setSongs()
-    }
-    fun setSongs(){
         // ListActivityから送ってきたlist_id
         val listid = intent.getStringExtra("ListId")
+
+        // タイトルの表示
+        val getListData = quaryByListId(listid)
+        if (getListData != null) {
+            setTitle(getListData.list_name + "に曲追加")
+        }
+        // リストの再表示
+        setSongs(listid)
+    }
+    fun setSongs(listid: String){
         // データベースの値をすべて取り出す
         val getData = read()
         Log.d("DBdata", getData.toString())
@@ -114,10 +118,10 @@ class SongAddActivity : AppCompatActivity() {
                 .findFirst()
     }
     // SiggmoDBからlist_idが一致したレコードだけ取り出す
-    fun quaryByListId(listId: String) : RealmResults<SiggmoDB> {
-        return mRealm.where(SiggmoDB::class.java)
+    fun quaryByListId(listId: String) : ListDB? {
+        return mRealm.where(ListDB::class.java)
                 .equalTo("list_id", listId)
-                .findAll()
+                .findFirst()
     }
 
     // 表示する項目名とidをペアにして扱うためのクラス
