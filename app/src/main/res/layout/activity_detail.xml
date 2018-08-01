@@ -19,12 +19,6 @@
             android:layout_width="wrap_content"
             android:layout_height="408dp"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/debug"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="debug" />
 
             <TextView
                 android:id="@+id/textView1"
@@ -95,13 +89,6 @@
             android:layout_height="408dp"
             android:layout_marginLeft="10dp"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/debugText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="debug text" />
 
             <TextView
                 android:id="@+id/music_name"
