@@ -95,16 +95,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/proper_key" />
-            <EditText
-                android:id="@+id/edit_proper_key"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberSigned"
-                android:maxLength="1"
-                android:maxLines="1" />
 
             <!-- 動画のリンク -->
+            <EditText
+                android:id="@+id/edit_proper_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
             <TextView
                 android:id="@+id/item_movie_link"
                 android:layout_width="match_parent"

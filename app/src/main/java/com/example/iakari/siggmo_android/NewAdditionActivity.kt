@@ -11,6 +11,7 @@ import java.util.*
 
 class NewAdditionActivity : AppCompatActivity() {
     lateinit var mRealm: Realm
+//    private val spinnerItems = arrayOf("７","６","５","４","３","２","１","０","-１","-２","-３","-４","-５","-６","-７")
 
     // String型データ用　入力値がない場合ここに設定したデフォルト値が入る
     // mutableMapOf：書き込み可能なコレクションを生成する(mapOfは読み取り専用)
@@ -20,10 +21,11 @@ class NewAdditionActivity : AppCompatActivity() {
             "sn" to "歌手名",         // 歌手名
             "sp" to "よみがな(歌手名)",// よみがな(歌手名)
             "fl" to "歌いだし",       // 歌い出し
+            "pk" to "適正キー",         // 適正キー
             "ml" to "動画のリンク",    // 動画のリンク
             "fm" to "自由記入欄")     // 自由記入欄
     // Int型データ用(適正キー)
-    val musicInfo_i: MutableMap<String, Int> = mutableMapOf("pk" to 10)
+//    val musicInfo_i: MutableMap<String, Int> = mutableMapOf("pk" to 10)
     // Float型データ用(採点結果)
     val musicInfo_f: MutableMap<String, Float> = mutableMapOf("sc" to 999F)
     var insertFlg = false
@@ -44,6 +46,30 @@ class NewAdditionActivity : AppCompatActivity() {
         mRealm = Realm.getInstance(realmConfig)
         Log.d("TAG", "Realmセットアップ終了(NewAdditionActivity)")
 
+/*        /*-----------------ArrayAdapter------------------*/
+        val adapter = ArrayAdapter(applicationContext,android.R.layout.simple_spinner_item,spinnerItems)
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        // spinner に adapter をセット
+        edit_proper_key.adapter = adapter
+
+        // リスナー登録
+        edit_proper_key.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            //アイテム選択時
+            override fun onItemSelected(parent: AdapterView<*>?,
+                                        view: View?,
+                                        position: Int,
+                                        id: Long){
+                val spinnerParent = parent as Spinner
+                musicInfo_i["pk"] = spinnerParent.selectedItem.toString()
+            }
+            //アイテム非選択時
+            override fun onNothingSelected(parent: AdapterView<*>?){
+
+            }
+        }
+*/
         /* 保存ボタンがクリックされたらレコードを追加する */
         // ※ここではテスト用データを事前に宣言してレコードを作成
         saveButon.setOnClickListener {
@@ -66,7 +92,7 @@ class NewAdditionActivity : AppCompatActivity() {
         if(!isEmpty(edit_singer_name.text)){ musicInfo_s["sn"] = edit_singer_name.text.toString() }
         if(!isEmpty(edit_singer_phonetic.text)){ musicInfo_s["sp"] = edit_singer_phonetic.text.toString() }
         if(!isEmpty(edit_first_line.text)){ musicInfo_s["fl"] = edit_first_line.text.toString() }
-        if(!isEmpty(edit_proper_key.text)){musicInfo_i["pk"] = edit_proper_key.text.toString().toInt()}
+        if(!isEmpty(edit_proper_key.text)){musicInfo_s["pk"] = edit_proper_key.text.toString()}
         if(!isEmpty(edit_movie_link.text)){ musicInfo_s["ml"] = edit_movie_link.text.toString() }
         if(!isEmpty(edit_score.text)){ musicInfo_f["sc"] = edit_score.text.toString().toFloat() }
         if(!isEmpty(edit_free_memo.text)){ musicInfo_s["fm"] = edit_free_memo.text.toString() }
@@ -82,7 +108,7 @@ class NewAdditionActivity : AppCompatActivity() {
                    musicInfo_s["sn"].toString(),
                    musicInfo_s["sp"].toString(),
                    musicInfo_s["fl"].toString(),
-                   musicInfo_i["pk"] as Int,
+                   musicInfo_s["pk"].toString(),
                    musicInfo_s["ml"].toString(),
                    musicInfo_f["sc"] as Float,
                    musicInfo_s["fm"].toString())
@@ -92,7 +118,7 @@ class NewAdditionActivity : AppCompatActivity() {
 
     // データベースにレコードを追加する
     fun create(mName:String, mPhonetic:String, sName:String, sPhonetic:String,
-               fLine:String, pKey:Int, mLink:String, Score:Float, fMemo:String){
+               fLine:String, pKey:String, mLink:String, Score:Float, fMemo:String){
         Log.d("TAG", "start create method")
         mRealm.executeTransaction{
             // ランダムなidを設定

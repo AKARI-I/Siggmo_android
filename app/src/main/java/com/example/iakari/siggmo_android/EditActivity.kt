@@ -39,7 +39,7 @@ class EditActivity : AppCompatActivity() {
             s_name.setText(record.singer_name)
             s_phone.setText(record.singer_phonetic)
             f_line.setText(record.first_line)
-            p_key.setText(record.proper_key.toString())
+            p_key.setText(record.proper_key)
             m_link.setText(record.movie_link)
             s_edit.setText(record.score.toString())
             f_memo.setText(record.free_memo)
@@ -81,7 +81,7 @@ class EditActivity : AppCompatActivity() {
                     record.singer_name = sgm[2]
                     record.singer_phonetic = sgm[3]
                     record.first_line = sgm[4]
-                    record.proper_key = sgm[5].toInt()
+                    record.proper_key = sgm[5]
                     record.movie_link = sgm[6]
                     record.score = sgm[7].toFloat()
                     record.free_memo = sgm[8]
