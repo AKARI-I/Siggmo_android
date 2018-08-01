@@ -32,7 +32,7 @@ class NewAdditionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_addition)
 
-        Log.d("activity", "start NewAdditionActivity")
+        Log.d("TAG", "start NewAdditionActivity")
 
         /*-------------------- Realm --------------------*/
         // Realmのセットアップ
@@ -51,7 +51,7 @@ class NewAdditionActivity : AppCompatActivity() {
             }
         }
 
-        Log.d("activity", "finish NewAdditionActivity")
+        Log.d("TAG", "finish NewAdditionActivity")
 
     }
 
@@ -83,7 +83,6 @@ class NewAdditionActivity : AppCompatActivity() {
             finish()    // メイン画面に戻る
         } else {
             // 曲名の入力がなかった場合
-            Log.d("TAG", "edit_music_name is empty")
             edit_music_name.error = "曲名を入力してください"
         }
     }
@@ -91,7 +90,7 @@ class NewAdditionActivity : AppCompatActivity() {
     // データベースにレコードを追加する
     fun create(mName:String, mPhonetic:String, sName:String, sPhonetic:String,
                fLine:String, pKey:Int, mLink:String, Score:Float, fMemo:String){
-        Log.d("TAG", "start create method")
+        Log.d("TAG", "start create method(NewAdditionActivity)")
         mRealm.executeTransaction{
             // ランダムなidを設定
             val siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
@@ -112,8 +111,14 @@ class NewAdditionActivity : AppCompatActivity() {
             // データベースに追加
             mRealm.copyToRealm(siggmoDB)
             mRealm.copyToRealm(scoreResultDB)
+
+            // scoreResultDB.score_id -> siggmoDB.score_id
+            siggmoDB.score_id = scoreResultDB.score_id
+
+            Log.d("TAG", "siggmoDB.score_id = ${siggmoDB.score_id}(NewAddition)")
+            Log.d("TAG", "scoreResultDB.score_id = ${scoreResultDB.score_id}(NewAddition)")
         }
-        Log.d("TAG", "finish create method")
+        Log.d("TAG", "finish create method(NewAdditionActivity)")
 
     }
 }

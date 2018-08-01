@@ -18,7 +18,7 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        Log.d("activity", "start DetailActivity")
+        Log.d("TAG", "start DetailActivity")
 
         /*-------------------- Realm --------------------*/
         Realm.init(this)
@@ -56,7 +56,7 @@ class DetailActivity : AppCompatActivity() {
             //新しくアクティビティを開く
             startActivity(intent)
         }
-        Log.d("activity", "finish DetailActivity")
+        Log.d("TAG", "finish DetailActivity")
     }
 
     // 標準Backkeyの遷移先変更
@@ -72,6 +72,7 @@ class DetailActivity : AppCompatActivity() {
     // 渡されたidからデータベースを検索して曲の情報を返す
     // select * from SiggmoDB where id = idと同じ意味
     fun quaryById(id: String): SiggmoDB? {
+        Log.d("TAG", "quaryById(DetailActivity)")
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("id", id)
                 .findFirst()
