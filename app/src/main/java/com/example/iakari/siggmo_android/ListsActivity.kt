@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.SpannableStringBuilder
 import android.util.Log
+import android.view.Window
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
@@ -23,6 +24,7 @@ class ListsActivity : AppCompatActivity() {
     /* ここでActivityが初めて生成される。初期化は全てここに書く。 */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.requestFeature(Window.FEATURE_ACTION_BAR)
         setContentView(R.layout.activity_lists)
 
         /*-------------------- Realm --------------------*/
@@ -84,13 +86,13 @@ class ListsActivity : AppCompatActivity() {
             dialog.setView(editView)
 
             // OKボタンの設定
-            dialog.setPositiveButton("OK") { dialog, whichButton ->
+            dialog.setPositiveButton("OK") { _, _ ->
                 // OKボタンをタップした時の処理をここに記述
                 if(editView.isEnabled) {
                     mRealm.executeTransaction {
                         // ListDBをlist_idをランダムで作成
                         var listDB = mRealm.createObject(ListDB::class.java, UUID.randomUUID().toString())
-                        val sb = editView.getText() as SpannableStringBuilder
+                        val sb = editView.text as SpannableStringBuilder
                         // Listの名前をListDB.list_nameに保存
                         listDB.list_name = sb.toString()
                     }
@@ -99,7 +101,7 @@ class ListsActivity : AppCompatActivity() {
             }
 
             // キャンセルボタンの設定
-            dialog.setNegativeButton("キャンセル") { dialog, whichButton ->
+            dialog.setNegativeButton("キャンセル") { _, _ ->
                 // キャンセルボタンをタップした時の処理をここに記述
             }
 
