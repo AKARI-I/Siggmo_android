@@ -35,13 +35,20 @@ class ListActivity : AppCompatActivity() {
 
         Log.d("activity", "finish DetailActivity")
 
+
     }
     /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
     override fun onResume() {
         super.onResume()
+        val tapid = intent.getStringExtra("TapID")
 
+        // タイトルの表示
+        val getListData = quaryByListId(tapid)
+        if (getListData != null) {
+            setTitle(getListData.list_name)
+        }
         // リストの再表示
-        setSongs()
+        setSongs(tapid)
     }
     // 標準Backkeyの遷移先変更
     override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
@@ -53,10 +60,7 @@ class ListActivity : AppCompatActivity() {
         return false
     }
 
-    fun setSongs(){
-
-        val tapid = intent.getStringExtra("TapID")
-        Log.d("DBdata", tapid)
+    fun setSongs(tapid: String){
         // データベースの値をすべて取り出す
         val getData = read(tapid)
         // 全データをdataListに取り出す
@@ -135,5 +139,10 @@ class ListActivity : AppCompatActivity() {
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("list_id", id)
                 .findAll()
+    }
+    fun quaryByListId(id: String) : ListDB? {
+        return mRealm.where(ListDB::class.java)
+                .equalTo("list_id", id)
+                .findFirst()
     }
 }

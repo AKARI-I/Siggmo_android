@@ -30,8 +30,9 @@
         <activity android:name=".EditActivity" />
         <activity android:name=".DetailActivity" />
         <activity android:name=".NewAdditionActivity"/>
-        <activity android:name=".ListsActivity"/>
-        <activity android:name=".ListActivity"/>
+        <activity android:name=".ListsActivity"
+            android:label="リスト一覧"/>
+        <activity android:name=".ListActivity" />
         <activity android:name=".SongAddActivity"/>
     </application>
 
