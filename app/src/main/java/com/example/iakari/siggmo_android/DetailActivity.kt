@@ -31,9 +31,10 @@ class DetailActivity : AppCompatActivity() {
         val tapid = intent.getStringExtra("TapID")
         // idから曲の情報を取得
         val record = quaryById(tapid)
+        val s_record = quaryByScore(record!!.score_id)
 
         // レコードが返されたら曲名を表示
-        if (record != null) {
+        if (record != null && s_record != null) {
             music_name.text = record.music_name
             music_phonetic.text = record.music_phonetic
             singer_name.text = record.singer_name
@@ -41,7 +42,7 @@ class DetailActivity : AppCompatActivity() {
             first_line.text = record.first_line
             proper_key.text = record.proper_key.toString()
             movie_link.text = record.movie_link
-            score.text = record.score.toString()
+            score.text = s_record.score.toString()
             free_memo.text = record.free_memo
         }
 
@@ -74,6 +75,14 @@ class DetailActivity : AppCompatActivity() {
         Log.d("TAG", "quaryById(DetailActivity)")
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("id", id)
+                .findFirst()
+    }
+
+    // scoreを参照する
+    fun quaryByScore(s_id: String): ScoreResultDB? {
+        Log.d("TAG", "quaryByScore(DetailActivity)")
+        return mRealm.where(ScoreResultDB::class.java)
+                .equalTo("score_id", s_id)
                 .findFirst()
     }
 }

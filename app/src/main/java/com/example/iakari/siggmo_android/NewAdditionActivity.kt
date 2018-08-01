@@ -132,8 +132,8 @@ class NewAdditionActivity : AppCompatActivity() {
             siggmoDB.first_line      = fLine
             siggmoDB.proper_key      = pKey
             siggmoDB.movie_link      = mLink
-            siggmoDB.score           = Score
-            scoreResultDB.score2     = Score
+            //siggmoDB.score           = Score
+            scoreResultDB.score     = Score
             siggmoDB.free_memo       = fMemo
 
             // データベースに追加
