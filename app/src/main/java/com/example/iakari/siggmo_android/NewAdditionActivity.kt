@@ -84,7 +84,6 @@ class NewAdditionActivity : AppCompatActivity() {
     // 保存ボタンが押されたらinsert処理をしてメイン画面に戻る
     // 数値は一度String型に変換してから元の型に戻す必要があるみたい(参考：https://appcoding.net/string-to-int-kotlin/)
     fun save(){
-<<<<<<< HEAD
         // 入力値を取得
         if(!isEmpty(edit_music_name.text)){ musicInfo_s["mn"] = edit_music_name.text.toString() }
         if(!isEmpty(edit_music_phonetic.text)){ musicInfo_s["mp"] = edit_music_phonetic.text.toString() }
@@ -96,27 +95,8 @@ class NewAdditionActivity : AppCompatActivity() {
         if(!isEmpty(edit_score.text)){ musicInfo_f["sc"] = edit_score.text.toString().toFloat() }
         if(!isEmpty(edit_free_memo.text)){ musicInfo_s["fm"] = edit_free_memo.text.toString() }
 
-        if(isEmpty(edit_music_name.text)){
-            // 曲名の入力がなかった場合
-            Log.d("TAG", "edit_music_name is empty")
-            edit_music_name.error = "曲名を入力してください"
-        } else {
-            // 曲名の入力があった場合
-=======
         if(!isEmpty(edit_music_name.text)){
-            // 入力値の取得
-            musicInfo_s["mn"] = edit_music_name.text.toString()
-            if(!isEmpty(edit_music_phonetic.text)) { musicInfo_s["mp"] = edit_music_phonetic.text.toString() }
-            if(!isEmpty(edit_singer_name.text))    { musicInfo_s["sn"] = edit_singer_name.text.toString() }
-            if(!isEmpty(edit_singer_phonetic.text)){ musicInfo_s["sp"] = edit_singer_phonetic.text.toString() }
-            if(!isEmpty(edit_first_line.text))     { musicInfo_s["fl"] = edit_first_line.text.toString() }
-            if(!isEmpty(edit_proper_key.text))     { musicInfo_i["pk"] = edit_proper_key.text.toString().toInt()}
-            if(!isEmpty(edit_movie_link.text))     { musicInfo_s["ml"] = edit_movie_link.text.toString() }
-            if(!isEmpty(edit_score.text))          { musicInfo_f["sc"] = edit_score.text.toString().toFloat() }
-            if(!isEmpty(edit_free_memo.text))      { musicInfo_s["fm"] = edit_free_memo.text.toString() }
-
-            // データ作成
->>>>>>> AddDatabaseColum
+            // 曲名の入力があった場合
             create(musicInfo_s["mn"].toString(),
                    musicInfo_s["mp"].toString(),
                    musicInfo_s["sn"].toString(),
@@ -136,7 +116,7 @@ class NewAdditionActivity : AppCompatActivity() {
     // データベースにレコードを追加する
     fun create(mName:String, mPhonetic:String, sName:String, sPhonetic:String,
 
-               fLine:String, pKey:Int, mLink:String, Score:Float, fMemo:String){
+               fLine:String, pKey: String, mLink:String, Score:Float, fMemo:String){
         Log.d("TAG", "start create method(NewAdditionActivity)")
 
         mRealm.executeTransaction{
@@ -167,6 +147,5 @@ class NewAdditionActivity : AppCompatActivity() {
             Log.d("TAG", "scoreResultDB.score_id = ${scoreResultDB.score_id}(NewAddition)")
         }
         Log.d("TAG", "finish create method(NewAdditionActivity)")
-
     }
 }

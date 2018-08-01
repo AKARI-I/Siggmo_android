@@ -43,7 +43,6 @@ class DetailActivity : AppCompatActivity() {
             movie_link.text = record.movie_link
             score.text = record.score.toString()
             free_memo.text = record.free_memo
-            debugText.text = record.score_id
         }
 
         /*------------------- Button --------------------*/
