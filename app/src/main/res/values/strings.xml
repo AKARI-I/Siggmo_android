@@ -31,4 +31,6 @@
     <string name="edit">編集</string>
     <string name="dbup">保存</string>
     <string name="no_data">情報なし</string>
+    <string name="update">更新</string>
+    <string name="lists">リスト一覧</string>
 </resources>
