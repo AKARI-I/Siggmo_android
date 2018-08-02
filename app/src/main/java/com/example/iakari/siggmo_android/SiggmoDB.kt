@@ -23,7 +23,6 @@ open class SiggmoDB (
         open var first_line     : String = "",  // 歌いだし
         open var proper_key     : String = "",  // 適正キー
         open var movie_link     : String = "",  // 動画のリンク
-        ///open var score          : Float = 0F,   // 採点結果
         open var free_memo      : String = "",  // 自由記入欄
         open var list_id        : String = "",  // リスト照合用のID
         open var score_id       : String = ""   // 採点結果照合用のID

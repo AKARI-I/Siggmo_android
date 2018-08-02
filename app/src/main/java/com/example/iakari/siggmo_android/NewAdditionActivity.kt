@@ -24,8 +24,6 @@ class NewAdditionActivity : AppCompatActivity() {
             "pk" to "適正キー",         // 適正キー
             "ml" to "動画のリンク",    // 動画のリンク
             "fm" to "自由記入欄")     // 自由記入欄
-    // Int型データ用(適正キー)
-//    val musicInfo_i: MutableMap<String, Int> = mutableMapOf("pk" to 10)
     // Float型データ用(採点結果)
     val musicInfo_f: MutableMap<String, Float> = mutableMapOf("sc" to 999F)
     var insertFlg = false
@@ -84,6 +82,7 @@ class NewAdditionActivity : AppCompatActivity() {
     // 保存ボタンが押されたらinsert処理をしてメイン画面に戻る
     // 数値は一度String型に変換してから元の型に戻す必要があるみたい(参考：https://appcoding.net/string-to-int-kotlin/)
     fun save(){
+        Log.d("TAG", "start save method(NewAdditionActivity)")
         // 入力値を取得
         if(!isEmpty(edit_music_name.text)){ musicInfo_s["mn"] = edit_music_name.text.toString() }
         if(!isEmpty(edit_music_phonetic.text)){ musicInfo_s["mp"] = edit_music_phonetic.text.toString() }
@@ -111,6 +110,8 @@ class NewAdditionActivity : AppCompatActivity() {
             // 曲名の入力がなかった場合
             edit_music_name.error = "曲名を入力してください"
         }
+
+        Log.d("TAG", "finish save method(NewAdditionActivity)")
     }
 
     // データベースにレコードを追加する
@@ -132,7 +133,6 @@ class NewAdditionActivity : AppCompatActivity() {
             siggmoDB.first_line      = fLine
             siggmoDB.proper_key      = pKey
             siggmoDB.movie_link      = mLink
-            //siggmoDB.score           = Score
             scoreResultDB.score     = Score
             siggmoDB.free_memo       = fMemo
 
