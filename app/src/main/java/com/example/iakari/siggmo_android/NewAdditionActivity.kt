@@ -27,6 +27,7 @@ class NewAdditionActivity : AppCompatActivity() {
     // Float型データ用(採点結果)
     val musicInfo_f: MutableMap<String, Float> = mutableMapOf("sc" to 999F)
     var insertFlg = false
+    var level = 1   // 歌えるレベル(1~4)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,29 @@ class NewAdditionActivity : AppCompatActivity() {
                 .deleteRealmIfMigrationNeeded()
                 .build()
         mRealm = Realm.getInstance(realmConfig)
+
+        /*-------------------- 歌えるレベルのボタン --------------------*/
+        downButton.setOnClickListener{
+            if(level-1 < 1){
+                level = 1
+            } else {
+                level -= 1
+            }
+
+            edit_singing_level.text = level.toString()
+            Log.d("TAG", "level = ${level}(press down)")
+        }
+
+        upButton.setOnClickListener{
+            if(4 < level+1){
+                level = 4
+            } else {
+                level += 1
+            }
+
+            edit_singing_level.text = level.toString()
+            Log.d("TAG", "level = ${level}(press up)")
+        }
 
 /*        /*-----------------ArrayAdapter------------------*/
         val adapter = ArrayAdapter(applicationContext,android.R.layout.simple_spinner_item,spinnerItems)
