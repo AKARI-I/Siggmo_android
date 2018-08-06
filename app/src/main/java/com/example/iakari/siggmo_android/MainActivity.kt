@@ -16,6 +16,7 @@ import android.widget.ListView
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
+import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -119,6 +120,60 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             return@setOnItemLongClickListener true
         }
     }
+    private fun setSortList(sortId: Int){
+        // データベースの値をすべて取り出す
+        Log.d("sortID", sortId.toString())
+        // 全データをdataListに取り出す
+        val dataList: MutableList<Item> = mutableListOf()
+        // ソートしたデータをゲット
+        readSorted(sortId)?.forEach {
+            Log.d("getData", "music_phonetic: " + it.music_phonetic + "  singer_phonetic: " + it.singer_phonetic)
+            dataList.add(Item(it.id, it.music_name))
+        }
+        val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
+        MainListView.adapter = arrayAdapter
+        // 各項目をタップしたときの処理
+        MainListView.setOnItemClickListener{parent, _, position, _ ->
+            val listView = parent as ListView
+            val item = listView.getItemAtPosition(position) as Item    // タップした項目の要素名を取得
+
+            // idを渡す
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("TapID", item.id)
+            startActivity(intent)
+        }
+
+        // 長押しで削除する
+        MainListView.setOnItemLongClickListener{parent, _, position, _ ->
+            val listView = parent as ListView
+            val item = listView.getItemAtPosition(position) as Item    // タップした項目の要素名を取得
+            // アラートの表示
+            AlertDialog.Builder(this).apply {
+                setTitle("Are you sure?")
+                setMessage("削除しますか？")
+                setPositiveButton("Yes", DialogInterface.OnClickListener{_, _ ->
+                    Log.d("TAG", "YES!!")
+                    // クエリを発行し結果を取得
+                    val results: RealmResults<SiggmoDB> = mRealm.where(SiggmoDB::class.java)
+                            .equalTo("id", item.id)
+                            .findAll()
+                    mRealm.executeTransaction(Realm.Transaction {
+                        Log.d("TAG", "in realm delete process")
+                        results.deleteFromRealm(0)
+                        results.deleteLastFromRealm()
+                    })
+
+                    arrayAdapter.remove(arrayAdapter.getItem(position))
+                    arrayAdapter.notifyDataSetChanged()
+                    MainListView.invalidateViews()
+                })
+                setNegativeButton("Cancel", null)
+                show()
+            }
+
+            return@setOnItemLongClickListener true
+        }
+    }
 
     override fun onBackPressed() {
         // バックキーの編集
@@ -159,7 +214,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.nav_sort -> {
+                // どの選択肢が選ばれたかを保持する変数
+                var selectedId = 0
 
+                // 選択肢
+                val dialogMenu = arrayOf<String>("曲名昇順", "曲名降順", "歌手名昇順", "歌手名降順")
+
+                // ダイアログを作成して表示
+                AlertDialog.Builder(this).apply {
+                    setTitle("タイトル")
+                    setSingleChoiceItems(dialogMenu, 0) { _, i ->
+                        // 選択した項目を保持
+                        selectedId = i
+                    }
+                    setPositiveButton("OK") { _, _ ->
+                        setSortList(selectedId)
+                    }
+                    setNegativeButton("Cancel", null)
+                    show()
+                }
             }
             R.id.nav_lists -> {
                 // リスト画面に遷移
@@ -182,8 +255,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     // データベースから "全ての" データを取り出す
-    fun read() : RealmResults<SiggmoDB> {
+    private fun read() : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
+    }
+
+    private fun readSorted(sortId: Int) : RealmResults<SiggmoDB>? {
+        when(sortId){
+            0 -> return mRealm.where(SiggmoDB::class.java).findAll().sort("music_phonetic")
+            1 -> return mRealm.where(SiggmoDB::class.java).findAll().sort("music_phonetic", Sort.DESCENDING)
+            2 -> return mRealm.where(SiggmoDB::class.java).findAll().sort("singer_phonetic")
+            3 -> return mRealm.where(SiggmoDB::class.java).findAll().sort("singer_phonetic", Sort.DESCENDING)
+        }
+        return null
     }
 
     // 表示する項目名とidをペアにして扱うためのクラス
