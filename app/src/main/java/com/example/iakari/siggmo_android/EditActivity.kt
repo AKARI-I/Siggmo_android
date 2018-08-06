@@ -82,6 +82,7 @@ class EditActivity : AppCompatActivity() {
                     s_name.text.toString(),
                     s_phone.text.toString(),
                     f_line.text.toString(),
+                    s_level.text.toString(),
                     p_key.text.toString(),
                     m_link.text.toString(),
                     s_edit.text.toString(),
@@ -102,16 +103,18 @@ class EditActivity : AppCompatActivity() {
             val list = listOf(record)
             if (record != null && s_record != null) {
                 for (item in list) {
+                    Log.d("TAG", sgm[5])
                     //ループと条件分岐が難しそうなので一気に全部更新
                     record.music_name       = sgm[0]
                     record.music_phonetic   = sgm[1]
                     record.singer_name      = sgm[2]
                     record.singer_phonetic  = sgm[3]
                     record.first_line       = sgm[4]
-                    record.proper_key       = sgm[5]
-                    record.movie_link       = sgm[6]
-                    s_record.score          = sgm[7].toFloat()
-                    record.free_memo        = sgm[8]
+                    record.singing_level    = sgm[5].toInt()
+                    record.proper_key       = sgm[6]
+                    record.movie_link       = sgm[7]
+                    s_record.score          = sgm[8].toFloat()
+                    record.free_memo        = sgm[9]
                 }
             }
         }
