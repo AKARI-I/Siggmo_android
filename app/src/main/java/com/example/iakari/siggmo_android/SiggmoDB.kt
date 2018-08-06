@@ -21,6 +21,7 @@ open class SiggmoDB (
         open var singer_name    : String = "",  // 歌手名
         open var singer_phonetic: String = "",  // 歌手名の読み仮名
         open var first_line     : String = "",  // 歌いだし
+        open var singing_level  : Int    = 0,   // 歌えるレベル(1：歌ってみたい、2：カラオケでは歌ったことない、3：歌える、4：得意)
         open var proper_key     : String = "",  // 適正キー
         open var movie_link     : String = "",  // 動画のリンク
         open var free_memo      : String = "",  // 自由記入欄
@@ -39,6 +40,7 @@ open class ScoreResultDB(
         @PrimaryKey open var score_id : String = UUID.randomUUID().toString(),
         //@Required
         open var music_id : String = "",        // どの曲の採点結果かを保存
-        open var score : Float = 0F
+        open var score    : Float = 0F,
+        open var reg_data : String = "YYYY/MM/DD"
 
 ) : RealmObject(){}
