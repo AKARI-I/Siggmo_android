@@ -41,7 +41,6 @@ class EditActivity : AppCompatActivity() {
             s_level.text = eLevel.toString()
             Log.d("TAG", "level = ${eLevel}(press down)")
         }
-
         upButtonE.setOnClickListener {
             if(4 < eLevel+1){
                 eLevel = 4
@@ -58,11 +57,13 @@ class EditActivity : AppCompatActivity() {
         val s_record = quaryByScore(record!!.score_id)
 
         if (record != null && s_record != null) {
+            Log.d("TAG", "${record}")
             m_name_edit.setText(record.music_name)
             m_phone.setText(record.music_phonetic)
             s_name.setText(record.singer_name)
             s_phone.setText(record.singer_phonetic)
             f_line.setText(record.first_line)
+            s_level.setText(record.singing_level.toString())
             p_key.setText(record.proper_key)
             m_link.setText(record.movie_link)
             s_edit.setText(s_record.score.toString())
