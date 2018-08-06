@@ -13,7 +13,6 @@ class NewAdditionActivity : AppCompatActivity() {
     lateinit var mRealm: Realm
 //    private val spinnerItems = arrayOf("７","６","５","４","３","２","１","０","-１","-２","-３","-４","-５","-６","-７")
 
-    // String型データ用　入力値がない場合ここに設定したデフォルト値が入る
     // mutableMapOf：書き込み可能なコレクションを生成する(mapOfは読み取り専用)
     val musicInfo_s: MutableMap<String, String> = mutableMapOf(
             "mn" to "曲名",           // 曲名
@@ -24,8 +23,8 @@ class NewAdditionActivity : AppCompatActivity() {
             "pk" to "適正キー",         // 適正キー
             "ml" to "動画のリンク",    // 動画のリンク
             "fm" to "自由記入欄")     // 自由記入欄
-    // Float型データ用(採点結果)
     val musicInfo_f: MutableMap<String, Float> = mutableMapOf("sc" to 999F)
+    val musicInfo_i: MutableMap<String, Int> = mutableMapOf("sl" to 1)
     var insertFlg = false
     var level = 1   // 歌えるレベル(1~4)
 
@@ -116,6 +115,7 @@ class NewAdditionActivity : AppCompatActivity() {
         if(!isEmpty(edit_movie_link.text)){ musicInfo_s["ml"] = edit_movie_link.text.toString() }
         if(!isEmpty(edit_score.text)){ musicInfo_f["sc"] = edit_score.text.toString().toFloat() }
         if(!isEmpty(edit_free_memo.text)){ musicInfo_s["fm"] = edit_free_memo.text.toString() }
+        musicInfo_i["sl"] = level
 
         if(!isEmpty(edit_music_name.text)){
             // 曲名の入力があった場合
@@ -124,6 +124,7 @@ class NewAdditionActivity : AppCompatActivity() {
                    musicInfo_s["sn"].toString(),
                    musicInfo_s["sp"].toString(),
                    musicInfo_s["fl"].toString(),
+                   musicInfo_i["sl"] as Int,
                    musicInfo_s["pk"].toString(),
                    musicInfo_s["ml"].toString(),
                    musicInfo_f["sc"] as Float,
@@ -136,8 +137,8 @@ class NewAdditionActivity : AppCompatActivity() {
     }
 
     // データベースにレコードを追加する
-    fun create(mName:String, mPhonetic:String, sName:String, sPhonetic:String,
-               fLine:String, pKey: String, mLink:String, Score:Float, fMemo:String){
+    fun create(mName:String, mPhonetic:String, sName:String, sPhonetic:String, fLine:String,
+               sLevel: Int, pKey: String, mLink:String, Score:Float, fMemo:String){
 
         mRealm.executeTransaction{
             // ランダムなidを設定
@@ -150,6 +151,7 @@ class NewAdditionActivity : AppCompatActivity() {
             siggmoDB.singer_name     = sName
             siggmoDB.singer_phonetic = sPhonetic
             siggmoDB.first_line      = fLine
+            siggmoDB.singing_level   = sLevel
             siggmoDB.proper_key      = pKey
             siggmoDB.movie_link      = mLink
             siggmoDB.free_memo       = fMemo
