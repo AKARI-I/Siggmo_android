@@ -56,6 +56,7 @@ class EditActivity : AppCompatActivity() {
         val record = quaryById(tapid)
         val s_record = quaryByScore(record!!.score_id)
 
+        // 保存済みのデータを表示
         if (record != null && s_record != null) {
             Log.d("TAG", "${record}")
             m_name_edit.setText(record.music_name)
@@ -70,10 +71,13 @@ class EditActivity : AppCompatActivity() {
             f_memo.setText(record.free_memo)
 
         }
+
+        // update処理にまわす
         val button: Button = findViewById(R.id.editbutton)
         button.setOnClickListener{
             //editにとりあえず今は曲名だけを入れてupdateに渡す
-            val sgm = arrayOf(m_name_edit.text.toString(),
+            val sgm = arrayOf(
+                    m_name_edit.text.toString(),
                     m_phone.text.toString(),
                     s_name.text.toString(),
                     s_phone.text.toString(),
