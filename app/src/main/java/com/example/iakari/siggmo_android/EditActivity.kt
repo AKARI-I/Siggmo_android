@@ -16,6 +16,8 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
+        var eLevel = 1
+
 
         //       val editText = findViewById<EditText>(android.R.id.music_name_edit)
  //       val edit = m_name_edit.text.toString()
@@ -27,6 +29,29 @@ class EditActivity : AppCompatActivity() {
                 .deleteRealmIfMigrationNeeded()
                 .build()
         mRealm = Realm.getInstance(realmConfig)
+
+        /*-------------------- 歌えるレベルのボタン --------------------*/
+        downButtonE.setOnClickListener {
+            if(eLevel-1 < 1){
+                eLevel = 1
+            } else {
+                eLevel -= 1
+            }
+
+            s_level.text = eLevel.toString()
+            Log.d("TAG", "level = ${eLevel}(press down)")
+        }
+
+        upButtonE.setOnClickListener {
+            if(4 < eLevel+1){
+                eLevel = 4
+            } else {
+                eLevel += 1
+            }
+
+            s_level.text = eLevel.toString()
+            Log.d("TAG", "level = ${eLevel}(press up)")
+        }
 
         val tapid = intent.getStringExtra("TapID")
         val record = quaryById(tapid)
