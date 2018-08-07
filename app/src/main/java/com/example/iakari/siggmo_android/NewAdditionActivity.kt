@@ -145,6 +145,18 @@ class NewAdditionActivity : AppCompatActivity() {
             val siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
             val scoreResultDB = mRealm.createObject(ScoreResultDB::class.java, UUID.randomUUID().toString())
 
+            /*-------------------- 時間の取得 --------------------*/
+            var calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
+            val second = calendar.get(Calendar.SECOND)
+
+            val date = "${year}/${month}/${day}/${hour}:${minute}:${second}"
+            Log.d("TAG", date)
+
             // 各項目を設定
             siggmoDB.music_name      = mName
             siggmoDB.music_phonetic  = mPhonetic

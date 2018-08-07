@@ -60,8 +60,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onResume() {
         super.onResume()
 
-        // リストの再表示
-        setList()
+        setList()   // リストの再表示
     }
 
     fun setList(){
@@ -239,7 +238,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this , ListsActivity::class.java)
                 startActivity(intent)
             }
-
             R.id.nav_add -> {
                 // 曲の追加：新規登録画面に遷移
                 val intent = Intent(this , NewAdditionActivity::class.java)
