@@ -32,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
-                android:text="@string/music_name"
                 tools:ignore="LabelFor" />
 
             <TextView
@@ -46,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@string/music_phonetic"
                 tools:ignore="LabelFor,TextFields" />
 
             <TextView
@@ -59,8 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/no_data" />
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/s_phone_text"
@@ -73,7 +70,6 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@string/no_data"
                 tools:ignore="TextFields" />
 
             <TextView
@@ -86,8 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/no_data" />
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/item_singing_level"
@@ -131,21 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="numberSigned"
-                android:text="0" />
-
-            <TextView
-                android:id="@+id/m_link_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/no_data" />
-            <EditText
-                android:id="@+id/m_link"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/no_data" />
+                android:inputType="numberSigned" />
 
             <TextView
                 android:id="@+id/s_text"
@@ -157,8 +138,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/no_data" />
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/m_link_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/movie_link" />
+            <EditText
+                android:id="@+id/m_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/f_memo_text"
@@ -170,8 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:inputType="textMultiLine|textPersonName"
-                android:text="@string/free_memo" />
+                android:inputType="textMultiLine|textPersonName" />
 
         </LinearLayout>
     </ScrollView>

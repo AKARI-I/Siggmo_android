@@ -15,15 +15,15 @@ class NewAdditionActivity : AppCompatActivity() {
 
     // mutableMapOf：書き込み可能なコレクションを生成する(mapOfは読み取り専用)
     val musicInfo_s: MutableMap<String, String> = mutableMapOf(
-            "mn" to "曲名",           // 曲名
-            "mp" to "よみがな(曲名)",  // よみがな(曲名)
-            "sn" to "歌手名",         // 歌手名
-            "sp" to "よみがな(歌手名)",// よみがな(歌手名)
-            "fl" to "歌いだし",       // 歌い出し
-            "pk" to "適正キー",         // 適正キー
-            "ml" to "動画のリンク",    // 動画のリンク
-            "fm" to "自由記入欄")     // 自由記入欄
-    val musicInfo_f: MutableMap<String, Float> = mutableMapOf("sc" to 999F)
+            "mn" to "",  // 曲名
+            "mp" to "",  // よみがな(曲名)
+            "sn" to "",  // 歌手名
+            "sp" to "",  // よみがな(歌手名)
+            "fl" to "",  // 歌いだし
+            "pk" to "",  // 適正キー
+            "ml" to "",  // 動画のリンク
+            "fm" to "")  // 自由記入欄
+    val musicInfo_f: MutableMap<String, Float> = mutableMapOf("sc" to 100F)
     val musicInfo_i: MutableMap<String, Int> = mutableMapOf("sl" to 1)
     var insertFlg = false
     var level = 1   // 歌えるレベル(1~4)
@@ -143,7 +143,7 @@ class NewAdditionActivity : AppCompatActivity() {
         mRealm.executeTransaction{
             // ランダムなidを設定
             val siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
-            var scoreResultDB = mRealm.createObject(ScoreResultDB::class.java, UUID.randomUUID().toString())
+            val scoreResultDB = mRealm.createObject(ScoreResultDB::class.java, UUID.randomUUID().toString())
 
             // 各項目を設定
             siggmoDB.music_name      = mName
