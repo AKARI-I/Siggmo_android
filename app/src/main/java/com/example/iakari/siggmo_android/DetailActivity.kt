@@ -45,6 +45,7 @@ class DetailActivity : AppCompatActivity() {
             movie_link.text      = record.movie_link
             score.text           = s_record.score.toString()
             free_memo.text       = record.free_memo
+            last_update.text     = s_record.reg_data
         }
 
         /*------------------- Button --------------------*/
