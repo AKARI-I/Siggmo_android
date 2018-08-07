@@ -35,16 +35,16 @@ class DetailActivity : AppCompatActivity() {
 
         // レコードが返されたら曲名を表示
         if (record != null && s_record != null) {
-            music_name.text = record.music_name
-            music_phonetic.text = record.music_phonetic
-            singer_name.text = record.singer_name
+            music_name.text      = record.music_name
+            music_phonetic.text  = record.music_phonetic
+            singer_name.text     = record.singer_name
             singer_phonetic.text = record.singer_phonetic
-            first_line.text = record.first_line
-            singing_level.text = record.singing_level.toString()
-            proper_key.text = record.proper_key
-            movie_link.text = record.movie_link
-            score.text = s_record.score.toString()
-            free_memo.text = record.free_memo
+            first_line.text      = record.first_line
+            singing_level.text   = record.singing_level.toString()
+            proper_key.text      = record.proper_key
+            movie_link.text      = record.movie_link
+            score.text           = s_record.score.toString()
+            free_memo.text       = record.free_memo
         }
 
         /*------------------- Button --------------------*/

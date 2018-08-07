@@ -125,7 +125,6 @@
             </LinearLayout>
 
             <!-- 適正キー -->
-
             <TextView
                 android:id="@+id/item_proper_key"
                 android:layout_width="match_parent"
@@ -139,20 +138,6 @@
                 android:inputType="numberSigned"
                 android:maxLines="1"/>
 
-            <!-- 動画のリンク -->
-            <TextView
-                android:id="@+id/item_movie_link"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/movie_link" />
-            <EditText
-                android:id="@+id/edit_movie_link"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:maxLines="1" />
-
             <!-- 採点結果 -->
             <TextView
                 android:id="@+id/item_score"
@@ -165,6 +150,20 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="numberDecimal"
+                android:maxLines="1" />
+
+            <!-- 動画のリンク -->
+            <TextView
+                android:id="@+id/item_movie_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/movie_link" />
+            <EditText
+                android:id="@+id/edit_movie_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
                 android:maxLines="1" />
 
             <!-- 自由記入欄 -->
