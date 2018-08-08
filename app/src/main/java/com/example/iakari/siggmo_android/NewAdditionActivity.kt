@@ -148,7 +148,7 @@ class NewAdditionActivity : AppCompatActivity() {
             /*-------------------- 時間の取得 --------------------*/
             var calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)          // 年
-            val month = calendar.get(Calendar.MONTH)        // 月
+            val month = calendar.get(Calendar.MONTH)+1      // 月
             val day = calendar.get(Calendar.DAY_OF_MONTH)   // 日
             val hour = calendar.get(Calendar.HOUR_OF_DAY)   // 時
             val minute = calendar.get(Calendar.MINUTE)      // 分
