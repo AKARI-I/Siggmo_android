@@ -147,14 +147,14 @@ class NewAdditionActivity : AppCompatActivity() {
 
             /*-------------------- 時間の取得 --------------------*/
             var calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-            val hour = calendar.get(Calendar.HOUR_OF_DAY)
-            val minute = calendar.get(Calendar.MINUTE)
-            val second = calendar.get(Calendar.SECOND)
+            val year = calendar.get(Calendar.YEAR)          // 年
+            val month = calendar.get(Calendar.MONTH)+1      // 月
+            val day = calendar.get(Calendar.DAY_OF_MONTH)   // 日
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)   // 時
+            val minute = calendar.get(Calendar.MINUTE)      // 分
+            val second = calendar.get(Calendar.SECOND)      // 秒
 
-            val date = "${year}/${month}/${day}/${hour}:${minute}:${second}"
+            val date = "${year}/${month}/${day}/${hour}:${minute}:${second}"    // 年/月/日/時:分:秒
             Log.d("TAG", date)
 
             // 各項目を設定
@@ -168,13 +168,13 @@ class NewAdditionActivity : AppCompatActivity() {
             siggmoDB.movie_link      = mLink
             siggmoDB.free_memo       = fMemo
             siggmoDB.score_id        = scoreResultDB.score_id
-            scoreResultDB.score      = Score
             scoreResultDB.music_id   = siggmoDB.id
+            scoreResultDB.score      = Score
+            scoreResultDB.reg_data   = date
 
             // データベースに追加
             mRealm.copyToRealm(siggmoDB)
             mRealm.copyToRealm(scoreResultDB)
-
         }
         Log.d("TAG", "finish create method(NewAdditionActivity)")
     }

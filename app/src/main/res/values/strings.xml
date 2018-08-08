@@ -34,4 +34,5 @@
     <string name="update">更新</string>
     <string name="lists">リスト一覧</string>
     <string name="singing_level">歌えるレベル</string>
+    <string name="last_update">最終更新日</string>
 </resources>

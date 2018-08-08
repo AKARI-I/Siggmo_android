@@ -41,6 +41,6 @@ open class ScoreResultDB(
         //@Required
         open var music_id : String = "",        // どの曲の採点結果かを保存
         open var score    : Float = 100F,
-        open var reg_data : String = "YYYY/MM/DD"
+        open var reg_data : String = ""
 
 ) : RealmObject(){}
