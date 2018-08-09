@@ -24,76 +24,92 @@
                 android:id="@+id/item_music_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/music_name" />
+                android:text="@string/music_name"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/edit_music_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text|textPersonName"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
             <!-- よみがな(曲名) -->
             <TextView
                 android:id="@+id/item_music_phonetic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/music_phonetic" />
+                android:text="@string/music_phonetic"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/edit_music_phonetic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
             <!-- 歌手名 -->
             <TextView
                 android:id="@+id/item_singer_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/singer_name" />
+                android:text="@string/singer_name"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/edit_singer_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text|textPersonName"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
             <!-- よみがな(歌手名) -->
             <TextView
                 android:id="@+id/item_singer_phonetic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/singer_phonetic" />
+                android:text="@string/singer_phonetic"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/edit_singer_phonetic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
             <!-- 歌いだし -->
             <TextView
                 android:id="@+id/item_first_line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/first_line" />
+                android:text="@string/first_line"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/edit_first_line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/item_singing_level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/singing_level" />
+                android:text="@string/singing_level"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -105,7 +121,9 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="↓" />
+                    android:gravity="center"
+                    android:text="↓"
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/edit_singing_level"
@@ -114,14 +132,16 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="1"
-                    android:textSize="18sp" />
+                    android:textSize="22sp" />
 
                 <Button
                     android:id="@+id/upButton"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="↑" />
+                    android:gravity="center"
+                    android:text="↑"
+                    android:textSize="22sp" />
             </LinearLayout>
 
             <!-- 適正キー -->

@@ -8,4 +8,7 @@
     <color name="text_color_primary">#dd000000</color>
     <color name="secondary_text_material_dark">#f5ffffff</color>
     <color name="foreground_material_light">#000000</color>
+    <color name="button">#c2ffc0</color>
+    <color name="button_text">#0e7c00</color>
+    <color name="text">#0b5d00</color>
 </resources>
