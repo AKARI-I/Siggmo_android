@@ -19,12 +19,4 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="ToolbarTheme">
-        <!-- タイトルテキストの色 -->
-        <item name="android:textColorPrimary">@color/app_text</item>
-        <!-- アイコンの色 -->
-        <item name="android:textColorSecondary">@color/app_text</item>
-    </style>
-
-
 </resources>
