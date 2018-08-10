@@ -234,9 +234,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@android:color/darker_gray"
+        android:background="@color/button"
         android:text="保存"
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginRight="16dp" />
