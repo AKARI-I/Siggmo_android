@@ -232,12 +232,13 @@
         android:id="@+id/saveButon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:background="@color/button"
-        android:text="保存"
+        android:text="@string/save"
         android:textColor="@color/button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginRight="16dp" />
+        />
 </android.support.constraint.ConstraintLayout>
