@@ -10,7 +10,7 @@
     tools:layout_editor_absoluteY="81dp">
 
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/toolbar_detail"
+        android:id="@+id/toolbar_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -36,7 +36,7 @@
         android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_detail">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_edit">
 
         <LinearLayout
             android:layout_width="wrap_content"
