@@ -6,9 +6,33 @@
     android:layout_height="match_parent"
     tools:context="com.example.iakari.siggmo_android.NewAdditionActivity">
 
-    <ScrollView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_new_addition"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:text="@string/new_addition_title"
+            android:textColor="@color/app_text"
+            android:textSize="18sp"  />
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_new_addition"
+        >
 
         <LinearLayout
             android:id="@+id/new_add_layout"
