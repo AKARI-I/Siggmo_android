@@ -26,16 +26,12 @@
         </activity>
 
         <activity android:name=".EditActivity"
-            android:label="@string/edit_title"
             android:theme="@style/AppBaseTheme"/>
         <activity android:name=".DetailActivity"
-            android:label="@string/detail_title"
             android:theme="@style/AppBaseTheme"/>
         <activity android:name=".NewAdditionActivity"
-            android:label="@string/new_addition_title"
             android:theme="@style/AppBaseTheme"/>
         <activity android:name=".ListsActivity"
-            android:label="@string/lists_title"
             android:theme="@style/AppBaseTheme"/>
         <activity android:name=".ListActivity"
             android:theme="@style/AppBaseTheme"/>
