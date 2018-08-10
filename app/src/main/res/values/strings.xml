@@ -23,7 +23,8 @@
     <string name="edit_title">編集</string>
     <string name="new_addition_title">新しい曲を追加</string>
     <string name="lists_title">リスト一覧</string>
-    <string name="list_title">リストに曲を追加する</string>
+    <string name="list_title">曲の一覧</string>
+    <string name="song_add_title">リストに曲を追加する</string>
 
     <!-- 項目 -->
     <string name="action_settings">Settings</string>
