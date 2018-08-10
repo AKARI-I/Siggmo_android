@@ -25,21 +25,22 @@
             </intent-filter>
         </activity>
 
-        <!--<activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />-->
-
         <activity android:name=".EditActivity"
-            android:label="@string/edit_title" />
+            android:label="@string/edit_title"
+            android:theme="@style/AppBaseTheme"/>
         <activity android:name=".DetailActivity"
-            android:label="@string/detail_title"/>
+            android:label="@string/detail_title"
+            android:theme="@style/AppBaseTheme"/>
         <activity android:name=".NewAdditionActivity"
-            android:label="@string/new_addition_title"/>
+            android:label="@string/new_addition_title"
+            android:theme="@style/AppBaseTheme"/>
         <activity android:name=".ListsActivity"
-            android:label="@string/lists_title"/>
-        <activity android:name=".ListActivity" />
-        <activity android:name=".SongAddActivity"/>
+            android:label="@string/lists_title"
+            android:theme="@style/AppBaseTheme"/>
+        <activity android:name=".ListActivity"
+            android:theme="@style/AppBaseTheme"/>
+        <activity android:name=".SongAddActivity"
+            android:theme="@style/AppBaseTheme"/>
     </application>
 
 </manifest>
