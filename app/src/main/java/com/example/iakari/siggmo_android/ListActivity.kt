@@ -53,7 +53,7 @@ class ListActivity : AppCompatActivity() {
     // 標準Backkeyの遷移先変更
     override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
         if(keyCode== KeyEvent.KEYCODE_BACK) {
-            val intent: Intent = Intent(this,MainActivity::class.java)
+            val intent: Intent = Intent(this,ListsActivity::class.java)
             startActivity(intent)
             return true
         }
