@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.SpannableStringBuilder
 import android.util.Log
+import android.view.KeyEvent
 import android.view.Window
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -139,6 +140,15 @@ class ListsActivity : AppCompatActivity() {
         }
     }
 
+    // 標準Backkeyの遷移先変更
+    override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
+        if(keyCode== KeyEvent.KEYCODE_BACK) {
+            val intent: Intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+            return true
+        }
+        return false
+    }
     // 表示する項目名とidをペアにして扱うためのクラス
     private inner class Item(val id: String, val name: String){
         override fun toString(): String{
