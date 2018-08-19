@@ -8,11 +8,14 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.Filterable
 import android.widget.ListView
+import android.widget.SearchView
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
@@ -20,6 +23,8 @@ import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
+
+
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -52,8 +57,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .deleteRealmIfMigrationNeeded()
                 .build()
         mRealm = Realm.getInstance(realmConfig)
-
         Log.d("TAG", "finish DetailActivity")
+
+
     }
 
     /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
@@ -61,6 +67,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onResume()
 
         setList()   // リストの再表示
+
+        // 検索ツールバー機能
+        val searchView = listSearch as SearchView
+        val filter = (MainListView.adapter as Filterable).filter // フィルター用オブジェクトの生成
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(text: String?): Boolean {
+                // 検索キーが押下された
+                Log.d("searchList", "submit text: $text")
+                return false
+            }
+
+            override fun onQueryTextChange(text: String?): Boolean {
+                // テキストが変更された
+                Log.d("searchList", "change text: $text")
+                if (TextUtils.isEmpty(text)){
+                    MainListView.clearTextFilter()
+                } else{
+                    Log.d("searchList", "else")
+                    filter.filter(text.toString())
+                }
+                return false
+            }
+        })
     }
 
     fun setList(){
