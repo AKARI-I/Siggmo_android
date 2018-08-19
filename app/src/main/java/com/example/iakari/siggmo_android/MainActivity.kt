@@ -8,11 +8,12 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.text.SpannableStringBuilder
+import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
-import android.widget.ListView
+import android.widget.*
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
@@ -52,8 +53,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .deleteRealmIfMigrationNeeded()
                 .build()
         mRealm = Realm.getInstance(realmConfig)
-
         Log.d("TAG", "finish DetailActivity")
+
+
     }
 
     /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
@@ -61,6 +63,32 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onResume()
 
         setList()   // リストの再表示
+        searchList() // 検索ツールバー
+    }
+
+    // 検索ツールバー機能
+    private fun searchList(){
+        val searchView = listSearch as SearchView
+        val filter = (MainListView.adapter as Filterable).filter // フィルター用オブジェクトの生成
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(text: String?): Boolean {
+                // 検索キーが押下された
+                Log.d("searchList", "submit text: $text")
+                return false
+            }
+
+            override fun onQueryTextChange(text: String?): Boolean {
+                // テキストが変更された
+                Log.d("searchList", "change text: $text")
+                if (TextUtils.isEmpty(text)){
+                    MainListView.clearTextFilter()
+                } else{
+                    Log.d("searchList", "else")
+                    filter.filter(text.toString())
+                }
+                return false
+            }
+        })
     }
 
     fun setList(){
@@ -210,6 +238,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_search -> {
+                val editView = EditText(this@MainActivity)
+                val dialog = AlertDialog.Builder(this@MainActivity)
+
+                dialog.setTitle("Search")
+                dialog.setView(editView)
+                // OKボタンの設定
+                dialog.setPositiveButton("OK") { _, _ ->
+                    // OKボタンをタップした時の処理をここに記述
+                    if(editView.isEnabled) {
+                        val filter = (MainListView.adapter as Filterable).filter // フィルター用オブジェクトの生成
+                        val sb = editView.text as SpannableStringBuilder
+                        filter.filter(sb.toString())
+                    }
+                }
+                // キャンセルボタンの設定
+                dialog.setNegativeButton("キャンセル") { _, _ ->
+                    MainListView.clearTextFilter()
+                }
+                dialog.show()
 
             }
             R.id.nav_sort -> {
