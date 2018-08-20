@@ -8,6 +8,7 @@ import android.widget.Button
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.activity_edit.*
+import kotlinx.android.synthetic.main.activity_new_addition.*
 
 class EditActivity : AppCompatActivity() {
     lateinit var mRealm: Realm
@@ -54,7 +55,7 @@ class EditActivity : AppCompatActivity() {
 
         val tapid = intent.getStringExtra("TapID")
         val record = quaryById(tapid)
-        val s_record = quaryByScore(record!!.score_id)
+        val s_record = quaryByScore(record!!.id)
 
         // 保存済みのデータを表示
         if (s_record != null) {
@@ -98,29 +99,41 @@ class EditActivity : AppCompatActivity() {
         //id(tapid),record,曲名を渡す
     fun update(record: SiggmoDB?, s_record: ScoreResultDB?, sgm: Array<String>){
         mRealm.executeTransaction{
-            //sgm配列に項目を入れて曲名から順番にDB(record)の中身と一緒かどうかを調べる
-            //今は項目一つしか入れてないのでループとかはせず曲名だけ見てる
-            val list = listOf(record)
-            if (record != null && s_record != null) {
-                for (item in list) {
-                    Log.d("TAG", sgm[5])
-                    //ループと条件分岐が難しそうなので一気に全部更新
-                    record.music_name       = sgm[0]
-                    record.music_phonetic   = sgm[1]
-                    record.singer_name      = sgm[2]
-                    record.singer_phonetic  = sgm[3]
-                    record.first_line       = sgm[4]
-                    record.singing_level    = sgm[5].toInt()
-                    record.proper_key       = sgm[6]
-                    record.movie_link       = sgm[7]
-                    s_record.score          = sgm[8].toFloat()
-                    record.free_memo        = sgm[9]
+            // スコアの範囲チェック
+            // ToDo:範囲チェックは通るが、true->更新できない、false->落ちる
+            if(checkScore(sgm[8].toFloat())){
+                Log.d("TAG", "スコアの範囲チェック：true")
+                //sgm配列に項目を入れて曲名から順番にDB(record)の中身と一緒かどうかを調べる
+                //今は項目一つしか入れてないのでループとかはせず曲名だけ見てる
+                val list = listOf(record)
+                if (record != null && s_record != null) {
+                    for (item in list) {
+                        //ループと条件分岐が難しそうなので一気に全部更新
+                        record.music_name       = sgm[0]
+                        record.music_phonetic   = sgm[1]
+                        record.singer_name      = sgm[2]
+                        record.singer_phonetic  = sgm[3]
+                        record.first_line       = sgm[4]
+                        record.singing_level    = sgm[5].toInt()
+                        record.proper_key       = sgm[6]
+                        record.movie_link       = sgm[7]
+                        s_record.score          = sgm[8].toFloat()
+                        record.free_memo        = sgm[9]
+                    }
                 }
+            } else {
+                Log.d("TAG", "スコアの範囲チェック：false")
+                edit_score.error = "0~100の点数を入力してください"
             }
         }
     }
-
-
+    fun checkScore(score:Float): Boolean {
+        if(0 <= score && score <= 100){
+            return true
+        } else {
+            return false
+        }
+    }
 
     fun quaryById(id: String): SiggmoDB? {
         return mRealm.where(SiggmoDB::class.java)
