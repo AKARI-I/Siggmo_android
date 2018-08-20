@@ -70,7 +70,6 @@ class EditActivity : AppCompatActivity() {
             m_link.setText(record.movie_link)
             s_edit.setText(s_record.score.toString())
             f_memo.setText(record.free_memo)
-
         }
 
         // update処理にまわす
@@ -100,7 +99,7 @@ class EditActivity : AppCompatActivity() {
     fun update(record: SiggmoDB?, s_record: ScoreResultDB?, sgm: Array<String>){
         mRealm.executeTransaction{
             // スコアの範囲チェック
-            // ToDo:範囲チェックは通るが、true->更新できない、false->落ちる
+            // ToDo:範囲チェックがfalse->落ちる
             if(checkScore(sgm[8].toFloat())){
                 Log.d("TAG", "スコアの範囲チェック：true")
                 //sgm配列に項目を入れて曲名から順番にDB(record)の中身と一緒かどうかを調べる
@@ -142,10 +141,10 @@ class EditActivity : AppCompatActivity() {
     }
 
     // scoreを参照する
-    fun quaryByScore(s_id: String): ScoreResultDB? {
+    fun quaryByScore(id: String): ScoreResultDB? {
         Log.d("TAG", "quaryByScore(DetailActivity)")
         return mRealm.where(ScoreResultDB::class.java)
-                .equalTo("score_id", s_id)
+                .equalTo("music_id", id)
                 .findFirst()
     }
 }
