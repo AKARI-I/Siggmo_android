@@ -1,10 +1,11 @@
 package com.example.iakari.siggmo_android
 
-import android.content.Intent
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.text.InputType
 import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.KeyEvent
@@ -80,6 +81,7 @@ class ListsActivity : AppCompatActivity() {
             // 曲リストの追加
             // テキスト入力用Viewの作成
             val editView = EditText(this@ListsActivity)
+            editView.inputType = InputType.TYPE_CLASS_TEXT
 
             val dialog = AlertDialog.Builder(this@ListsActivity)
 
