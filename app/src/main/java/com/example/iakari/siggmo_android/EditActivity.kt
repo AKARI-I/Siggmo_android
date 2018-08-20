@@ -182,6 +182,5 @@ class EditActivity : AppCompatActivity() {
         return mRealm.where(ScoreResultDB::class.java)
                 .equalTo("music_id", id)
                 .findAll()
-
     }
 }
