@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_edit.*
 
 class EditActivity : AppCompatActivity() {
@@ -54,7 +55,11 @@ class EditActivity : AppCompatActivity() {
 
         val tapid = intent.getStringExtra("TapID")
         val record = quaryById(tapid)
-        val s_record = quaryByScore(record!!.score_id)
+        val s_record = quaryByScore(record!!.id)
+
+        Log.d("TAG", "${s_record}")
+
+        // レコード数の取得
 
         // 保存済みのデータを表示
         if (s_record != null) {
@@ -67,7 +72,7 @@ class EditActivity : AppCompatActivity() {
             s_level.setText(record.singing_level.toString())
             p_key.setText(record.proper_key)
             m_link.setText(record.movie_link)
-            s_edit.setText(s_record.score.toString())
+            //s_edit.setText(s_record.score.toString())
             f_memo.setText(record.free_memo)
 
         }
@@ -87,7 +92,7 @@ class EditActivity : AppCompatActivity() {
                     m_link.text.toString(),
                     s_edit.text.toString(),
                     f_memo.text.toString())
-            update(record, s_record, sgm)
+            //update(record, s_record, sgm)
             //DetailActivityにもどる
             val intent: Intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("TapID",tapid)
@@ -129,10 +134,10 @@ class EditActivity : AppCompatActivity() {
     }
 
     // scoreを参照する
-    fun quaryByScore(s_id: String): ScoreResultDB? {
+    fun quaryByScore(id: String): RealmResults<ScoreResultDB>? {
         Log.d("TAG", "quaryByScore(DetailActivity)")
         return mRealm.where(ScoreResultDB::class.java)
-                .equalTo("score_id", s_id)
-                .findFirst()
+                .equalTo("music_id", id)
+                .findAll()
     }
 }
