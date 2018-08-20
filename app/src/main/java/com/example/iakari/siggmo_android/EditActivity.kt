@@ -57,7 +57,7 @@ class EditActivity : AppCompatActivity() {
         val s_record = quaryByScore(record!!.score_id)
 
         // 保存済みのデータを表示
-        if (record != null && s_record != null) {
+        if (s_record != null) {
             Log.d("TAG", "${record}")
             m_name_edit.setText(record.music_name)
             m_phone.setText(record.music_phonetic)

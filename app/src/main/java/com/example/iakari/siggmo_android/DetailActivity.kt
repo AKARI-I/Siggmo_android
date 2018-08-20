@@ -2,6 +2,7 @@ package com.example.iakari.siggmo_android
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.KeyEvent
@@ -34,7 +35,7 @@ class DetailActivity : AppCompatActivity() {
         val s_record = quaryByScore(record!!.score_id)
 
         // レコードが返されたら曲名を表示
-        if (record != null && s_record != null) {
+        if (s_record != null) {
             music_name.text      = record.music_name
             music_phonetic.text  = record.music_phonetic
             singer_name.text     = record.singer_name
@@ -47,6 +48,32 @@ class DetailActivity : AppCompatActivity() {
             free_memo.text       = record.free_memo
             last_update.text     = s_record.reg_data
         }
+        /*------------------- dialog --------------------*/
+        // 選択した曲IDと一致する採点結果を取得
+        val getData = mRealm.where(ScoreResultDB::class.java)
+                .equalTo("music_id",tapid )
+                .findAll()
+        var maxScore = 0F            // 最高得点
+        var sum = 0F                 // 合計値
+        // 点数レコードを回す
+        getData.forEach{
+            if(maxScore < it.score)
+            sum += it.score
+            maxScore = it.score
+        }
+        var count = getData.count() // 歌った回数
+        var averageScore = sum / count  // 平均点
+
+        score_detail.setOnClickListener {
+            val detail = AlertDialog.Builder(this@DetailActivity)
+            detail.setTitle("点数詳細")
+            detail.setMessage("・最高得点\n" +  maxScore  +   "点\n" +
+                    "・平均点\n" +  averageScore  +  "点\n" +
+                    "・歌った回数\n" +  count  +  "回\n"
+            )
+            detail.setPositiveButton("OK" , null).show()
+        }
+
 
         /*------------------- Button --------------------*/
         val button: Button = findViewById(R.id.send_button)
@@ -86,5 +113,12 @@ class DetailActivity : AppCompatActivity() {
         return mRealm.where(ScoreResultDB::class.java)
                 .equalTo("score_id", s_id)
                 .findFirst()
+    }
+
+    // 表示する項目名とidをペアにして扱うためのクラス
+    private inner class Item(val id: String, val name: String){
+        override fun toString(): String{
+            return name
+        }
     }
 }
