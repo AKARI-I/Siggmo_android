@@ -59,7 +59,15 @@ class EditActivity : AppCompatActivity() {
 
         Log.d("TAG", "${s_record}")
 
+        var recCnt = 0
         // レコード数の取得
+        if (s_record != null) {
+            s_record.forEach {
+                Log.d("TAG", "${it.score}")
+                recCnt++
+                Log.d("TAG", "${recCnt}")
+            }
+        }
 
         // 保存済みのデータを表示
         if (s_record != null) {
@@ -74,7 +82,6 @@ class EditActivity : AppCompatActivity() {
             m_link.setText(record.movie_link)
             //s_edit.setText(s_record.score.toString())
             f_memo.setText(record.free_memo)
-
         }
 
         // update処理にまわす
