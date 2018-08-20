@@ -151,7 +151,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/downButtonE"
+                    android:id="@+id/s_level_downButton"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -170,7 +170,7 @@
                     android:textSize="20sp" />
 
                 <Button
-                    android:id="@+id/upButtonE"
+                    android:id="@+id/s_level_upButton"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -187,14 +187,39 @@
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/p_key"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberSigned"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/p_key_downButton"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="↓"
+                    android:textColor="@android:color/black"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/p_key"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/p_key_upButton"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="↑"
+                    android:textColor="@android:color/black"
+                    android:textSize="22sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/s_text"
