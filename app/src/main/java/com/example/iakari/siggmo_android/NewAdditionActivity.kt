@@ -27,6 +27,7 @@ class NewAdditionActivity : AppCompatActivity() {
     val musicInfo_i: MutableMap<String, Int> = mutableMapOf("sl" to 1)
     var insertFlg = false
     var level = 1   // 歌えるレベル(1~4)
+    var key_level = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +64,29 @@ class NewAdditionActivity : AppCompatActivity() {
 
             edit_singing_level.text = level.toString()
             Log.d("TAG", "level = ${level}(press up)")
+        }
+
+        /*-------------------- 適正キーのボタン --------------------*/
+        key_downButton.setOnClickListener{
+            if(key_level-1 < -7){
+                key_level = -7
+            } else {
+                key_level -= 1
+            }
+
+            edit_proper_key.text = key_level.toString()
+            Log.d("TAG", "level = ${key_level}(press down)")
+        }
+
+        key_upButton.setOnClickListener{
+            if(7 < key_level+1){
+                key_level = 7
+            } else {
+                key_level += 1
+            }
+
+            edit_proper_key.text = key_level.toString()
+            Log.d("TAG", "key_level = ${key_level}(press up)")
         }
 
 /*        /*-----------------ArrayAdapter------------------*/
