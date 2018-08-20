@@ -36,7 +36,7 @@
     <string name="proper_key">適正キー</string>
     <string name="movie_link">動画のリンク</string>
     <string name="score">採点結果</string>
-    <string name="free_memo">自由記入欄</string>
+    <string name="free_memo">メモ</string>
     <string name="edit">編集</string>
     <string name="dbup">保存</string>
     <string name="no_data">情報なし</string>
