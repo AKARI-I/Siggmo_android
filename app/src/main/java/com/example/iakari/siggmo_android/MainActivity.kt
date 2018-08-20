@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import io.realm.Realm
@@ -210,19 +209,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // メニューを膨張させます。アクションバーが存在する場合、アクションバーに項目が追加される
-        menuInflater.inflate(R.menu.main, menu)
-
-        /*-------------------- SearchView --------------------*/
-        // ToDo: SearchViewのセットアップを記述
-        // listSearch.setIconifiedByDefault(false)         // SearchViewの初期表示状態を設定
-        // listSearch.setOnQueryTextListener()         // テキストが入力される度に呼ばれるメソッド
-        // listSearch.isSubmitButtonEnabled = false        // Submitボタン(何それ)を使用不可にする
-
-        return true
-    }
+    
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // アクションバー(ホームボタンとかある場所)のアイテムのクリックをここで処理
@@ -289,9 +276,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 // 曲の追加：新規登録画面に遷移
                 val intent = Intent(this , NewAdditionActivity::class.java)
                 startActivity(intent)
-            }
-            R.id.nav_config -> {
-
             }
         }
 
