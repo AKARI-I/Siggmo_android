@@ -11,7 +11,6 @@ import java.util.*
 
 class NewAdditionActivity : AppCompatActivity() {
     lateinit var mRealm: Realm
-//    private val spinnerItems = arrayOf("７","６","５","４","３","２","１","０","-１","-２","-３","-４","-５","-６","-７")
 
     // mutableMapOf：書き込み可能なコレクションを生成する(mapOfは読み取り専用)
     val musicInfo_s: MutableMap<String, String> = mutableMapOf(
@@ -26,7 +25,8 @@ class NewAdditionActivity : AppCompatActivity() {
     val musicInfo_f: MutableMap<String, Float> = mutableMapOf("sc" to 100F)
     val musicInfo_i: MutableMap<String, Int> = mutableMapOf("sl" to 1)
     var insertFlg = false
-    var level = 1   // 歌えるレベル(1~4)
+    var singing_level = 1   // 歌えるレベル(1~4)
+    var proper_key_level = 0 // 適正キー(-7~7)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,52 +43,51 @@ class NewAdditionActivity : AppCompatActivity() {
         mRealm = Realm.getInstance(realmConfig)
 
         /*-------------------- 歌えるレベルのボタン --------------------*/
-        downButton.setOnClickListener{
-            if(level-1 < 1){
-                level = 1
+        singing_level_downButton.setOnClickListener{
+            if(singing_level-1 < 1){
+                singing_level = 1
             } else {
-                level -= 1
+                singing_level -= 1
             }
 
-            edit_singing_level.text = level.toString()
-            Log.d("TAG", "level = ${level}(press down)")
+            edit_singing_level.text = singing_level.toString()
+            Log.d("TAG", "level = ${singing_level}(press down)")
         }
 
-        upButton.setOnClickListener{
-            if(4 < level+1){
-                level = 4
+        singing_level_upButton.setOnClickListener{
+            if(4 < singing_level+1){
+                singing_level = 4
             } else {
-                level += 1
+                singing_level += 1
             }
 
-            edit_singing_level.text = level.toString()
-            Log.d("TAG", "level = ${level}(press up)")
+            edit_singing_level.text = singing_level.toString()
+            Log.d("TAG", "level = ${singing_level}(press up)")
         }
 
-/*        /*-----------------ArrayAdapter------------------*/
-        val adapter = ArrayAdapter(applicationContext,android.R.layout.simple_spinner_item,spinnerItems)
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        // spinner に adapter をセット
-        edit_proper_key.adapter = adapter
-
-        // リスナー登録
-        edit_proper_key.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            //アイテム選択時
-            override fun onItemSelected(parent: AdapterView<*>?,
-                                        view: View?,
-                                        position: Int,
-                                        id: Long){
-                val spinnerParent = parent as Spinner
-                musicInfo_i["pk"] = spinnerParent.selectedItem.toString()
+        /*-------------------- 適正キーのボタン --------------------*/
+        proper_key_downButton.setOnClickListener{
+            if(proper_key_level-1 < -7){
+                proper_key_level = -7
+            } else {
+                proper_key_level -= 1
             }
-            //アイテム非選択時
-            override fun onNothingSelected(parent: AdapterView<*>?){
 
-            }
+            edit_proper_key.text = proper_key_level.toString()
+            Log.d("TAG", "level = ${proper_key_level}(press down)")
         }
-*/
+
+        proper_key_upButton.setOnClickListener{
+            if(7 < proper_key_level+1){
+                proper_key_level = 7
+            } else {
+                proper_key_level += 1
+            }
+
+            edit_proper_key.text = proper_key_level.toString()
+            Log.d("TAG", "key_level = ${proper_key_level}(press up)")
+        }
+
         /* 保存ボタンがクリックされたらレコードを追加する */
         // ※ここではテスト用データを事前に宣言してレコードを作成
         saveButon.setOnClickListener {
@@ -115,7 +114,7 @@ class NewAdditionActivity : AppCompatActivity() {
         if(!isEmpty(edit_movie_link.text)){ musicInfo_s["ml"] = edit_movie_link.text.toString() }
         if(!isEmpty(edit_score.text)){ musicInfo_f["sc"] = edit_score.text.toString().toFloat() }
         if(!isEmpty(edit_free_memo.text)){ musicInfo_s["fm"] = edit_free_memo.text.toString() }
-        musicInfo_i["sl"] = level
+        musicInfo_i["sl"] = singing_level
 
         if(!isEmpty(edit_music_name.text)){
             // 曲名の入力があった場合
