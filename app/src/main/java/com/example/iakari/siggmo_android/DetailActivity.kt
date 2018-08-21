@@ -4,12 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.text.InputType
 import android.util.Log
 import android.view.KeyEvent
 import android.widget.Button
+import android.widget.EditText
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_detail.*
+import java.util.*
 
 class DetailActivity : AppCompatActivity() {
     lateinit var mRealm: Realm
@@ -32,7 +36,12 @@ class DetailActivity : AppCompatActivity() {
         val tapid = intent.getStringExtra("TapID")
         // idから曲の情報を取得
         val record = quaryById(tapid)
-        val s_record = quaryByScore(record!!.score_id)
+        val s_record = readScore(record!!.id)
+
+        /*s_record.forEach {
+            Log.d("s_record", "\nscore = ${it.score}\nreq_date${it.reg_data}")
+        }
+        Log.d("s_record", "\n===============================\n")*/
 
         // レコードが返されたら曲名を表示
         if (s_record != null) {
@@ -44,36 +53,11 @@ class DetailActivity : AppCompatActivity() {
             singing_level.text   = record.singing_level.toString()
             proper_key.text      = record.proper_key
             movie_link.text      = record.movie_link
-            score.text           = s_record.score.toString()
+            score.text           = s_record.max("score").toString()
             free_memo.text       = record.free_memo
-            last_update.text     = s_record.reg_data
+            last_update.text     = s_record.last()!!.reg_data
         }
-        /*------------------- dialog --------------------*/
-        // 選択した曲IDと一致する採点結果を取得
-        val getData = mRealm.where(ScoreResultDB::class.java)
-                .equalTo("music_id",tapid )
-                .findAll()
-        var maxScore = 0F            // 最高得点
-        var sum = 0F                 // 合計値
-        // 点数レコードを回す
-        getData.forEach{
-            if(maxScore < it.score)
-            sum += it.score
-            maxScore = it.score
-        }
-        var count = getData.count() // 歌った回数
-        var averageScore = sum / count  // 平均点
-
-        score_detail.setOnClickListener {
-            val detail = AlertDialog.Builder(this@DetailActivity)
-            detail.setTitle("点数詳細")
-            detail.setMessage("・最高得点\n" +  maxScore  +   "点\n" +
-                    "・平均点\n" +  averageScore  +  "点\n" +
-                    "・歌った回数\n" +  count  +  "回\n"
-            )
-            detail.setPositiveButton("OK" , null).show()
-        }
-
+        score_detail.setOnClickListener {dialogRun(tapid)}
 
         /*------------------- Button --------------------*/
         val button: Button = findViewById(R.id.send_button)
@@ -98,6 +82,64 @@ class DetailActivity : AppCompatActivity() {
         return false
     }
 
+    fun dialogRun(tapid: String){
+        // 選択した曲IDと一致する採点結果を取得
+        val getData = readScore(tapid)
+        var maxScore = 0F            // 最高得点
+        var sum = 0F                 // 合計値
+        // 点数レコードを回す
+        getData.forEach{
+            sum += it.score
+            if(maxScore < it.score)
+                maxScore = it.score
+            Log.d("scoreDB", "score = ${it.score}\ndate = ${it.reg_data}\nscore_id${it.score_id}")
+        }
+        Log.d("scoreDB", "\n===============================\n")
+        var count = getData.count() // 歌った回数
+        var averageScore = sum / count  // 平均点
+
+
+        val detail = AlertDialog.Builder(this@DetailActivity)
+        detail.setTitle("点数詳細")
+        detail.setMessage("・最高得点\n" +  maxScore  +   "点\n" +
+                "・平均点\n" +  averageScore  +  "点\n" +
+                "・歌った回数\n" +  count  +  "回\n" +
+                "\n\nスコアを追加"
+        )
+
+        val editView = EditText(this@DetailActivity)
+        // editViewの小数入力の強制
+        editView.inputType = InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL
+        detail.setView(editView)
+        detail.setPositiveButton("OK"){ _, _ ->
+            if (editView.text != null && !editView.text.toString().isEmpty()){
+                val score = editView.text.toString().toFloat()
+                if (score in 0.0..100.0) { // scoreの範囲チェック
+                    if (count < 5) {
+                        saveScore(tapid, score)
+                    } else {
+                        // ScoreResultDBの数が５を超えると古いものから削除
+                        val results: RealmResults<ScoreResultDB> = mRealm.where(ScoreResultDB::class.java)
+                                .equalTo("score_id", getData[0]!!.score_id)
+                                .findAll()
+                        mRealm.executeTransaction(Realm.Transaction {
+                            Log.d("TAG", "in realm delete process")
+                            results.deleteFromRealm(0)
+                            results.deleteLastFromRealm()
+                        })
+                        saveScore(tapid, score)
+                    }
+                }else{
+
+                }
+            }
+        }
+        detail.setNegativeButton("キャンセル"){ _, _ ->
+
+        }
+        detail.show()
+    }
+
     // 渡されたidからデータベースを検索して曲の情報を返す
     // select * from SiggmoDB where id = idと同じ意味
     fun quaryById(id: String): SiggmoDB? {
@@ -108,11 +150,38 @@ class DetailActivity : AppCompatActivity() {
     }
 
     // scoreを参照する
-    fun quaryByScore(s_id: String): ScoreResultDB? {
+    fun quaryByScore(m_id: String): ScoreResultDB? {
         Log.d("TAG", "quaryByScore(DetailActivity)")
         return mRealm.where(ScoreResultDB::class.java)
-                .equalTo("score_id", s_id)
+                .equalTo("music_id", m_id)
                 .findFirst()
+    }
+
+    // Scoreを日付の古い順に取ってくる
+    fun readScore(id: String) : RealmResults<ScoreResultDB> {
+        return mRealm.where(ScoreResultDB::class.java)
+                .equalTo("music_id", id)
+                .findAll().sort("reg_data")
+    }
+    fun saveScore(musicId:String, score:Float){
+        mRealm.executeTransaction {
+            val scoreResultDB = mRealm.createObject(ScoreResultDB::class.java, UUID.randomUUID().toString())
+            /*-------------------- 時間の取得 --------------------*/
+            var calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)          // 年
+            val month = calendar.get(Calendar.MONTH) + 1      // 月
+            val day = calendar.get(Calendar.DAY_OF_MONTH)   // 日
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)   // 時
+            val minute = calendar.get(Calendar.MINUTE)      // 分
+            val second = calendar.get(Calendar.SECOND)      // 秒
+
+            val date = "$year/$month/$day/$hour:$minute:$second"    // 年/月/日/時:分:秒
+
+            scoreResultDB.music_id = musicId
+            scoreResultDB.score = score
+            scoreResultDB.reg_data = date
+            mRealm.copyToRealm(scoreResultDB)
+        }
     }
 
     // 表示する項目名とidをペアにして扱うためのクラス
