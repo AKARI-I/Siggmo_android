@@ -18,10 +18,10 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
-        var eLevel = 1
+        var s_Level = 1  // 歌えるレベル
+        var p_Key = 0 // 適正キー
 
-
-        //       val editText = findViewById<EditText>(android.R.id.music_name_edit)
+ //       val editText = findViewById<EditText>(android.R.id.music_name_edit)
  //       val edit = m_name_edit.text.toString()
  //       m_name_edit.setText("==========")
 
@@ -33,25 +33,48 @@ class EditActivity : AppCompatActivity() {
         mRealm = Realm.getInstance(realmConfig)
 
         /*-------------------- 歌えるレベルのボタン --------------------*/
-        downButtonE.setOnClickListener {
-            if(eLevel-1 < 1){
-                eLevel = 1
+        s_level_downButton.setOnClickListener {
+            if(s_Level-1 < 1){
+                s_Level = 1
             } else {
-                eLevel -= 1
+                s_Level -= 1
             }
 
-            s_level.text = eLevel.toString()
-            Log.d("TAG", "level = ${eLevel}(press down)")
+            s_level.text = s_Level.toString()
+            Log.d("TAG", "level = ${s_Level}(press down)")
         }
-        upButtonE.setOnClickListener {
-            if(4 < eLevel+1){
-                eLevel = 4
+        s_level_upButton.setOnClickListener {
+            if(4 < s_Level+1){
+                s_Level = 4
             } else {
-                eLevel += 1
+                s_Level += 1
             }
 
-            s_level.text = eLevel.toString()
-            Log.d("TAG", "level = ${eLevel}(press up)")
+            s_level.text = s_Level.toString()
+            Log.d("TAG", "level = ${s_Level}(press up)")
+        }
+
+        /*-------------------- 適正キーのボタン --------------------*/
+        p_key_downButton.setOnClickListener{
+            if(p_Key-1 < -7){
+                p_Key = -7
+            } else {
+                p_Key -= 1
+            }
+
+            p_key.text = p_Key.toString()
+            Log.d("TAG", "level = ${p_Key}(press down)")
+        }
+
+        p_key_upButton.setOnClickListener{
+            if(7 < p_Key+1){
+                p_Key = 7
+            } else {
+                p_Key += 1
+            }
+
+            p_key.text = p_Key.toString()
+            Log.d("TAG", "key_level = ${p_Key}(press up)")
         }
 
         val tapid = intent.getStringExtra("TapID")
