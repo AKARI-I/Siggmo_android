@@ -116,22 +116,23 @@ class NewAdditionActivity : AppCompatActivity() {
         if(!isEmpty(edit_free_memo.text)){ musicInfo_s["fm"] = edit_free_memo.text.toString() }
         musicInfo_i["sl"] = singing_level
 
-        if(!isEmpty(edit_music_name.text)){
-            // 曲名の入力があった場合
-            create(musicInfo_s["mn"].toString(),
-                   musicInfo_s["mp"].toString(),
-                   musicInfo_s["sn"].toString(),
-                   musicInfo_s["sp"].toString(),
-                   musicInfo_s["fl"].toString(),
-                   musicInfo_i["sl"] as Int,
-                   musicInfo_s["pk"].toString(),
-                   musicInfo_s["ml"].toString(),
-                   musicInfo_f["sc"] as Float,
-                   musicInfo_s["fm"].toString())
-            finish()    // メイン画面に戻る
-        } else {
+        // 入力値のチェックはここでする
+        if(isEmpty(edit_music_name.text)){
             // 曲名の入力がなかった場合
             edit_music_name.error = "曲名を入力してください"
+        } else {
+            // 曲名の入力があった場合
+            create(musicInfo_s["mn"].toString(),
+                    musicInfo_s["mp"].toString(),
+                    musicInfo_s["sn"].toString(),
+                    musicInfo_s["sp"].toString(),
+                    musicInfo_s["fl"].toString(),
+                    musicInfo_i["sl"] as Int,
+                    musicInfo_s["pk"].toString(),
+                    musicInfo_s["ml"].toString(),
+                    musicInfo_f["sc"] as Float,
+                    musicInfo_s["fm"].toString())
+            finish()    // メイン画面に戻る
         }
     }
 
@@ -154,7 +155,6 @@ class NewAdditionActivity : AppCompatActivity() {
             val second = calendar.get(Calendar.SECOND)      // 秒
 
             val date = "${year}/${month}/${day}/${hour}:${minute}:${second}"    // 年/月/日/時:分:秒
-            Log.d("TAG", date)
 
             // 各項目を設定
             siggmoDB.music_name      = mName
@@ -176,5 +176,9 @@ class NewAdditionActivity : AppCompatActivity() {
             mRealm.copyToRealm(scoreResultDB)
         }
         Log.d("TAG", "finish create method(NewAdditionActivity)")
+    }
+
+    fun scoreCheck(){
+
     }
 }
