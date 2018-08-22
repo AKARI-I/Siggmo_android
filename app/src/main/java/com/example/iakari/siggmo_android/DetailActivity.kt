@@ -57,7 +57,8 @@ class DetailActivity : AppCompatActivity() {
             free_memo.text       = record.free_memo
             last_update.text     = s_record.last()!!.reg_data
         }
-        score_detail.setOnClickListener {dialogRun(tapid)}
+        Log.d("music_count", "read ${record.music_count}")
+        score_detail.setOnClickListener {dialogRun(tapid, record.music_count)}
 
         /*------------------- Button --------------------*/
         val button: Button = findViewById(R.id.send_button)
@@ -82,7 +83,7 @@ class DetailActivity : AppCompatActivity() {
         return false
     }
 
-    fun dialogRun(tapid: String){
+    fun dialogRun(tapid: String, count: Int){
         // 選択した曲IDと一致する採点結果を取得
         val getData = readScore(tapid)
         var maxScore = 0F            // 最高得点
@@ -95,7 +96,6 @@ class DetailActivity : AppCompatActivity() {
             Log.d("scoreDB", "score = ${it.score}\ndate = ${it.reg_data}\nscore_id${it.score_id}")
         }
         Log.d("scoreDB", "\n===============================\n")
-        var count = getData.count() // 歌った回数
         var averageScore = sum / count  // 平均点
 
 
@@ -165,6 +165,7 @@ class DetailActivity : AppCompatActivity() {
     }
     fun saveScore(musicId:String, score:Float){
         mRealm.executeTransaction {
+            val siggmoDB = quaryById(musicId)
             val scoreResultDB = mRealm.createObject(ScoreResultDB::class.java, UUID.randomUUID().toString())
             /*-------------------- 時間の取得 --------------------*/
             var calendar = Calendar.getInstance()
@@ -177,6 +178,8 @@ class DetailActivity : AppCompatActivity() {
 
             val date = "$year/$month/$day/$hour:$minute:$second"    // 年/月/日/時:分:秒
 
+            Log.d("music_count", "${siggmoDB!!.music_count}")
+            siggmoDB!!.music_count = siggmoDB!!.music_count + 1
             scoreResultDB.music_id = musicId
             scoreResultDB.score = score
             scoreResultDB.reg_data = date
