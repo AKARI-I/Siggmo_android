@@ -80,7 +80,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 // テキストが変更された
                 Log.d("searchList", "change text: $text")
                 if (TextUtils.isEmpty(text)){
-                    MainListView.clearTextFilter()
+                    Log.d("searchList", "true")
+                    filter.filter("")
                 } else{
                     Log.d("searchList", "else")
                     filter.filter(text.toString())
@@ -158,6 +159,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
         MainListView.adapter = arrayAdapter
+
         // 各項目をタップしたときの処理
         MainListView.setOnItemClickListener{parent, _, position, _ ->
             val listView = parent as ListView
@@ -209,7 +211,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
-    
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // アクションバー(ホームボタンとかある場所)のアイテムのクリックをここで処理
