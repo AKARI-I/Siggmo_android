@@ -115,7 +115,7 @@ class DetailActivity : AppCompatActivity() {
             if (editView.text != null && !editView.text.toString().isEmpty()){
                 val score = editView.text.toString().toFloat()
                 if (score in 0.0..100.0) { // scoreの範囲チェック
-                    if (count < 5) {
+                    if (count < 100) {
                         saveScore(tapid, score)
                     } else {
                         // ScoreResultDBの数が５を超えると古いものから削除
