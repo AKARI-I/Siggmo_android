@@ -118,8 +118,9 @@ class NewAdditionActivity : AppCompatActivity() {
 
         // 入力値のチェックはここでする
         if(isEmpty(edit_music_name.text)){
-            // 曲名の入力がなかった場合
             edit_music_name.error = "曲名を入力してください"
+        }else if(scoreCheck(edit_score.text.toString().toFloat())){
+            edit_score.error = "1~100の数字を入力してください"
         } else {
             // 曲名の入力があった場合
             create(musicInfo_s["mn"].toString(),
@@ -178,7 +179,7 @@ class NewAdditionActivity : AppCompatActivity() {
         Log.d("TAG", "finish create method(NewAdditionActivity)")
     }
 
-    fun scoreCheck(){
-
+    fun scoreCheck(score: Float): Boolean {
+        return score < 0 || 100 < score
     }
 }
