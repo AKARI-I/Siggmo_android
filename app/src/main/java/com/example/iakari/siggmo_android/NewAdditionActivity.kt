@@ -166,7 +166,6 @@ class NewAdditionActivity : AppCompatActivity() {
             siggmoDB.proper_key      = pKey
             siggmoDB.movie_link      = mLink
             siggmoDB.free_memo       = fMemo
-            siggmoDB.score_id        = scoreResultDB.score_id
             scoreResultDB.music_id   = siggmoDB.id
             scoreResultDB.score      = Score
             scoreResultDB.reg_data   = date

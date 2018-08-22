@@ -26,7 +26,7 @@ open class SiggmoDB (
         open var movie_link     : String = "",  // 動画のリンク
         open var free_memo      : String = "",  // 自由記入欄
         open var list_id        : String = "",  // リスト照合用のID
-        open var score_id       : String = ""   // 採点結果照合用ID(同曲でも別々に付与、消すかも)
+        open var music_count    : Int    = 0
 ) : RealmObject(){}
 
 // openをとると継承ができなくなるらしい
