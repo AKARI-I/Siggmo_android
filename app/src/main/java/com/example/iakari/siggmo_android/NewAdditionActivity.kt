@@ -22,7 +22,7 @@ class NewAdditionActivity : AppCompatActivity() {
             "pk" to "",  // 適正キー
             "ml" to "",  // 動画のリンク
             "fm" to "")  // 自由記入欄
-    val musicInfo_f: MutableMap<String, Float> = mutableMapOf("sc" to 100F)
+    val musicInfo_f: MutableMap<String, Float?> = mutableMapOf("sc" to null)
     val musicInfo_i: MutableMap<String, Int> = mutableMapOf("sl" to 1)
     var insertFlg = false
     var singing_level = 1   // 歌えるレベル(1~4)
@@ -119,8 +119,23 @@ class NewAdditionActivity : AppCompatActivity() {
         // 入力値のチェックはここでする
         if(isEmpty(edit_music_name.text)){
             edit_music_name.error = "曲名を入力してください"
-        }else if(scoreCheck(edit_score.text.toString().toFloat())){
-            edit_score.error = "1~100の数字を入力してください"
+        }else if( !isEmpty(edit_score.text) ){
+            if( scoreCheck(edit_score.text.toString().toFloat())) {
+                edit_score.error = "1~100の数字を入力してください"
+            }else {
+                // 曲名の入力があった場合
+                create(musicInfo_s["mn"].toString(),
+                        musicInfo_s["mp"].toString(),
+                        musicInfo_s["sn"].toString(),
+                        musicInfo_s["sp"].toString(),
+                        musicInfo_s["fl"].toString(),
+                        musicInfo_i["sl"] as Int,
+                        musicInfo_s["pk"].toString(),
+                        musicInfo_s["ml"].toString(),
+                        musicInfo_f["sc"] as Float?,
+                        musicInfo_s["fm"].toString())
+                finish()    // メイン画面に戻る
+            }
         } else {
             // 曲名の入力があった場合
             create(musicInfo_s["mn"].toString(),
@@ -131,7 +146,7 @@ class NewAdditionActivity : AppCompatActivity() {
                     musicInfo_i["sl"] as Int,
                     musicInfo_s["pk"].toString(),
                     musicInfo_s["ml"].toString(),
-                    musicInfo_f["sc"] as Float,
+                    musicInfo_f["sc"] as Float?,
                     musicInfo_s["fm"].toString())
             finish()    // メイン画面に戻る
         }
@@ -139,7 +154,7 @@ class NewAdditionActivity : AppCompatActivity() {
 
     // データベースにレコードを追加する
     fun create(mName:String, mPhonetic:String, sName:String, sPhonetic:String, fLine:String,
-               sLevel: Int, pKey: String, mLink:String, Score:Float, fMemo:String){
+               sLevel: Int, pKey: String, mLink:String, Score:Float?, fMemo:String){
 
         mRealm.executeTransaction{
             // ランダムなidを設定
@@ -170,8 +185,11 @@ class NewAdditionActivity : AppCompatActivity() {
             scoreResultDB.music_id   = siggmoDB.id
             scoreResultDB.score      = Score
             scoreResultDB.reg_data   = date
+            if( Score != null )
+                siggmoDB!!.music_count = siggmoDB!!.music_count + 1
 
-            // データベースに追加
+                // データベースに追加
+
             mRealm.copyToRealm(siggmoDB)
             mRealm.copyToRealm(scoreResultDB)
         }

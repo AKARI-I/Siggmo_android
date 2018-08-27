@@ -37,10 +37,10 @@ open class ListDB (
 ) : RealmObject(){}
 
 open class ScoreResultDB(
-        @PrimaryKey open var score_id : String = UUID.randomUUID().toString(),
+        @PrimaryKey open var score_id: String = UUID.randomUUID().toString(),
         //@Required
-        open var music_id : String = "",        // どの曲の採点結果かを保存
-        open var score    : Float = 100F,
-        open var reg_data : String = ""
+        open var music_id: String = "",        // どの曲の採点結果かを保存
+        open var score: Float? = null,
+        open var reg_data: String = ""
 
 ) : RealmObject(){}
