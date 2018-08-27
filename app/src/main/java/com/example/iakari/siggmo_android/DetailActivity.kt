@@ -13,6 +13,7 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_detail.*
+import java.lang.String.format
 import java.util.*
 
 class DetailActivity : AppCompatActivity() {
@@ -53,7 +54,7 @@ class DetailActivity : AppCompatActivity() {
             singing_level.text   = record.singing_level.toString()
             proper_key.text      = record.proper_key
             movie_link.text      = record.movie_link
-            score.text           = s_record.max("score").toString()
+            score.text           = checkScore(s_record.max("score") as Float?).toString()
             free_memo.text       = record.free_memo
             last_update.text     = s_record.last()!!.reg_data
         }
@@ -86,23 +87,11 @@ class DetailActivity : AppCompatActivity() {
     fun dialogRun(tapid: String, count: Int){
         // 選択した曲IDと一致する採点結果を取得
         val getData = readScore(tapid)
-        var maxScore = 0F            // 最高得点
-        var sum = 0F                 // 合計値
-        // 点数レコードを回す
-        getData.forEach{
-            sum += it.score
-            if(maxScore < it.score)
-                maxScore = it.score
-            Log.d("scoreDB", "score = ${it.score}\ndate = ${it.reg_data}\nscore_id${it.score_id}")
-        }
-        Log.d("scoreDB", "\n===============================\n")
-        var averageScore = sum / count  // 平均点
-
 
         val detail = AlertDialog.Builder(this@DetailActivity)
         detail.setTitle("点数詳細")
-        detail.setMessage("・最高得点\n" +  maxScore  +   "点\n" +
-                "・平均点\n" +  averageScore  +  "点\n" +
+        detail.setMessage("・最高得点\n" +  checkScore(getData.max("score") as Float?)  +   "点\n" +
+                "・平均点\n" +  format("%.1f",(getData.average("score")))  +  "点\n" +
                 "・歌った回数\n" +  count  +  "回\n" +
                 "\n\nスコアを追加"
         )
@@ -118,7 +107,7 @@ class DetailActivity : AppCompatActivity() {
                     if (count < 100) {
                         saveScore(tapid, score)
                     } else {
-                        // ScoreResultDBの数が５を超えると古いものから削除
+                        // ScoreResultDBの数が100を超えると古いものから削除
                         val results: RealmResults<ScoreResultDB> = mRealm.where(ScoreResultDB::class.java)
                                 .equalTo("score_id", getData[0]!!.score_id)
                                 .findAll()
@@ -147,6 +136,10 @@ class DetailActivity : AppCompatActivity() {
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("id", id)
                 .findFirst()
+    }
+
+    fun checkScore(score: Float?): Float{
+        return score as? Float ?: 0.0F
     }
 
     // scoreを参照する
