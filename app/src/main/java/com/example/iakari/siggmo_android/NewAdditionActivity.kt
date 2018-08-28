@@ -116,6 +116,8 @@ class NewAdditionActivity : AppCompatActivity() {
         if(!isEmpty(edit_free_memo.text)){ musicInfo_s["fm"] = edit_free_memo.text.toString() }
         musicInfo_i["sl"] = singing_level
 
+        Log.d("TAG", "edit_score→${edit_score.text.toString().toFloat()}")
+
         // 入力値のチェックはここでする
         if(isEmpty(edit_music_name.text)){
             edit_music_name.error = "曲名を入力してください"
@@ -197,6 +199,6 @@ class NewAdditionActivity : AppCompatActivity() {
     }
 
     fun scoreCheck(score: Float): Boolean {
-        return score < 0 || 100 < score
+        return score < 0 || 100 < score     // 1~100の範囲外ならtrueを返す
     }
 }
