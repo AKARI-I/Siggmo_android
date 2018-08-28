@@ -3,13 +3,14 @@ package com.example.iakari.siggmo_android
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils.isEmpty
 import android.util.Log
 import android.widget.Button
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import io.realm.RealmResults
+import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_edit.*
-import kotlinx.android.synthetic.main.activity_new_addition.*
+import java.util.*
 
 class EditActivity : AppCompatActivity() {
     lateinit var mRealm: Realm
@@ -83,16 +84,6 @@ class EditActivity : AppCompatActivity() {
 
         Log.d("TAG", "${s_record}")
 
-        var recCnt = 0
-        // レコード数の取得
-        if (s_record != null) {
-            s_record.forEach {
-                Log.d("TAG", "${it.score}")
-                recCnt++
-                Log.d("TAG", "${recCnt}")
-            }
-        }
-
         // 保存済みのデータを表示
         if (s_record != null) {
             Log.d("TAG", "${record}")
@@ -104,7 +95,7 @@ class EditActivity : AppCompatActivity() {
             s_level.setText(record.singing_level.toString())
             p_key.setText(record.proper_key)
             m_link.setText(record.movie_link)
-            //s_edit.setText(s_record.score.toString())
+            s_edit.setText(s_record.score.toString())
             f_memo.setText(record.free_memo)
         }
 
@@ -123,44 +114,59 @@ class EditActivity : AppCompatActivity() {
                     m_link.text.toString(),
                     s_edit.text.toString(),
                     f_memo.text.toString())
-            //update(record, s_record, sgm)
-            //DetailActivityにもどる
-            val intent: Intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("TapID",tapid)
-            startActivity(intent)
+            if(update(record, s_record, sgm)) {
+                //DetailActivityにもどる
+                val intent: Intent = Intent(this, DetailActivity::class.java)
+                intent.putExtra("TapID", tapid)
+                startActivity(intent)
+            }
         }
     }
 
         //id(tapid),record,曲名を渡す
-    fun update(record: SiggmoDB?, s_record: ScoreResultDB?, sgm: Array<String>){
-        mRealm.executeTransaction{
+    fun update(record: SiggmoDB?, s_record: ScoreResultDB?, sgm: Array<String>) :Boolean{
+        if(isEmpty(sgm[0])){
+            m_name_edit.error = "曲名を入力してください"
+            return false
+        }
+        if(!checkScore(sgm[8].toFloat())) {
+            Log.d("TAG", "スコアの範囲チェック：false")
+            s_edit.error = "0~100の点数を入力してください"
+            return false
+        }
+        mRealm.executeTransaction {
             // スコアの範囲チェック
             // ToDo:範囲チェックがfalse->落ちる
-            if(checkScore(sgm[8].toFloat())){
-                Log.d("TAG", "スコアの範囲チェック：true")
-                //sgm配列に項目を入れて曲名から順番にDB(record)の中身と一緒かどうかを調べる
-                //今は項目一つしか入れてないのでループとかはせず曲名だけ見てる
-                val list = listOf(record)
-                if (record != null && s_record != null) {
-                    for (item in list) {
-                        //ループと条件分岐が難しそうなので一気に全部更新
-                        record.music_name       = sgm[0]
-                        record.music_phonetic   = sgm[1]
-                        record.singer_name      = sgm[2]
-                        record.singer_phonetic  = sgm[3]
-                        record.first_line       = sgm[4]
-                        record.singing_level    = sgm[5].toInt()
-                        record.proper_key       = sgm[6]
-                        record.movie_link       = sgm[7]
-                        s_record.score          = sgm[8].toFloat()
-                        record.free_memo        = sgm[9]
-                    }
-                }
-            } else {
-                Log.d("TAG", "スコアの範囲チェック：false")
-                edit_score.error = "0~100の点数を入力してください"
+
+            Log.d("TAG", "スコアの範囲チェック：true")
+            //sgm配列に項目を入れて曲名から順番にDB(record)の中身と一緒かどうかを調べる
+            //今は項目一つしか入れてないのでループとかはせず曲名だけ見てる
+            if (record != null && s_record != null) {
+                /*-------------------- 時間の取得 --------------------*/
+                var calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)          // 年
+                val month = calendar.get(Calendar.MONTH) + 1      // 月
+                val day = calendar.get(Calendar.DAY_OF_MONTH)   // 日
+                val hour = calendar.get(Calendar.HOUR_OF_DAY)   // 時
+                val minute = calendar.get(Calendar.MINUTE)      // 分
+                val second = calendar.get(Calendar.SECOND)      // 秒
+
+                val date = "${year}/${month}/${day}/${hour}:${minute}:${second}"    // 年/月/日/時:分:秒
+                //ループと条件分岐が難しそうなので一気に全部更新
+                record.music_name = sgm[0]
+                record.music_phonetic = sgm[1]
+                record.singer_name = sgm[2]
+                record.singer_phonetic = sgm[3]
+                record.first_line = sgm[4]
+                record.singing_level = sgm[5].toInt()
+                record.proper_key = sgm[6]
+                record.movie_link = sgm[7]
+                s_record.score = sgm[8].toFloat()
+                record.free_memo = sgm[9]
+                s_record.reg_data = date
             }
         }
+        return true
     }
     fun checkScore(score:Float): Boolean {
         if(0 <= score && score <= 100){
@@ -177,10 +183,11 @@ class EditActivity : AppCompatActivity() {
     }
 
     // scoreを参照する
-    fun quaryByScore(id: String): RealmResults<ScoreResultDB>? {
+    fun quaryByScore(id: String): ScoreResultDB? {
         Log.d("TAG", "quaryByScore(DetailActivity)")
-        return mRealm.where(ScoreResultDB::class.java)
+        val records = mRealm.where(ScoreResultDB::class.java)
                 .equalTo("music_id", id)
-                .findAll()
+                .findAll().sort("reg_data", Sort.DESCENDING)
+        return records[0]
     }
 }
