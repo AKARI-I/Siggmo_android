@@ -119,13 +119,14 @@ class DetailActivity : AppCompatActivity() {
                         saveScore(tapid, score)
                     }
                 }else{
-
+                    editView.error = "1~100の数字を入力してください"
                 }
             }
         }
         detail.setNegativeButton("キャンセル"){ _, _ ->
 
         }
+
         detail.show()
     }
 
