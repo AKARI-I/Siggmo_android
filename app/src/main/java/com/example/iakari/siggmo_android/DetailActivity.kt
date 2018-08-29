@@ -173,7 +173,7 @@ class DetailActivity : AppCompatActivity() {
             val date = "$year/$month/$day/$hour:$minute:$second"    // 年/月/日/時:分:秒
 
             Log.d("music_count", "${siggmoDB!!.music_count}")
-            siggmoDB!!.music_count = siggmoDB!!.music_count + 1
+            siggmoDB.music_count = siggmoDB.music_count + 1
             scoreResultDB.music_id = musicId
             scoreResultDB.score = score
             scoreResultDB.reg_data = date
