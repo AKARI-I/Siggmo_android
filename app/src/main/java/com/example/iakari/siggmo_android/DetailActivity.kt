@@ -140,7 +140,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     fun checkScore(score: Float?): Float{
-        return score as? Float ?: 0.0F
+        return score ?: 0.0F
     }
 
     // scoreを参照する
