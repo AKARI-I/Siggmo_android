@@ -45,7 +45,7 @@ class DetailActivity : AppCompatActivity() {
         Log.d("s_record", "\n===============================\n")*/
 
         // レコードが返されたら曲名を表示
-        if (s_record != null) {
+        //if (s_record != null) {
             music_name.text      = record.music_name
             music_phonetic.text  = record.music_phonetic
             singer_name.text     = record.singer_name
@@ -57,7 +57,7 @@ class DetailActivity : AppCompatActivity() {
             score.text           = checkScore(s_record.max("score") as Float?).toString()
             free_memo.text       = record.free_memo
             last_update.text     = s_record.last()!!.reg_data
-        }
+        //}
         Log.d("music_count", "read ${record.music_count}")
         score_detail.setOnClickListener {dialogRun(tapid, record.music_count)}
 
