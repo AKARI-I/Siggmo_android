@@ -307,6 +307,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
+                    android:autoText="true"
+                    android:background="@drawable/button_style"
                     android:gravity="center"
                     android:text="詳細"
                     android:textColor="@color/button_text"
