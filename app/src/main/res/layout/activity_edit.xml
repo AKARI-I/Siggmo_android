@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/music_name"
                 android:textColor="@android:color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_size"
                 tools:ignore="HardcodedText" />
 
             <EditText
@@ -64,7 +64,7 @@
                 android:ems="10"
                 android:inputType="text"
                 android:textColor="@android:color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_size"
                 tools:ignore="LabelFor" />
 
             <TextView
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/music_phonetic"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/m_phone"
@@ -82,7 +82,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textColor="@android:color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_size"
                 tools:ignore="LabelFor,TextFields" />
 
             <TextView
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/singer_name"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/s_name"
@@ -100,7 +100,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/s_phone_text"
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/singer_phonetic"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/s_phone"
@@ -117,7 +117,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textColor="@android:color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_size"
                 tools:ignore="TextFields" />
 
             <TextView
@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/first_line"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/f_line"
@@ -135,7 +135,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/item_singing_level"
@@ -143,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/singing_level"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -167,7 +167,7 @@
                     android:gravity="center"
                     android:text="1"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/s_level_upButton"
@@ -209,7 +209,7 @@
                     android:gravity="center"
                     android:text="0"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/p_key_upButton"
@@ -227,7 +227,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/score"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/s_edit"
@@ -236,7 +236,7 @@
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/m_link_text"
@@ -244,7 +244,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/movie_link"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/m_link"
@@ -253,7 +253,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/f_memo_text"
@@ -261,7 +261,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/free_memo"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/f_memo"
@@ -272,7 +272,7 @@
                 android:maxLength="500"
                 android:maxLines="10"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
         </LinearLayout>
     </ScrollView>
@@ -283,7 +283,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/button"
+        android:background="@drawable/button_style"
         android:text="@string/dbup"
         android:textColor="@color/app_text"
         app:layout_constraintBottom_toBottomOf="parent"
