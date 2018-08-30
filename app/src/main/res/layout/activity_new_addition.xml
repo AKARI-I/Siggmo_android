@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/music_name"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/edit_music_name"
@@ -61,7 +61,7 @@
                 android:inputType="text|textPersonName"
                 android:maxLines="1"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <!-- よみがな(曲名) -->
             <TextView
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/music_phonetic"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/edit_music_phonetic"
@@ -80,7 +80,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <!-- 歌手名 -->
             <TextView
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/singer_name"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/edit_singer_name"
@@ -99,7 +99,7 @@
                 android:inputType="text|textPersonName"
                 android:maxLines="1"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <!-- よみがな(歌手名) -->
             <TextView
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/singer_phonetic"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/edit_singer_phonetic"
@@ -118,7 +118,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <!-- 歌いだし -->
             <TextView
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/first_line"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/edit_first_line"
@@ -137,7 +137,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/item_singing_level"
@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/singing_level"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -170,7 +170,7 @@
                     android:gravity="center"
                     android:text="1"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/singing_level_upButton"
@@ -213,7 +213,7 @@
                     android:gravity="center"
                     android:text="0"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/proper_key_upButton"
@@ -231,7 +231,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/score"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/edit_score"
@@ -240,7 +241,8 @@
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:maxLines="1"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size" />
 
             <!-- 動画のリンク -->
             <TextView
@@ -248,7 +250,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/movie_link"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/edit_movie_link"
@@ -257,7 +260,8 @@
                 android:ems="10"
                 android:inputType="text"
                 android:maxLines="1"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size" />
 
             <!-- 自由記入欄 -->
             <TextView
@@ -265,7 +269,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/free_memo"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/edit_free_memo"
@@ -275,7 +280,8 @@
                 android:inputType="textMultiLine"
                 android:maxLength="500"
                 android:maxLines="10"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size" />
 
         </LinearLayout>
     </ScrollView>
