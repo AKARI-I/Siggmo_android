@@ -176,8 +176,7 @@ class NewAdditionActivity : AppCompatActivity() {
             if( Score != null )
                 siggmoDB!!.music_count = siggmoDB.music_count + 1
 
-                // データベースに追加
-
+            // データベースに追加
             mRealm.copyToRealm(siggmoDB)
             mRealm.copyToRealm(scoreResultDB)
         }

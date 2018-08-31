@@ -3,7 +3,7 @@ package com.example.iakari.siggmo_android
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils.isEmpty
-import android.widget.Button
+import android.util.Log
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.Sort
@@ -86,8 +86,8 @@ class EditActivity : AppCompatActivity() {
         }
 
         // update処理にまわす
-        val button: Button = findViewById(R.id.editbutton)
-        button.setOnClickListener{
+        editbutton.setOnClickListener{
+            Log.d("TAG", "Edit：setOnClickListener開始")
             //editにとりあえず今は曲名だけを入れてupdateに渡す
             val sgm = arrayOf(
                     m_name_edit.text.toString(),
@@ -100,6 +100,7 @@ class EditActivity : AppCompatActivity() {
                     m_link.text.toString(),
                     s_edit.text.toString(),
                     f_memo.text.toString())
+            Log.d("TAG", "Edit：sgm[]に入力された値を全て代入")
             if(update(record, sRecord, sgm)) {
                 finish()    // EditActivityを終了する
             }
@@ -108,16 +109,25 @@ class EditActivity : AppCompatActivity() {
 
     //id(tapid),record,曲名を渡す
     private fun update(record: SiggmoDB?, s_record: ScoreResultDB?, sgm: Array<String>) :Boolean{
+        Log.d("TAG", "Edit：updateメソッド開始")
+        // 曲名のエラーチェック
         if(isEmpty(sgm[0])){
             m_name_edit.error = "曲名を入力してください"
             return false
         }
+        // スコアの範囲チェック
         if(!checkScore(sgm[8].toFloat())) {
             s_edit.error = "0~100の点数を入力してください"
             return false
         }
+
         mRealm.executeTransaction {
             if (record != null && s_record != null) {
+
+                // ランダムなidを設定
+                val siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
+                val scoreResultDB = mRealm.createObject(ScoreResultDB::class.java, UUID.randomUUID().toString())
+
                 // 時間の取得
                 var calendar = Calendar.getInstance()
                 val year = calendar.get(Calendar.YEAR)          // 年
@@ -128,6 +138,7 @@ class EditActivity : AppCompatActivity() {
                 val second = calendar.get(Calendar.SECOND)      // 秒
 
                 val date = "$year/$month/$day/$hour:$minute:$second"    // 年/月/日/時:分:秒
+                Log.d("TAG", "Edit：日付の取得->$date")
 
                 // ToDo:mutablelistにしたい
                 record.music_name = sgm[0]

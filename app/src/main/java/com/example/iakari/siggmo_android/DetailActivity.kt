@@ -32,8 +32,38 @@ class DetailActivity : AppCompatActivity() {
                 .build()
         mRealm = Realm.getInstance(realmConfig)
 
-        // 受け取ったIDをTextViewで表示
+    }
+
+    override fun onResume() {
+        Log.d("TAG", "Detail：onResume start")
+        super.onResume()
+
         val tapid = intent.getStringExtra("TapID")
+        Log.d("TAG", "Detail：tapid -> $tapid")
+
+        setDetail(tapid)     // データを表示
+
+        /*------------------- Button --------------------*/
+        val button: Button = findViewById(R.id.send_button)
+        button.setOnClickListener {
+            val intent = Intent(this, EditActivity::class.java)
+            intent.putExtra("TapID",tapid)
+
+            startActivity(intent)
+        }
+    }
+
+    // 標準Backkeyの遷移先変更
+    override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
+        if(keyCode==KeyEvent.KEYCODE_BACK) {
+            finish()    // DetailActivityの終了
+            return true
+        }
+        return false
+    }
+
+    private fun setDetail(tapid:String){
+        Log.d("TAG", "Detail：setDetailメソッド開始")
 
         // idから曲の情報を取得
         val record = quaryById(tapid)
@@ -52,27 +82,8 @@ class DetailActivity : AppCompatActivity() {
         free_memo.text       = record.free_memo
         last_update.text     = sRecord.last()!!.reg_data
 
+        // スコアダイアログ
         score_detail.setOnClickListener {dialogRun(tapid, record.music_count)}
-
-        /*------------------- Button --------------------*/
-        val button: Button = findViewById(R.id.send_button)
-        button.setOnClickListener {
-            val intent = Intent(this, EditActivity::class.java)
-            intent.putExtra("TapID",tapid)
-
-            startActivity(intent)
-        }
-    }
-
-    // 標準Backkeyの遷移先変更
-    override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
-        val from = intent.getStringExtra("From")    // 遷移元を受け取る
-        Log.d("TAG", "From：$from")
-        if(keyCode==KeyEvent.KEYCODE_BACK) {
-            finish()    // DetailActivityの終了
-            return true
-        }
-        return false
     }
 
     @SuppressLint("DefaultLocale")
