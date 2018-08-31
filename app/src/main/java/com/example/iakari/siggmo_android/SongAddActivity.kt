@@ -42,10 +42,9 @@ class SongAddActivity : AppCompatActivity() {
         // リストの再表示
         setSongs(listid)
     }
-    fun setSongs(listid: String){
+    private fun setSongs(listid: String){
         val getData = read()    // データベースの値をすべて取り出す
-        val dataList: MutableList<SongAddActivity.Item> // 全データをdataListに取り出す
-        dataList = mutableListOf()
+        val dataList: MutableList<SongAddActivity.Item> = mutableListOf() // 全データをdataListに取り出す
 
         // 曲名をリスト表示
         getData.forEach{
@@ -93,16 +92,16 @@ class SongAddActivity : AppCompatActivity() {
     }
 
     // データベースから "全ての" データを取り出す
-    fun read() : RealmResults<SiggmoDB> {
+    private fun read() : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
-    fun quaryById(id: String): SiggmoDB? {
+    private fun quaryById(id: String): SiggmoDB? {
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("id", id)
                 .findFirst()
     }
     // SiggmoDBからlist_idが一致したレコードだけ取り出す
-    fun quaryByListId(listId: String) : ListDB? {
+    private fun quaryByListId(listId: String) : ListDB? {
         return mRealm.where(ListDB::class.java)
                 .equalTo("list_id", listId)
                 .findFirst()

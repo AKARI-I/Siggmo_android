@@ -1,6 +1,7 @@
+/* リスト内の曲の一覧を表示する画面 */
+
 package com.example.iakari.siggmo_android
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.content_list.*
 
 class ListActivity : AppCompatActivity() {
-    lateinit var mRealm: Realm
+    private lateinit var mRealm: Realm
 
     /* ここでActivityが初めて生成される。初期化は全てここに書く。 */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +32,7 @@ class ListActivity : AppCompatActivity() {
                 .build()
         mRealm = Realm.getInstance(realmConfig)
     }
-    /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
+    // Activityが表示されたときの処理を書く(別の画面から戻った時とか)
     override fun onResume() {
         super.onResume()
         val tapid = intent.getStringExtra("TapID")
@@ -39,7 +40,7 @@ class ListActivity : AppCompatActivity() {
         // タイトルの表示
         val getListData = quaryByListId(tapid)
         if (getListData != null) {
-            setTitle(getListData.list_name)
+            title = getListData.list_name
         }
         // リストの再表示
         setSongs(tapid)
@@ -47,19 +48,18 @@ class ListActivity : AppCompatActivity() {
     // 標準Backkeyの遷移先変更
     override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
         if(keyCode== KeyEvent.KEYCODE_BACK) {
-            val intent: Intent = Intent(this,ListsActivity::class.java)
+            val intent = Intent(this,ListsActivity::class.java)
             startActivity(intent)
             return true
         }
         return false
     }
 
-    fun setSongs(tapid: String){
+    private fun setSongs(tapid: String){
         // データベースの値をすべて取り出す
         val getData = read(tapid)
         // 全データをdataListに取り出す
-        val dataList: MutableList<Item>
-        dataList = mutableListOf()
+        val dataList: MutableList<Item> = mutableListOf()
 
         // 曲名をリスト表示
         getData.forEach{
@@ -93,17 +93,14 @@ class ListActivity : AppCompatActivity() {
             AlertDialog.Builder(this).apply {
                 setTitle("Are you sure?")
                 setMessage("削除しますか？")
-                setPositiveButton("Yes", DialogInterface.OnClickListener{_, _ ->
+                setPositiveButton("Yes", { _, _ ->
                     Log.d("TAG", "YES!!")
                     // クエリを発行し結果を取得
                     val record = quaryById(item.id)
                     mRealm.executeTransaction {
-                        if (record != null) {
-                            record.list_id = ""
-                        }
+                        if (record != null) { record.list_id = "" }
                     }
 
-                    //
                     arrayAdapter.remove(arrayAdapter.getItem(position))
                     arrayAdapter.notifyDataSetChanged()
                     SongsListView.invalidateViews()
@@ -122,18 +119,18 @@ class ListActivity : AppCompatActivity() {
             return name
         }
     }
-    fun quaryById(id: String): SiggmoDB? {
+    private fun quaryById(id: String): SiggmoDB? {
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("id", id)
                 .findFirst()
     }
     // データベースから "全ての" データを取り出す
-    fun read(id: String) : RealmResults<SiggmoDB> {
+    private fun read(id: String) : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("list_id", id)
                 .findAll()
     }
-    fun quaryByListId(id: String) : ListDB? {
+    private fun quaryByListId(id: String) : ListDB? {
         return mRealm.where(ListDB::class.java)
                 .equalTo("list_id", id)
                 .findFirst()

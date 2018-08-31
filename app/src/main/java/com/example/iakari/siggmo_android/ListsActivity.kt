@@ -1,13 +1,13 @@
+/* リストの一覧を表示する画面 */
+
 package com.example.iakari.siggmo_android
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.InputType
 import android.text.SpannableStringBuilder
-import android.util.Log
 import android.view.KeyEvent
 import android.view.Window
 import android.widget.ArrayAdapter
@@ -41,17 +41,12 @@ class ListsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        // リストの再表示
-        setLists()
-
+        setLists()  // リストの再表示
     }
 
-
-    fun setLists(){
-        // データベースの値をすべて取り出す
-        val getData = readList()
-        // 全データをdataListに取り出す
-        val dataList: MutableList<Item> = mutableListOf()
+    private fun setLists(){
+        val getData = readList()    // データベースの値をすべて取り出す
+        val dataList: MutableList<Item> = mutableListOf()   // 全データをdataListに取り出す
 
         // リスト名をリスト表示
         getData.forEach{
@@ -72,8 +67,7 @@ class ListsActivity : AppCompatActivity() {
         }
         // フローティングアクションボタン
         lists_fab.setOnClickListener{ _ ->
-            // 曲リストの追加
-            // テキスト入力用Viewの作成
+            // 曲リストの追加, テキスト入力用Viewの作成
             val editView = EditText(this@ListsActivity)
             editView.inputType = InputType.TYPE_CLASS_TEXT
 
@@ -88,7 +82,7 @@ class ListsActivity : AppCompatActivity() {
                 if(editView.isEnabled) {
                     mRealm.executeTransaction {
                         // ListDBをlist_idをランダムで作成
-                        var listDB = mRealm.createObject(ListDB::class.java, UUID.randomUUID().toString())
+                        val listDB = mRealm.createObject(ListDB::class.java, UUID.randomUUID().toString())
                         val sb = editView.text as SpannableStringBuilder
                         // Listの名前をListDB.list_nameに保存
                         listDB.list_name = sb.toString()
@@ -113,11 +107,11 @@ class ListsActivity : AppCompatActivity() {
             AlertDialog.Builder(this).apply {
                 setTitle("Are you sure?")
                 setMessage("削除しますか？")
-                setPositiveButton("Yes", DialogInterface.OnClickListener{ _, _ ->
+                setPositiveButton("Yes", { _, _ ->
                     // クエリを発行し結果を取得
                     val results: RealmResults<ListDB> = mRealm.where(ListDB::class.java)
                             .equalTo("list_id", item.id).findAll()
-                    mRealm.executeTransaction(Realm.Transaction {
+                    mRealm.executeTransaction({
                         results.deleteLastFromRealm()
                     })
 
@@ -132,10 +126,10 @@ class ListsActivity : AppCompatActivity() {
         }
     }
 
-    // 標準Backkeyの遷移先変更
+    // 標準BackKeyの遷移先変更
     override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
         if(keyCode== KeyEvent.KEYCODE_BACK) {
-            val intent: Intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
             return true
         }
@@ -147,7 +141,7 @@ class ListsActivity : AppCompatActivity() {
             return name
         }
     }
-    fun readList() : RealmResults<ListDB> {
+    private fun readList() : RealmResults<ListDB> {
         return mRealm.where(ListDB::class.java).findAll()
     }
 }
