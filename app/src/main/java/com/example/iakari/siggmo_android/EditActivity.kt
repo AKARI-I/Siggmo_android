@@ -1,6 +1,5 @@
 package com.example.iakari.siggmo_android
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils.isEmpty
@@ -79,8 +78,8 @@ class EditActivity : AppCompatActivity() {
             s_name.setText(record.singer_name)
             s_phone.setText(record.singer_phonetic)
             f_line.setText(record.first_line)
-            s_level.setText(record.singing_level.toString())
-            p_key.setText(record.proper_key)
+            s_level.text = record.singing_level.toString()
+            p_key.text = record.proper_key
             m_link.setText(record.movie_link)
             s_edit.setText(sRecord.score.toString())
             f_memo.setText(record.free_memo)
@@ -102,16 +101,13 @@ class EditActivity : AppCompatActivity() {
                     s_edit.text.toString(),
                     f_memo.text.toString())
             if(update(record, sRecord, sgm)) {
-                //DetailActivityにもどる
-                val intent: Intent = Intent(this, DetailActivity::class.java)
-                intent.putExtra("TapID", tapid)
-                startActivity(intent)
+                finish()    // EditActivityを終了する
             }
         }
     }
 
         //id(tapid),record,曲名を渡す
-    fun update(record: SiggmoDB?, s_record: ScoreResultDB?, sgm: Array<String>) :Boolean{
+        private fun update(record: SiggmoDB?, s_record: ScoreResultDB?, sgm: Array<String>) :Boolean{
         if(isEmpty(sgm[0])){
             m_name_edit.error = "曲名を入力してください"
             return false
@@ -131,7 +127,7 @@ class EditActivity : AppCompatActivity() {
                 val minute = calendar.get(Calendar.MINUTE)      // 分
                 val second = calendar.get(Calendar.SECOND)      // 秒
 
-                val date = "${year}/${month}/${day}/${hour}:${minute}:${second}"    // 年/月/日/時:分:秒
+                val date = "$year/$month/$day/$hour:$minute:$second"    // 年/月/日/時:分:秒
                 //ループと条件分岐が難しそうなので一気に全部更新
                 record.music_name = sgm[0]
                 record.music_phonetic = sgm[1]
@@ -148,15 +144,11 @@ class EditActivity : AppCompatActivity() {
         }
         return true
     }
-    fun checkScore(score:Float): Boolean {
-        if(0 <= score && score <= 100){
-            return true
-        } else {
-            return false
-        }
+    private fun checkScore(score:Float): Boolean {
+        return score in 0.0..100.0
     }
 
-    fun quaryById(id: String): SiggmoDB? {
+    private fun quaryById(id: String): SiggmoDB? {
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("id", id)
                 .findFirst()

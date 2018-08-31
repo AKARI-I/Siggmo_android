@@ -42,14 +42,12 @@ class ListActivity : AppCompatActivity() {
         if (getListData != null) {
             title = getListData.list_name
         }
-        // リストの再表示
-        setSongs(tapid)
+        setSongs(tapid) // リストの再表示
     }
-    // 標準Backkeyの遷移先変更
+
     override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
         if(keyCode== KeyEvent.KEYCODE_BACK) {
-            val intent = Intent(this,ListsActivity::class.java)
-            startActivity(intent)
+            finish()
             return true
         }
         return false
@@ -62,9 +60,7 @@ class ListActivity : AppCompatActivity() {
         val dataList: MutableList<Item> = mutableListOf()
 
         // 曲名をリスト表示
-        getData.forEach{
-            dataList.add(Item(it.id, it.music_name))
-        }
+        getData.forEach{ dataList.add(Item(it.id, it.music_name)) }
         val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
         SongsListView.adapter = arrayAdapter
 
@@ -73,7 +69,7 @@ class ListActivity : AppCompatActivity() {
             val listView = parent as ListView
             val item = listView.getItemAtPosition(position) as Item    // タップした項目の要素名を取得
 
-            // idを渡す
+            // idと遷移元の情報を渡す
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("TapID", item.id)
             startActivity(intent)
@@ -130,6 +126,8 @@ class ListActivity : AppCompatActivity() {
                 .equalTo("list_id", id)
                 .findAll()
     }
+
+    // リストid, リスト名を参照
     private fun quaryByListId(id: String) : ListDB? {
         return mRealm.where(ListDB::class.java)
                 .equalTo("list_id", id)

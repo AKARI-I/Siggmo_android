@@ -1,10 +1,12 @@
 package com.example.iakari.siggmo_android
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.InputType
+import android.util.Log
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
@@ -32,6 +34,7 @@ class DetailActivity : AppCompatActivity() {
 
         // 受け取ったIDをTextViewで表示
         val tapid = intent.getStringExtra("TapID")
+
         // idから曲の情報を取得
         val record = quaryById(tapid)
         val sRecord = readScore(record!!.id)
@@ -54,30 +57,30 @@ class DetailActivity : AppCompatActivity() {
         /*------------------- Button --------------------*/
         val button: Button = findViewById(R.id.send_button)
         button.setOnClickListener {
-            //新しく開くアクティビティに渡す値
-            val intent: Intent = Intent(this, EditActivity::class.java)
+            val intent = Intent(this, EditActivity::class.java)
             intent.putExtra("TapID",tapid)
 
-            //新しくアクティビティを開く
             startActivity(intent)
         }
     }
 
     // 標準Backkeyの遷移先変更
     override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
+        val from = intent.getStringExtra("From")    // 遷移元を受け取る
+        Log.d("TAG", "From：$from")
         if(keyCode==KeyEvent.KEYCODE_BACK) {
-            val intent: Intent = Intent(this,MainActivity::class.java)
-            startActivity(intent)
+            finish()    // DetailActivityの終了
             return true
         }
         return false
     }
 
-    fun dialogRun(tapid: String, count: Int){
+    @SuppressLint("DefaultLocale")
+    private fun dialogRun(tapid: String, count: Int){
         // 選択した曲IDと一致する採点結果を取得
         val getData = readScore(tapid)
-
         val detail = AlertDialog.Builder(this@DetailActivity)
+
         detail.setTitle("点数詳細")
         detail.setMessage("・最高得点\n" +  checkScore(getData.max("score") as Float?)  +   "点\n" +
                 "・平均点\n" +  format("%.1f",(getData.average("score")))  +  "点\n" +
@@ -100,7 +103,7 @@ class DetailActivity : AppCompatActivity() {
                         val results: RealmResults<ScoreResultDB> = mRealm.where(ScoreResultDB::class.java)
                                 .equalTo("score_id", getData[0]!!.score_id)
                                 .findAll()
-                        mRealm.executeTransaction(Realm.Transaction {
+                        mRealm.executeTransaction({
                             results.deleteFromRealm(0)
                             results.deleteLastFromRealm()
                         })
@@ -111,9 +114,7 @@ class DetailActivity : AppCompatActivity() {
                 }
             }
         }
-        detail.setNegativeButton("キャンセル"){ _, _ ->
-
-        }
+        detail.setNegativeButton("キャンセル"){ _, _ ->}
 
         detail.show()
     }
@@ -136,14 +137,16 @@ class DetailActivity : AppCompatActivity() {
                 .equalTo("music_id", id)
                 .findAll().sort("reg_data")
     }
+
+    // ダイアログからのスコアの追加処理
     private fun saveScore(musicId:String, score:Float){
         mRealm.executeTransaction {
             val siggmoDB = quaryById(musicId)
             val scoreResultDB = mRealm.createObject(ScoreResultDB::class.java, UUID.randomUUID().toString())
             /*-------------------- 時間の取得 --------------------*/
-            var calendar = Calendar.getInstance()
+            val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)          // 年
-            val month = calendar.get(Calendar.MONTH) + 1      // 月
+            val month = calendar.get(Calendar.MONTH) + 1    // 月
             val day = calendar.get(Calendar.DAY_OF_MONTH)   // 日
             val hour = calendar.get(Calendar.HOUR_OF_DAY)   // 時
             val minute = calendar.get(Calendar.MINUTE)      // 分
@@ -156,13 +159,6 @@ class DetailActivity : AppCompatActivity() {
             scoreResultDB.score = score
             scoreResultDB.reg_data = date
             mRealm.copyToRealm(scoreResultDB)
-        }
-    }
-
-    // 表示する項目名とidをペアにして扱うためのクラス
-    private inner class Item(val id: String, val name: String){
-        override fun toString(): String{
-            return name
         }
     }
 }

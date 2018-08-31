@@ -1,6 +1,5 @@
 package com.example.iakari.siggmo_android
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
@@ -9,8 +8,6 @@ import io.realm.RealmConfiguration
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_song_add.*
 import kotlinx.android.synthetic.main.content_song_add.*
-
-
 
 class SongAddActivity : AppCompatActivity() {
     lateinit var mRealm: Realm
@@ -42,6 +39,7 @@ class SongAddActivity : AppCompatActivity() {
         // リストの再表示
         setSongs(listid)
     }
+
     private fun setSongs(listid: String){
         val getData = read()    // データベースの値をすべて取り出す
         val dataList: MutableList<SongAddActivity.Item> = mutableListOf() // 全データをdataListに取り出す
@@ -52,7 +50,7 @@ class SongAddActivity : AppCompatActivity() {
         }
         val arrayAdapter = ArrayAdapter<SongAddActivity.Item>(this,  android.R.layout.simple_list_item_multiple_choice, dataList)
         SongsAddListView.adapter = arrayAdapter
-        val cnt = SongsAddListView.count // リストの中の曲の数
+        val cnt = SongsAddListView.count    // リストの中の曲の数
 
         // リスト追加済みの曲をチェックする
         for (i in 0 until cnt){
@@ -64,7 +62,7 @@ class SongAddActivity : AppCompatActivity() {
 
         updatebutton.setOnClickListener{_ ->
             // 歌のリスト追加機能
-            val check = SongsAddListView.checkedItemPositions // チェックされているアイテムのポジションを
+            val check = SongsAddListView.checkedItemPositions // チェックされているアイテムのポジションを取得
             for (i in 0 until cnt){
                 if (check.get(i)){
                     val item = SongsAddListView.getItemAtPosition(i) as Item
@@ -84,10 +82,7 @@ class SongAddActivity : AppCompatActivity() {
                     }
                 }
             }
-            // リスト一覧に戻る
-            val intent = Intent(this , ListActivity::class.java)
-            intent.putExtra("TapID", listid)
-            startActivity(intent)
+            finish()    // リスト一覧に戻る
         }
     }
 
@@ -95,11 +90,13 @@ class SongAddActivity : AppCompatActivity() {
     private fun read() : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
+
     private fun quaryById(id: String): SiggmoDB? {
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("id", id)
                 .findFirst()
     }
+
     // SiggmoDBからlist_idが一致したレコードだけ取り出す
     private fun quaryByListId(listId: String) : ListDB? {
         return mRealm.where(ListDB::class.java)

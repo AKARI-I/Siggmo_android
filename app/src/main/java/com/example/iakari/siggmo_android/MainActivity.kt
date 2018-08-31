@@ -1,6 +1,5 @@
 package com.example.iakari.siggmo_android
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -20,7 +19,6 @@ import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
-
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var mRealm: Realm
@@ -69,7 +67,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 // 検索キーが押下された
                 return false
             }
-
             override fun onQueryTextChange(text: String?): Boolean {
                 // テキストが変更された
                 if (TextUtils.isEmpty(text)){
@@ -82,12 +79,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
-    fun setList(){
+    private fun setList(){
         // データベースの値をすべて取り出す
         val getData = read()
         // 全データをdataListに取り出す
-        val dataList: MutableList<Item>
-        dataList = mutableListOf()
+        val dataList: MutableList<Item> = mutableListOf()
 
         // 曲名をリスト表示
         getData.forEach{
@@ -101,7 +97,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val listView = parent as ListView
             val item = listView.getItemAtPosition(position) as Item    // タップした項目の要素名を取得
 
-            // idを渡す
+            // idと遷移元の情報を渡す
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("TapID", item.id)
             startActivity(intent)
@@ -115,12 +111,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             AlertDialog.Builder(this).apply {
                 setTitle("Are you sure?")
                 setMessage("削除しますか？")
-                setPositiveButton("Yes", DialogInterface.OnClickListener{_, _ ->
+                setPositiveButton("Yes", { _, _ ->
                     // クエリを発行し結果を取得
                     val results: RealmResults<SiggmoDB> = mRealm.where(SiggmoDB::class.java)
                             .equalTo("id", item.id)
                             .findAll()
-                    mRealm.executeTransaction(Realm.Transaction {
+                    mRealm.executeTransaction({
                         results.deleteFromRealm(0)
                         results.deleteLastFromRealm()
                     })
@@ -167,12 +163,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             AlertDialog.Builder(this).apply {
                 setTitle("Are you sure?")
                 setMessage("削除しますか？")
-                setPositiveButton("Yes", DialogInterface.OnClickListener{_, _ ->
+                setPositiveButton("Yes", { _, _ ->
                     // クエリを発行し結果を取得
                     val results: RealmResults<SiggmoDB> = mRealm.where(SiggmoDB::class.java)
                             .equalTo("id", item.id)
                             .findAll()
-                    mRealm.executeTransaction(Realm.Transaction {
+                    mRealm.executeTransaction({
                         results.deleteFromRealm(0)
                         results.deleteLastFromRealm()
                     })
@@ -203,9 +199,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // アクションバー(ホームボタンとかある場所)のアイテムのクリックをここで処理
         // アクションバーは、AndroidManifest.xmlで親アクティビティを指定する限り
         // Home / Upボタンのクリックを自動的に処理する
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.action_settings -> true
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -239,7 +235,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 var selectedId = 0
 
                 // 選択肢
-                val dialogMenu = arrayOf<String>("曲名昇順", "曲名降順", "歌手名昇順", "歌手名降順")
+                val dialogMenu = arrayOf("曲名昇順", "曲名降順", "歌手名昇順", "歌手名降順")
 
                 // ダイアログを作成して表示
                 AlertDialog.Builder(this).apply {

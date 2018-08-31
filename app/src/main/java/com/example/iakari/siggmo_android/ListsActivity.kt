@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.content_lists.*
 import java.util.*
 
 class ListsActivity : AppCompatActivity() {
-    lateinit var mRealm: Realm
+    private lateinit var mRealm: Realm
 
     /* ここでActivityが初めて生成される。初期化は全てここに書く。 */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +61,7 @@ class ListsActivity : AppCompatActivity() {
             val item = listView.getItemAtPosition(position) as ListsActivity.Item    // タップした項目の要素名を取得
 
             // idを渡す
-            val intent = Intent(this, com.example.iakari.siggmo_android.ListActivity::class.java)
+            val intent = Intent(this, ListActivity::class.java)
             intent.putExtra("TapID", item.id)
             startActivity(intent)
         }
