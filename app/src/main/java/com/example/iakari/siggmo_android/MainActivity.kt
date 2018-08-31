@@ -31,8 +31,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        Log.d("TAG", "start MainActivity")
-
         /*-------------------- 新規登録画面 --------------------*/
         // 新規登録画面に遷移
         fab.setOnClickListener { _ ->
@@ -52,9 +50,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .deleteRealmIfMigrationNeeded()
                 .build()
         mRealm = Realm.getInstance(realmConfig)
-        Log.d("TAG", "finish DetailActivity")
-
-
     }
 
     /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
@@ -72,18 +67,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(text: String?): Boolean {
                 // 検索キーが押下された
-                Log.d("searchList", "submit text: $text")
                 return false
             }
 
             override fun onQueryTextChange(text: String?): Boolean {
                 // テキストが変更された
-                Log.d("searchList", "change text: $text")
                 if (TextUtils.isEmpty(text)){
-                    Log.d("searchList", "true")
                     filter.filter("")
                 } else{
-                    Log.d("searchList", "else")
                     filter.filter(text.toString())
                 }
                 return false
@@ -125,13 +116,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 setTitle("Are you sure?")
                 setMessage("削除しますか？")
                 setPositiveButton("Yes", DialogInterface.OnClickListener{_, _ ->
-                    Log.d("TAG", "YES!!")
                     // クエリを発行し結果を取得
                     val results: RealmResults<SiggmoDB> = mRealm.where(SiggmoDB::class.java)
                             .equalTo("id", item.id)
                             .findAll()
                     mRealm.executeTransaction(Realm.Transaction {
-                        Log.d("TAG", "in realm delete process")
                         results.deleteFromRealm(0)
                         results.deleteLastFromRealm()
                     })
@@ -154,7 +143,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val dataList: MutableList<Item> = mutableListOf()
         // ソートしたデータをゲット
         readSorted(sortId)?.forEach {
-            Log.d("getData", "music_phonetic: " + it.music_phonetic + "  singer_phonetic: " + it.singer_phonetic)
             dataList.add(Item(it.id, it.music_name))
         }
         val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
@@ -180,13 +168,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 setTitle("Are you sure?")
                 setMessage("削除しますか？")
                 setPositiveButton("Yes", DialogInterface.OnClickListener{_, _ ->
-                    Log.d("TAG", "YES!!")
                     // クエリを発行し結果を取得
                     val results: RealmResults<SiggmoDB> = mRealm.where(SiggmoDB::class.java)
                             .equalTo("id", item.id)
                             .findAll()
                     mRealm.executeTransaction(Realm.Transaction {
-                        Log.d("TAG", "in realm delete process")
                         results.deleteFromRealm(0)
                         results.deleteLastFromRealm()
                     })
