@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.InputType
-import android.util.Log
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
@@ -35,11 +34,9 @@ class DetailActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        Log.d("TAG", "Detail：onResume start")
         super.onResume()
 
         val tapid = intent.getStringExtra("TapID")
-        Log.d("TAG", "Detail：tapid -> $tapid")
 
         setDetail(tapid)     // データを表示
 
@@ -63,8 +60,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setDetail(tapid:String){
-        Log.d("TAG", "Detail：setDetailメソッド開始")
-
         // idから曲の情報を取得
         val record = quaryById(tapid)
         val sRecord = readScore(record!!.id)

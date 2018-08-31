@@ -3,7 +3,6 @@ package com.example.iakari.siggmo_android
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils.isEmpty
-import android.util.Log
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.Sort
@@ -106,9 +105,6 @@ class EditActivity : AppCompatActivity() {
 
     //id(tapid),record,曲名を渡す
     private fun update(record: SiggmoDB?, s_record: ScoreResultDB?, sgm: Array<String>) :Boolean{
-        Log.d("TAG", "record:$record")
-        Log.d("TAG", "s_record:$s_record")
-
         // 曲名のエラーチェック
         if(isEmpty(sgm[0])){
             m_name_edit.error = "曲名を入力してください"
@@ -133,7 +129,6 @@ class EditActivity : AppCompatActivity() {
                 val second = calendar.get(Calendar.SECOND)      // 秒
 
                 val date = "$year/$month/$day/$hour:$minute:$second"    // 年/月/日/時:分:秒
-                Log.d("TAG", "Edit：日付の取得->$date")
 
                 // ToDo:mutablelistにしたい
                 record.music_name = sgm[0]
