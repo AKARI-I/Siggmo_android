@@ -40,6 +40,7 @@ class DetailActivity : AppCompatActivity() {
         val sRecord = readScore(record!!.id)
 
         // レコードが返されたら曲名を表示
+        detailTitle.text     = record.music_name
         music_name.text      = record.music_name
         music_phonetic.text  = record.music_phonetic
         singer_name.text     = record.singer_name
