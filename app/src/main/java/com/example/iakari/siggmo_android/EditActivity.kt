@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils.isEmpty
-import android.util.Log
 import android.widget.Button
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -22,10 +21,6 @@ class EditActivity : AppCompatActivity() {
         var s_Level = 1  // 歌えるレベル
         var p_Key = 0 // 適正キー
 
- //       val editText = findViewById<EditText>(android.R.id.music_name_edit)
- //       val edit = m_name_edit.text.toString()
- //       m_name_edit.setText("==========")
-
         // Realmのセットアップ
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
@@ -42,7 +37,6 @@ class EditActivity : AppCompatActivity() {
             }
 
             s_level.text = s_Level.toString()
-            Log.d("TAG", "level = ${s_Level}(press down)")
         }
         s_level_upButton.setOnClickListener {
             if(4 < s_Level+1){
@@ -52,7 +46,6 @@ class EditActivity : AppCompatActivity() {
             }
 
             s_level.text = s_Level.toString()
-            Log.d("TAG", "level = ${s_Level}(press up)")
         }
 
         /*-------------------- 適正キーのボタン --------------------*/
@@ -64,9 +57,7 @@ class EditActivity : AppCompatActivity() {
             }
 
             p_key.text = p_Key.toString()
-            Log.d("TAG", "level = ${p_Key}(press down)")
         }
-
         p_key_upButton.setOnClickListener{
             if(7 < p_Key+1){
                 p_Key = 7
@@ -75,18 +66,14 @@ class EditActivity : AppCompatActivity() {
             }
 
             p_key.text = p_Key.toString()
-            Log.d("TAG", "key_level = ${p_Key}(press up)")
         }
 
         val tapid = intent.getStringExtra("TapID")
         val record = quaryById(tapid)
-        val s_record = quaryByScore(record!!.id)
-
-        Log.d("TAG", "${s_record}")
+        val sRecord = quaryByScore(record!!.id)
 
         // 保存済みのデータを表示
-        if (s_record != null) {
-            Log.d("TAG", "${record}")
+        if (sRecord != null) {
             m_name_edit.setText(record.music_name)
             m_phone.setText(record.music_phonetic)
             s_name.setText(record.singer_name)
@@ -95,7 +82,7 @@ class EditActivity : AppCompatActivity() {
             s_level.setText(record.singing_level.toString())
             p_key.setText(record.proper_key)
             m_link.setText(record.movie_link)
-            s_edit.setText(s_record.score.toString())
+            s_edit.setText(sRecord.score.toString())
             f_memo.setText(record.free_memo)
         }
 
@@ -114,7 +101,7 @@ class EditActivity : AppCompatActivity() {
                     m_link.text.toString(),
                     s_edit.text.toString(),
                     f_memo.text.toString())
-            if(update(record, s_record, sgm)) {
+            if(update(record, sRecord, sgm)) {
                 //DetailActivityにもどる
                 val intent: Intent = Intent(this, DetailActivity::class.java)
                 intent.putExtra("TapID", tapid)
@@ -130,22 +117,15 @@ class EditActivity : AppCompatActivity() {
             return false
         }
         if(!checkScore(sgm[8].toFloat())) {
-            Log.d("TAG", "スコアの範囲チェック：false")
             s_edit.error = "0~100の点数を入力してください"
             return false
         }
         mRealm.executeTransaction {
-            // スコアの範囲チェック
-            // ToDo:範囲チェックがfalse->落ちる
-
-            Log.d("TAG", "スコアの範囲チェック：true")
-            //sgm配列に項目を入れて曲名から順番にDB(record)の中身と一緒かどうかを調べる
-            //今は項目一つしか入れてないのでループとかはせず曲名だけ見てる
             if (record != null && s_record != null) {
-                /*-------------------- 時間の取得 --------------------*/
+                // 時間の取得
                 var calendar = Calendar.getInstance()
                 val year = calendar.get(Calendar.YEAR)          // 年
-                val month = calendar.get(Calendar.MONTH) + 1      // 月
+                val month = calendar.get(Calendar.MONTH) + 1    // 月
                 val day = calendar.get(Calendar.DAY_OF_MONTH)   // 日
                 val hour = calendar.get(Calendar.HOUR_OF_DAY)   // 時
                 val minute = calendar.get(Calendar.MINUTE)      // 分
@@ -184,7 +164,6 @@ class EditActivity : AppCompatActivity() {
 
     // scoreを参照する
     fun quaryByScore(id: String): ScoreResultDB? {
-        Log.d("TAG", "quaryByScore(DetailActivity)")
         val records = mRealm.where(ScoreResultDB::class.java)
                 .equalTo("music_id", id)
                 .findAll().sort("reg_data", Sort.DESCENDING)
