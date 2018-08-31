@@ -34,7 +34,7 @@ class DetailActivity : AppCompatActivity() {
         val tapid = intent.getStringExtra("TapID")
         // idから曲の情報を取得
         val record = quaryById(tapid)
-        val s_record = readScore(record!!.id)
+        val sRecord = readScore(record!!.id)
 
         // レコードが返されたら曲名を表示
         music_name.text      = record.music_name
@@ -45,9 +45,9 @@ class DetailActivity : AppCompatActivity() {
         singing_level.text   = record.singing_level.toString()
         proper_key.text      = record.proper_key
         movie_link.text      = record.movie_link
-        score.text           = checkScore(s_record.max("score") as Float?).toString()
+        score.text           = checkScore(sRecord.max("score") as Float?).toString()
         free_memo.text       = record.free_memo
-        last_update.text     = s_record.last()!!.reg_data
+        last_update.text     = sRecord.last()!!.reg_data
 
         score_detail.setOnClickListener {dialogRun(tapid, record.music_count)}
 
@@ -120,30 +120,23 @@ class DetailActivity : AppCompatActivity() {
 
     // 渡されたidからデータベースを検索して曲の情報を返す
     // select * from SiggmoDB where id = idと同じ意味
-    fun quaryById(id: String): SiggmoDB? {
+    private fun quaryById(id: String): SiggmoDB? {
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("id", id)
                 .findFirst()
     }
 
-    fun checkScore(score: Float?): Float{
+    private fun checkScore(score: Float?): Float{
         return score ?: 0.0F
     }
 
-    // scoreを参照する
-    fun quaryByScore(m_id: String): ScoreResultDB? {
-        return mRealm.where(ScoreResultDB::class.java)
-                .equalTo("music_id", m_id)
-                .findFirst()
-    }
-
     // Scoreを日付の古い順に取ってくる
-    fun readScore(id: String) : RealmResults<ScoreResultDB> {
+    private fun readScore(id: String) : RealmResults<ScoreResultDB> {
         return mRealm.where(ScoreResultDB::class.java)
                 .equalTo("music_id", id)
                 .findAll().sort("reg_data")
     }
-    fun saveScore(musicId:String, score:Float){
+    private fun saveScore(musicId:String, score:Float){
         mRealm.executeTransaction {
             val siggmoDB = quaryById(musicId)
             val scoreResultDB = mRealm.createObject(ScoreResultDB::class.java, UUID.randomUUID().toString())
