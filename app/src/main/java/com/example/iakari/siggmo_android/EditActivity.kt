@@ -10,14 +10,14 @@ import kotlinx.android.synthetic.main.activity_edit.*
 import java.util.*
 
 class EditActivity : AppCompatActivity() {
-    lateinit var mRealm: Realm
+    private lateinit var mRealm: Realm
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
-        var s_Level = 1  // 歌えるレベル
-        var p_Key = 0 // 適正キー
+        var sLevel = 1  // 歌えるレベル
+        var pKey = 0 // 適正キー
 
         // Realmのセットアップ
         Realm.init(this)
@@ -28,42 +28,42 @@ class EditActivity : AppCompatActivity() {
 
         /*-------------------- 歌えるレベルのボタン --------------------*/
         s_level_downButton.setOnClickListener {
-            if(s_Level-1 < 1){
-                s_Level = 1
+            if(sLevel-1 < 1){
+                sLevel = 1
             } else {
-                s_Level -= 1
+                sLevel -= 1
             }
 
-            s_level.text = s_Level.toString()
+            s_level.text = sLevel.toString()
         }
         s_level_upButton.setOnClickListener {
-            if(4 < s_Level+1){
-                s_Level = 4
+            if(4 < sLevel+1){
+                sLevel = 4
             } else {
-                s_Level += 1
+                sLevel += 1
             }
 
-            s_level.text = s_Level.toString()
+            s_level.text = sLevel.toString()
         }
 
         /*-------------------- 適正キーのボタン --------------------*/
         p_key_downButton.setOnClickListener{
-            if(p_Key-1 < -7){
-                p_Key = -7
+            if(pKey-1 < -7){
+                pKey = -7
             } else {
-                p_Key -= 1
+                pKey -= 1
             }
 
-            p_key.text = p_Key.toString()
+            p_key.text = pKey.toString()
         }
         p_key_upButton.setOnClickListener{
-            if(7 < p_Key+1){
-                p_Key = 7
+            if(7 < pKey+1){
+                pKey = 7
             } else {
-                p_Key += 1
+                pKey += 1
             }
 
-            p_key.text = p_Key.toString()
+            p_key.text = pKey.toString()
         }
 
         val tapid = intent.getStringExtra("TapID")
