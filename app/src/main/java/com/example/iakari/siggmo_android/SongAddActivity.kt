@@ -1,20 +1,14 @@
 package com.example.iakari.siggmo_android
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.ListView
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_song_add.*
-import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.content_song_add.*
-import android.widget.Spinner
 
 
 
@@ -28,16 +22,11 @@ class SongAddActivity : AppCompatActivity() {
 
         /*-------------------- Realm --------------------*/
         // Realmのセットアップ
-        Log.d("TAG", "Realmセットアップ開始")
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build()
         mRealm = Realm.getInstance(realmConfig)
-        Log.d("TAG", "Realmセットアップ終了")
-
-        Log.d("activity", "finish DetailActivity")
-
     }
     /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
     override fun onResume() {
@@ -54,11 +43,8 @@ class SongAddActivity : AppCompatActivity() {
         setSongs(listid)
     }
     fun setSongs(listid: String){
-        // データベースの値をすべて取り出す
-        val getData = read()
-        Log.d("DBdata", getData.toString())
-        // 全データをdataListに取り出す
-        val dataList: MutableList<SongAddActivity.Item>
+        val getData = read()    // データベースの値をすべて取り出す
+        val dataList: MutableList<SongAddActivity.Item> // 全データをdataListに取り出す
         dataList = mutableListOf()
 
         // 曲名をリスト表示
