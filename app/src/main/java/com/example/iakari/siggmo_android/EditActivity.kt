@@ -12,6 +12,9 @@ import java.util.*
 class EditActivity : AppCompatActivity() {
     private lateinit var mRealm: Realm
 
+    // mutableMapOf：書き込み可能なコレクションを生成する
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
@@ -86,32 +89,41 @@ class EditActivity : AppCompatActivity() {
 
         // update処理にまわす
         editbutton.setOnClickListener{
-            val sgm = arrayOf(
-                    m_name_edit.text.toString(),
-                    m_phone.text.toString(),
-                    s_name.text.toString(),
-                    s_phone.text.toString(),
-                    f_line.text.toString(),
-                    s_level.text.toString(),
-                    p_key.text.toString(),
-                    m_link.text.toString(),
-                    s_edit.text.toString(),
-                    f_memo.text.toString())
-            if(update(record, sRecord, sgm)) {
+            val musicInfoS: MutableMap<String, String> = mutableMapOf(
+                    "mn" to m_name_edit.text.toString(),  // 曲名
+                    "mp" to m_phone.text.toString(),      // よみがな(曲名)
+                    "sn" to s_name.text.toString(),       // 歌手名
+                    "sp" to s_phone.text.toString(),      // よみがな(歌手名)
+                    "fl" to f_line.text.toString(),       // 歌いだし
+                    "pk" to p_key.text.toString(),        // 適正キー
+                    "ml" to m_link.text.toString(),       // 動画のリンク
+                    "fm" to f_memo.text.toString())       // 自由記入欄
+            val musicInfoF: MutableMap<String, Float?> = mutableMapOf(
+                    "sc" to s_edit.text.toString().toFloat())   // 採点結果
+            val musicInfoI: MutableMap<String, Int> = mutableMapOf(
+                    "sl" to s_level.text.toString().toInt())    // 歌えるレベル
+
+            if(update(record, sRecord, musicInfoS, musicInfoF, musicInfoI)) {
                 finish()    // EditActivityを終了する
             }
         }
     }
 
     //id(tapid),record,曲名を渡す
-    private fun update(record: SiggmoDB?, s_record: ScoreResultDB?, sgm: Array<String>) :Boolean{
+    private fun update(
+            record: SiggmoDB?,
+            s_record: ScoreResultDB?,
+            dataS: MutableMap<String, String>,
+            dataF: MutableMap<String, Float?>,
+            dataI: MutableMap<String, Int>
+    ) :Boolean{
         // 曲名のエラーチェック
-        if(isEmpty(sgm[0])){
+        if(isEmpty(dataS["mn"])){
             m_name_edit.error = "曲名を入力してください"
             return false
         }
         // スコアの範囲チェック
-        if(!checkScore(sgm[8].toFloat())) {
+        if(!checkScore(dataF["sc"])) {
             s_edit.error = "0~100の点数を入力してください"
             return false
         }
@@ -130,24 +142,23 @@ class EditActivity : AppCompatActivity() {
 
                 val date = "$year/$month/$day/$hour:$minute:$second"    // 年/月/日/時:分:秒
 
-                // ToDo:mutablelistにしたい
-                record.music_name = sgm[0]
-                record.music_phonetic = sgm[1]
-                record.singer_name = sgm[2]
-                record.singer_phonetic = sgm[3]
-                record.first_line = sgm[4]
-                record.singing_level = sgm[5].toInt()
-                record.proper_key = sgm[6]
-                record.movie_link = sgm[7]
-                s_record.score = sgm[8].toFloat()
-                record.free_memo = sgm[9]
-                s_record.reg_data = date
+                record.music_name       = dataS["mn"].toString()
+                record.music_phonetic   = dataS["mp"].toString()
+                record.singer_name      = dataS["sn"].toString()
+                record.singer_phonetic  = dataS["sp"].toString()
+                record.first_line       = dataS["fl"].toString()
+                record.singing_level    = dataI["sl"] as Int
+                record.proper_key       = dataS["pk"].toString()
+                record.movie_link       = dataS["ml"].toString()
+                s_record.score          = dataF["sc"] as Float
+                record.free_memo        = dataS["fm"].toString()
+                s_record.reg_data       = date
             }
         }
         return true
     }
-    private fun checkScore(score:Float): Boolean {
-        return score in 0.0..100.0
+    private fun checkScore(score: Float?): Boolean {
+        return 0.0 <= score!! && score <= 100.0    // 範囲内ならtrueを返す
     }
 
     private fun quaryById(id: String): SiggmoDB? {
