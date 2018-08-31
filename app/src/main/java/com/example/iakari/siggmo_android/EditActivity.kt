@@ -87,8 +87,6 @@ class EditActivity : AppCompatActivity() {
 
         // update処理にまわす
         editbutton.setOnClickListener{
-            Log.d("TAG", "Edit：setOnClickListener開始")
-            //editにとりあえず今は曲名だけを入れてupdateに渡す
             val sgm = arrayOf(
                     m_name_edit.text.toString(),
                     m_phone.text.toString(),
@@ -100,7 +98,6 @@ class EditActivity : AppCompatActivity() {
                     m_link.text.toString(),
                     s_edit.text.toString(),
                     f_memo.text.toString())
-            Log.d("TAG", "Edit：sgm[]に入力された値を全て代入")
             if(update(record, sRecord, sgm)) {
                 finish()    // EditActivityを終了する
             }
@@ -109,7 +106,9 @@ class EditActivity : AppCompatActivity() {
 
     //id(tapid),record,曲名を渡す
     private fun update(record: SiggmoDB?, s_record: ScoreResultDB?, sgm: Array<String>) :Boolean{
-        Log.d("TAG", "Edit：updateメソッド開始")
+        Log.d("TAG", "record:$record")
+        Log.d("TAG", "s_record:$s_record")
+
         // 曲名のエラーチェック
         if(isEmpty(sgm[0])){
             m_name_edit.error = "曲名を入力してください"
@@ -123,10 +122,6 @@ class EditActivity : AppCompatActivity() {
 
         mRealm.executeTransaction {
             if (record != null && s_record != null) {
-
-                // ランダムなidを設定
-                val siggmoDB = mRealm.createObject(SiggmoDB::class.java, UUID.randomUUID().toString())
-                val scoreResultDB = mRealm.createObject(ScoreResultDB::class.java, UUID.randomUUID().toString())
 
                 // 時間の取得
                 var calendar = Calendar.getInstance()
