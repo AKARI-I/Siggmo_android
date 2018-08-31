@@ -40,7 +40,7 @@ class ListActivity : AppCompatActivity() {
         // タイトルの表示
         val getListData = quaryByListId(tapid)
         if (getListData != null) {
-            title = getListData.list_name
+            listTitle.text = getListData.list_name
         }
         setSongs(tapid) // リストの再表示
     }

@@ -1,5 +1,6 @@
 package com.example.iakari.siggmo_android
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
@@ -26,6 +27,7 @@ class SongAddActivity : AppCompatActivity() {
         mRealm = Realm.getInstance(realmConfig)
     }
     /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
+    @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
         // ListActivityから送ってきたlist_id
@@ -34,7 +36,7 @@ class SongAddActivity : AppCompatActivity() {
         // タイトルの表示
         val getListData = quaryByListId(listid)
         if (getListData != null) {
-            title = getListData.list_name + "に曲追加"
+            songAddTitle.text = "「" + getListData.list_name + "」に曲を追加する"
         }
         // リストの再表示
         setSongs(listid)
