@@ -132,6 +132,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             return@setOnItemLongClickListener true
         }
     }
+
     private fun setSortList(sortId: Int){
         // データベースの値をすべて取り出す
         Log.d("sortID", sortId.toString())
@@ -154,35 +155,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             intent.putExtra("TapID", item.id)
             startActivity(intent)
         }
-
-        // 長押しで削除する
-        MainListView.setOnItemLongClickListener{parent, _, position, _ ->
-            val listView = parent as ListView
-            val item = listView.getItemAtPosition(position) as Item    // タップした項目の要素名を取得
-            // アラートの表示
-            AlertDialog.Builder(this).apply {
-                setTitle("Are you sure?")
-                setMessage("削除しますか？")
-                setPositiveButton("Yes", { _, _ ->
-                    // クエリを発行し結果を取得
-                    val results: RealmResults<SiggmoDB> = mRealm.where(SiggmoDB::class.java)
-                            .equalTo("id", item.id)
-                            .findAll()
-                    mRealm.executeTransaction({
-                        results.deleteFromRealm(0)
-                        results.deleteLastFromRealm()
-                    })
-
-                    arrayAdapter.remove(arrayAdapter.getItem(position))
-                    arrayAdapter.notifyDataSetChanged()
-                    MainListView.invalidateViews()
-                })
-                setNegativeButton("Cancel", null)
-                show()
-            }
-
-            return@setOnItemLongClickListener true
-        }
     }
 
     override fun onBackPressed() {
@@ -193,7 +165,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // アクションバー(ホームボタンとかある場所)のアイテムのクリックをここで処理

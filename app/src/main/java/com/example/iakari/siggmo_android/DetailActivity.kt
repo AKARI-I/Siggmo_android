@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.InputType
-import android.util.Log
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
@@ -32,28 +31,14 @@ class DetailActivity : AppCompatActivity() {
                 .build()
         mRealm = Realm.getInstance(realmConfig)
 
-        // 受け取ったIDをTextViewで表示
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         val tapid = intent.getStringExtra("TapID")
 
-        // idから曲の情報を取得
-        val record = quaryById(tapid)
-        val sRecord = readScore(record!!.id)
-
-        // レコードが返されたら曲名を表示
-        detailTitle.text     = record.music_name
-        music_name.text      = record.music_name
-        music_phonetic.text  = record.music_phonetic
-        singer_name.text     = record.singer_name
-        singer_phonetic.text = record.singer_phonetic
-        first_line.text      = record.first_line
-        singing_level.text   = record.singing_level.toString()
-        proper_key.text      = record.proper_key
-        movie_link.text      = record.movie_link
-        score.text           = checkScore(sRecord.max("score") as Float?).toString()
-        free_memo.text       = record.free_memo
-        last_update.text     = sRecord.last()!!.reg_data
-
-        score_detail.setOnClickListener {dialogRun(tapid, record.music_count)}
+        setDetail(tapid)     // データを表示
 
         /*------------------- Button --------------------*/
         val button: Button = findViewById(R.id.send_button)
@@ -67,13 +52,33 @@ class DetailActivity : AppCompatActivity() {
 
     // 標準Backkeyの遷移先変更
     override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
-        val from = intent.getStringExtra("From")    // 遷移元を受け取る
-        Log.d("TAG", "From：$from")
         if(keyCode==KeyEvent.KEYCODE_BACK) {
             finish()    // DetailActivityの終了
             return true
         }
         return false
+    }
+
+    private fun setDetail(tapid:String){
+        // idから曲の情報を取得
+        val record = quaryById(tapid)
+        val sRecord = readScore(record!!.id)
+
+        // レコードが返されたら曲名を表示
+        music_name.text      = record.music_name
+        music_phonetic.text  = record.music_phonetic
+        singer_name.text     = record.singer_name
+        singer_phonetic.text = record.singer_phonetic
+        first_line.text      = record.first_line
+        singing_level.text   = record.singing_level.toString()
+        proper_key.text      = record.proper_key
+        movie_link.text      = record.movie_link
+        score.text           = checkScore(sRecord.max("score") as Float?).toString()
+        free_memo.text       = record.free_memo
+        last_update.text     = sRecord.last()!!.reg_data
+
+        // スコアダイアログ
+        score_detail.setOnClickListener {dialogRun(tapid, record.music_count)}
     }
 
     @SuppressLint("DefaultLocale")

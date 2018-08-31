@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_new_addition.*
 import java.util.*
 
 class NewAdditionActivity : AppCompatActivity() {
+
     lateinit var mRealm: Realm
 
     // mutableMapOf：書き込み可能なコレクションを生成する(mapOfは読み取り専用)
@@ -21,6 +22,7 @@ class NewAdditionActivity : AppCompatActivity() {
             "pk" to "",  // 適正キー
             "ml" to "",  // 動画のリンク
             "fm" to "")  // 自由記入欄
+
     private val musicInfoF: MutableMap<String, Float?> = mutableMapOf("sc" to null)
     private val musicInfoI: MutableMap<String, Int> = mutableMapOf("sl" to 1)
     var insertFlg = false
@@ -29,6 +31,7 @@ class NewAdditionActivity : AppCompatActivity() {
     var score = ""           // スコア
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_addition)
 
@@ -41,22 +44,21 @@ class NewAdditionActivity : AppCompatActivity() {
         mRealm = Realm.getInstance(realmConfig)
 
         /*-------------------- 歌えるレベルのボタン --------------------*/
-        singing_level_downButton.setOnClickListener{
-            if(singing_level-1 < 1){
+        singing_level_downButton.setOnClickListener {
+            if (singing_level - 1 < 1) {
                 singing_level = 1
             } else {
                 singing_level -= 1
             }
-
             edit_singing_level.text = singing_level.toString()
         }
+
         singing_level_upButton.setOnClickListener{
             if(4 < singing_level+1){
                 singing_level = 4
             } else {
                 singing_level += 1
             }
-
             edit_singing_level.text = singing_level.toString()
         }
 
@@ -67,9 +69,9 @@ class NewAdditionActivity : AppCompatActivity() {
             } else {
                 proper_key_level -= 1
             }
-
             edit_proper_key.text = proper_key_level.toString()
         }
+
         proper_key_upButton.setOnClickListener{
             if(7 < proper_key_level+1){
                 proper_key_level = 7
@@ -103,7 +105,7 @@ class NewAdditionActivity : AppCompatActivity() {
         if(!isEmpty(edit_score.text))          { musicInfoF["sc"] = edit_score.text.toString().toFloat() }
         if(!isEmpty(edit_free_memo.text))      { musicInfoS["fm"] = edit_free_memo.text.toString() }
         musicInfoI["sl"] = singing_level   // 表示している数字をそのまま代入するためifはいらない
-        
+
         // 入力値のチェックはここでする
         if(isEmpty(edit_music_name.text)){
             edit_music_name.error = "曲名を入力してください"
@@ -142,7 +144,7 @@ class NewAdditionActivity : AppCompatActivity() {
 
     // データベースにレコードを追加する
     private fun create(mName:String, mPhonetic:String, sName:String, sPhonetic:String, fLine:String,
-               sLevel: Int, pKey: String, mLink:String, Score:Float?, fMemo:String){
+                       sLevel: Int, pKey: String, mLink:String, Score:Float?, fMemo:String){
 
         mRealm.executeTransaction{
             // ランダムなidを設定
@@ -176,8 +178,7 @@ class NewAdditionActivity : AppCompatActivity() {
             if( Score != null )
                 siggmoDB!!.music_count = siggmoDB.music_count + 1
 
-                // データベースに追加
-
+            // データベースに追加
             mRealm.copyToRealm(siggmoDB)
             mRealm.copyToRealm(scoreResultDB)
         }
