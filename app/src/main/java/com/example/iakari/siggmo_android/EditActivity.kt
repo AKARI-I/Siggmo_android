@@ -106,8 +106,8 @@ class EditActivity : AppCompatActivity() {
         }
     }
 
-        //id(tapid),record,曲名を渡す
-        private fun update(record: SiggmoDB?, s_record: ScoreResultDB?, sgm: Array<String>) :Boolean{
+    //id(tapid),record,曲名を渡す
+    private fun update(record: SiggmoDB?, s_record: ScoreResultDB?, sgm: Array<String>) :Boolean{
         if(isEmpty(sgm[0])){
             m_name_edit.error = "曲名を入力してください"
             return false
@@ -128,7 +128,8 @@ class EditActivity : AppCompatActivity() {
                 val second = calendar.get(Calendar.SECOND)      // 秒
 
                 val date = "$year/$month/$day/$hour:$minute:$second"    // 年/月/日/時:分:秒
-                //ループと条件分岐が難しそうなので一気に全部更新
+
+                // ToDo:mutablelistにしたい
                 record.music_name = sgm[0]
                 record.music_phonetic = sgm[1]
                 record.singer_name = sgm[2]
@@ -155,7 +156,7 @@ class EditActivity : AppCompatActivity() {
     }
 
     // scoreを参照する
-    fun quaryByScore(id: String): ScoreResultDB? {
+    private fun quaryByScore(id: String): ScoreResultDB? {
         val records = mRealm.where(ScoreResultDB::class.java)
                 .equalTo("music_id", id)
                 .findAll().sort("reg_data", Sort.DESCENDING)
