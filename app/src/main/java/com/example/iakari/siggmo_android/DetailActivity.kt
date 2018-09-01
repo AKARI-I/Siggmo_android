@@ -1,6 +1,7 @@
 package com.example.iakari.siggmo_android
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -9,6 +10,7 @@ import android.text.InputType
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
@@ -86,42 +88,45 @@ class DetailActivity : AppCompatActivity() {
         // 選択した曲IDと一致する採点結果を取得
         val getData = readScore(tapid)
         val detail = AlertDialog.Builder(this@DetailActivity)
-
+        val m_dig = detail.show()
+        val buttonOK: Button = m_dig.getButton(DialogInterface.BUTTON_POSITIVE)
         detail.setTitle("点数詳細")
         detail.setMessage("・最高得点\n" +  checkScore(getData.max("score") as Float?)  +   "点\n" +
                 "・平均点\n" +  format("%.1f",(getData.average("score")))  +  "点\n" +
                 "・歌った回数\n" +  count  +  "回\n" +
                 "\n\nスコアを追加"
         )
-
+        // editViewで点数の追加
         val editView = EditText(this@DetailActivity)
         // editViewの小数入力の強制
         editView.inputType = InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL
         detail.setView(editView)
-        detail.setPositiveButton("OK"){ _, _ ->
+
+        detail.setPositiveButton("OK",null)
+
+        // setPositiveButton() でリスナー指定するとダイアログが閉じる
+        // setOnClickListener() でリスナーを指定する
+        buttonOK.setOnClickListener{
             if (editView.text != null && !editView.text.toString().isEmpty()){
                 val score = editView.text.toString().toFloat()
-                if (score in 0.0..100.0) { // scoreの範囲チェック
-                    if (count < 100) {
-                        saveScore(tapid, score)
-                    } else {
-                        // ScoreResultDBの数が100を超えると古いものから削除
-                        val results: RealmResults<ScoreResultDB> = mRealm.where(ScoreResultDB::class.java)
-                                .equalTo("score_id", getData[0]!!.score_id)
-                                .findAll()
-                        mRealm.executeTransaction({
-                            results.deleteFromRealm(0)
-                            results.deleteLastFromRealm()
-                        })
-                        saveScore(tapid, score)
-                    }
-                }else{
-                    editView.error = "1~100の数字を入力してください"
+                if (score in 0.0..100.0) {
+                    // scoreの範囲チェック if (count < 100) {
+                    saveScore(tapid, score)
+                } else {
+                    // ScoreResultDBの数が100を超えると古いものから削除
+                    val results: RealmResults<ScoreResultDB> = mRealm.where(ScoreResultDB::class.java)
+                            .equalTo("score_id", getData[0]!!.score_id)
+                            .findAll()
+                    mRealm.executeTransaction({
+                        results.deleteFromRealm(0)
+                        results.deleteLastFromRealm()
+                    })
+                    saveScore(tapid, score)
                 }
+            }else{
+                Toast.makeText(this,"1~100の数字を入力してください",Toast.LENGTH_SHORT)
             }
         }
-        detail.setNegativeButton("キャンセル"){ _, _ ->}
-
         detail.show()
     }
 
