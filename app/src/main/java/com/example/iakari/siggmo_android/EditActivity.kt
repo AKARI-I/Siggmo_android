@@ -83,7 +83,9 @@ class EditActivity : AppCompatActivity() {
             s_level.text = record.singing_level.toString()
             p_key.text = record.proper_key
             m_link.setText(record.movie_link)
-            s_edit.setText(sRecord.score.toString())
+            if (sRecord.score != null) {
+                s_edit.setText(sRecord.score.toString())
+            }
             f_memo.setText(record.free_memo)
         }
 
@@ -99,6 +101,7 @@ class EditActivity : AppCompatActivity() {
                     "ml" to m_link.text.toString(),       // 動画のリンク
                     "fm" to f_memo.text.toString())       // 自由記入欄
             val musicInfoF: MutableMap<String, Float?> = mutableMapOf(
+                    if(isEmpty(s_edit.text)) "sc" to null else
                     "sc" to s_edit.text.toString().toFloat())   // 採点結果
             val musicInfoI: MutableMap<String, Int> = mutableMapOf(
                     "sl" to s_level.text.toString().toInt())    // 歌えるレベル
@@ -150,7 +153,7 @@ class EditActivity : AppCompatActivity() {
                 record.singing_level    = dataI["sl"] as Int
                 record.proper_key       = dataS["pk"].toString()
                 record.movie_link       = dataS["ml"].toString()
-                s_record.score          = dataF["sc"] as Float
+                s_record.score          = if(dataF["sc"] == null) null else dataF["sc"] as Float
                 record.free_memo        = dataS["fm"].toString()
                 s_record.reg_data       = date
             }
@@ -158,7 +161,7 @@ class EditActivity : AppCompatActivity() {
         return true
     }
     private fun checkScore(score: Float?): Boolean {
-        return 0.0 <= score!! && score <= 100.0    // 範囲内ならtrueを返す
+        return score == null || 0.0 <= score && score <= 100.0  // 範囲内ならtrueを返す
     }
 
     private fun quaryById(id: String): SiggmoDB? {
