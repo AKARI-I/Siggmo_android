@@ -3,7 +3,6 @@ package com.example.iakari.siggmo_android
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils.isEmpty
-import android.util.Log
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.Sort
@@ -126,7 +125,6 @@ class EditActivity : AppCompatActivity() {
             m_name_edit.error = "曲名を入力してください"
             return false
         }
-        Log.d("scoreC", "${dataF["sc"]}")
         // スコアの範囲チェック
         if(!checkScore(dataF["sc"])) {
             s_edit.error = "0~100の点数を入力してください"
