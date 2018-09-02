@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< Updated upstream
       <module fileurl="file://$PROJECT_DIR$/Siggmo_android.iml" filepath="$PROJECT_DIR$/Siggmo_android.iml" />
+=======
+      <module fileurl="file://C:\programing\AndroidStudio\Siggmo_android\AndroidStudioProjects-Siggmo_android.iml" filepath="C:\programing\AndroidStudio\Siggmo_android\AndroidStudioProjects-Siggmo_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Siggmo_android.iml" filepath="$PROJECT_DIR$/Siggmo_android.iml" />
+      <module fileurl="file://C:\programing\AndroidStudio\Siggmo_android\app\Siggmo_android-app.iml" filepath="C:\programing\AndroidStudio\Siggmo_android\app\Siggmo_android-app.iml" />
+>>>>>>> Stashed changes
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

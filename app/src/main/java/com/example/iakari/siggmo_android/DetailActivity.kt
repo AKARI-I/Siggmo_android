@@ -2,7 +2,9 @@ package com.example.iakari.siggmo_android
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.InputType
@@ -17,7 +19,7 @@ import java.lang.String.format
 import java.util.*
 
 class DetailActivity : AppCompatActivity() {
-    lateinit var mRealm: Realm
+    private lateinit var mRealm: Realm
 
     /* ここでActivityが初めて生成される。初期化は全てここに書く。 */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +35,7 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.CUPCAKE)
     override fun onResume() {
         super.onResume()
 
@@ -59,6 +62,7 @@ class DetailActivity : AppCompatActivity() {
         return false
     }
 
+    @RequiresApi(Build.VERSION_CODES.CUPCAKE)
     private fun setDetail(tapid:String){
         // idから曲の情報を取得
         val record = quaryById(tapid)
@@ -81,16 +85,22 @@ class DetailActivity : AppCompatActivity() {
         score_detail.setOnClickListener {dialogRun(tapid, record.music_count)}
     }
 
+    @RequiresApi(Build.VERSION_CODES.CUPCAKE)
     @SuppressLint("DefaultLocale")
-    private fun dialogRun(tapid: String, count: Int){
+    private fun dialogRun(tapid: String, count: Int) {
         // 選択した曲IDと一致する採点結果を取得
         val getData = readScore(tapid)
         val detail = AlertDialog.Builder(this@DetailActivity)
+<<<<<<< Updated upstream
 
+=======
+        //val m_dig = detail.show()
+        //val buttonOK: Button = m_dig.getButton(DialogInterface.BUTTON_POSITIVE)
+>>>>>>> Stashed changes
         detail.setTitle("点数詳細")
-        detail.setMessage("・最高得点\n" +  checkScore(getData.max("score") as Float?)  +   "点\n" +
-                "・平均点\n" +  format("%.1f",(getData.average("score")))  +  "点\n" +
-                "・歌った回数\n" +  count  +  "回\n" +
+        detail.setMessage("・最高得点\n" + checkScore(getData.max("score") as Float?) + "点\n" +
+                "・平均点\n" + format("%.1f", (getData.average("score"))) + "点\n" +
+                "・歌った回数\n" + count + "回\n" +
                 "\n\nスコアを追加"
         )
 
@@ -98,8 +108,19 @@ class DetailActivity : AppCompatActivity() {
         // editViewの小数入力の強制
         editView.inputType = InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL
         detail.setView(editView)
+<<<<<<< Updated upstream
         detail.setPositiveButton("OK"){ _, _ ->
             if (editView.text != null && !editView.text.toString().isEmpty()){
+=======
+
+        //detail.setPositiveButton("OK",null)
+
+        // setPositiveButton() でリスナー指定するとダイアログが閉じる
+        // setOnClickListener() でリスナーを指定する
+        //buttonOK.setOnClickListener{
+        detail.setPositiveButton("OK"){ _, _ ->
+            if (editView.text != null && !editView.text.toString().isEmpty()) {
+>>>>>>> Stashed changes
                 val score = editView.text.toString().toFloat()
                 if (score in 0.0..100.0) { // scoreの範囲チェック
                     if (count < 100) {
@@ -115,8 +136,13 @@ class DetailActivity : AppCompatActivity() {
                         })
                         saveScore(tapid, score)
                     }
+<<<<<<< Updated upstream
                 }else{
                     editView.error = "1~100の数字を入力してください"
+=======
+                } else {
+                    Toast.makeText(this, "1~100の数字を入力してください", Toast.LENGTH_SHORT).show()
+>>>>>>> Stashed changes
                 }
             }
         }
