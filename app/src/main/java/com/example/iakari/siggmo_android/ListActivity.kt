@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.content_list.*
 class ListActivity : AppCompatActivity() {
     private lateinit var mRealm: Realm
 
-    /* ここでActivityが初めて生成される。初期化は全てここに書く。 */
+    // ここでActivityが初めて生成される, 初期化は全てここに書く
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
@@ -37,12 +37,12 @@ class ListActivity : AppCompatActivity() {
         super.onResume()
         val tapid = intent.getStringExtra("TapID")
 
-        // タイトルの表示
+        // Toolbarに表示するテキストの表示
         val getListData = quaryByListId(tapid)
         if (getListData != null) {
             listTitle.text = getListData.list_name
         }
-        setSongs(tapid) // リストの再表示
+        setSongs(tapid) // リストの表示
     }
 
     override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
@@ -53,6 +53,7 @@ class ListActivity : AppCompatActivity() {
         return false
     }
 
+    // 曲の一覧を表示する
     private fun setSongs(tapid: String){
         // データベースの値をすべて取り出す
         val getData = read(tapid)
@@ -61,6 +62,7 @@ class ListActivity : AppCompatActivity() {
 
         // 曲名をリスト表示
         getData.forEach{ dataList.add(Item(it.id, it.music_name)) }
+
         val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
         SongsListView.adapter = arrayAdapter
 
@@ -69,12 +71,13 @@ class ListActivity : AppCompatActivity() {
             val listView = parent as ListView
             val item = listView.getItemAtPosition(position) as Item    // タップした項目の要素名を取得
 
-            // idと遷移元の情報を渡す
+            // 詳細画面に遷移
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("TapID", item.id)
             startActivity(intent)
         }
-        // フローティングアクションボタン
+
+        // リストに曲を追加する画面に遷移
         list_fab.setOnClickListener{ _ ->
             val intent = Intent(this , SongAddActivity::class.java)
             intent.putExtra("ListId", tapid)
@@ -115,11 +118,13 @@ class ListActivity : AppCompatActivity() {
             return name
         }
     }
+
     private fun quaryById(id: String): SiggmoDB? {
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("id", id)
                 .findFirst()
     }
+
     // データベースから "全ての" データを取り出す
     private fun read(id: String) : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java)
