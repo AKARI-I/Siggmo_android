@@ -23,7 +23,7 @@ import java.util.*
 class ListsActivity : AppCompatActivity() {
     private lateinit var mRealm: Realm
 
-    /* ここでActivityが初めて生成される。初期化は全てここに書く。 */
+    // ここでActivityが初めて生成される, 初期化は全てここに書く
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.requestFeature(Window.FEATURE_ACTION_BAR)
@@ -37,7 +37,7 @@ class ListsActivity : AppCompatActivity() {
                 .build()
         mRealm = Realm.getInstance(realmConfig)
     }
-    /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
+    // Activityが表示されたときの処理を書く(別の画面から戻った時とか)
     override fun onResume() {
         super.onResume()
 
@@ -55,17 +55,7 @@ class ListsActivity : AppCompatActivity() {
         val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
         ListsView.adapter = arrayAdapter
 
-        // 各項目をタップしたときの処理
-        ListsView.setOnItemClickListener{parent, _, position, _ ->
-            val listView = parent as ListView
-            val item = listView.getItemAtPosition(position) as ListsActivity.Item    // タップした項目の要素名を取得
-
-            // idを渡す
-            val intent = Intent(this, ListActivity::class.java)
-            intent.putExtra("TapID", item.id)
-            startActivity(intent)
-        }
-        // フローティングアクションボタン
+        // ダイアログでリストの追加をする
         lists_fab.setOnClickListener{ _ ->
             // 曲リストの追加, テキスト入力用Viewの作成
             val editView = EditText(this@ListsActivity)
@@ -76,7 +66,7 @@ class ListsActivity : AppCompatActivity() {
             dialog.setTitle("リスト名を入力してください")
             dialog.setView(editView)
 
-            // OKボタンの設定
+            // OKを押下した時の処理
             dialog.setPositiveButton("OK") { _, _ ->
                 // OKボタンをタップした時の処理をここに記述
                 if(editView.isEnabled) {
@@ -92,13 +82,23 @@ class ListsActivity : AppCompatActivity() {
             }
 
             // キャンセルボタンの設定
-            dialog.setNegativeButton("キャンセル") { _, _ ->
-                // キャンセルボタンをタップした時の処理をここに記述
-            }
+            dialog.setNegativeButton("キャンセル") { _, _ -> }
 
             dialog.show()
 
         }
+
+        // 各項目をタップしたときの処理
+        ListsView.setOnItemClickListener{parent, _, position, _ ->
+            val listView = parent as ListView
+            val item = listView.getItemAtPosition(position) as ListsActivity.Item    // タップした項目の要素名を取得
+
+            // リスト内の曲一覧画面に遷移
+            val intent = Intent(this, ListActivity::class.java)
+            intent.putExtra("TapID", item.id)
+            startActivity(intent)
+        }
+
         // 長押しで削除する
         ListsView.setOnItemLongClickListener{parent, _, position, _ ->
             val listView = parent as ListView
@@ -129,18 +129,20 @@ class ListsActivity : AppCompatActivity() {
     // 標準BackKeyの遷移先変更
     override fun onKeyDown(keyCode: Int,event: KeyEvent?): Boolean{
         if(keyCode== KeyEvent.KEYCODE_BACK) {
-            val intent = Intent(this,MainActivity::class.java)
-            startActivity(intent)
+            finish()    // ListsActivityの終了
             return true
         }
         return false
     }
+
     // 表示する項目名とidをペアにして扱うためのクラス
     private inner class Item(val id: String, val name: String){
         override fun toString(): String{
             return name
         }
     }
+
+    // リストの取得
     private fun readList() : RealmResults<ListDB> {
         return mRealm.where(ListDB::class.java).findAll()
     }
