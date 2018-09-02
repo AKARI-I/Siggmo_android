@@ -221,7 +221,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(intent)
             }
             R.id.nav_search_clear -> {
-
+                setList()
             }
         }
 
