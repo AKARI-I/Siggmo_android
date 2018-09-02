@@ -136,8 +136,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // ソートしたデータを表示する
     private fun setSortList(sortId: Int){
-        // データベースの値をすべて取り出す
         Log.d("sortID", sortId.toString())
+
         // 全データをdataListに取得
         val dataList: MutableList<Item> = mutableListOf()
         // ソートしたデータを取得
@@ -237,10 +237,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // 並び変え処理(0:曲名昇順, 1:曲名降順, 2:歌手名昇順, 3:歌手名降順)
     private fun readSorted(sortId: Int) : RealmResults<SiggmoDB>? {
         when(sortId){
-            0 -> return mRealm.where(SiggmoDB::class.java).findAll().sort("music_phonetic")
-            1 -> return mRealm.where(SiggmoDB::class.java).findAll().sort("music_phonetic", Sort.DESCENDING)
-            2 -> return mRealm.where(SiggmoDB::class.java).findAll().sort("singer_phonetic")
-            3 -> return mRealm.where(SiggmoDB::class.java).findAll().sort("singer_phonetic", Sort.DESCENDING)
+            0 -> return mRealm.where(SiggmoDB::class.java).findAll().sort("music_name")
+            1 -> return mRealm.where(SiggmoDB::class.java).findAll().sort("music_name", Sort.DESCENDING)
+            2 -> return mRealm.where(SiggmoDB::class.java).findAll().sort("singer_name")
+            3 -> return mRealm.where(SiggmoDB::class.java).findAll().sort("singer_name", Sort.DESCENDING)
         }
         return null
     }
