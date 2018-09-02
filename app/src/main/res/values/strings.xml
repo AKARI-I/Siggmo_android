@@ -35,7 +35,7 @@
     <string name="first_line">歌いだし</string>
     <string name="proper_key">適正キー</string>
     <string name="movie_link">動画のリンク</string>
-    <string name="score">採点結果</string>
+    <string name="score">前回のスコア</string>
     <string name="free_memo">メモ</string>
     <string name="edit">編集</string>
     <string name="dbup">保存</string>
