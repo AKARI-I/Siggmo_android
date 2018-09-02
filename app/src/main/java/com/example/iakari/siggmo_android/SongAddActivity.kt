@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.content_song_add.*
 class SongAddActivity : AppCompatActivity() {
     lateinit var mRealm: Realm
 
-    /* ここでActivityが初めて生成される。初期化は全てここに書く。 */
+    // ここでActivityが初めて生成される, 初期化は全てここに書く
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_song_add)
@@ -26,25 +26,26 @@ class SongAddActivity : AppCompatActivity() {
                 .build()
         mRealm = Realm.getInstance(realmConfig)
     }
-    /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
+    // Activityが表示されたときの処理を書く(別の画面から戻った時とか)
     @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
         // ListActivityから送ってきたlist_id
         val listid = intent.getStringExtra("ListId")
 
-        // タイトルの表示
+        // Toolbarの画面タイトルの表示
         val getListData = quaryByListId(listid)
         if (getListData != null) {
             songAddTitle.text = "「" + getListData.list_name + "」に曲を追加する"
         }
-        // リストの再表示
-        setSongs(listid)
+        setSongs(listid)    // リストの再表示
     }
 
     private fun setSongs(listid: String){
-        val getData = read()    // データベースの値をすべて取り出す
-        val dataList: MutableList<SongAddActivity.Item> = mutableListOf() // 全データをdataListに取り出す
+        // データベースの値をすべて取り出す
+        val getData = read()
+        // 全データをdataListに取り出す
+        val dataList: MutableList<SongAddActivity.Item> = mutableListOf()
 
         // 曲名をリスト表示
         getData.forEach{
@@ -52,9 +53,11 @@ class SongAddActivity : AppCompatActivity() {
         }
         val arrayAdapter = ArrayAdapter<SongAddActivity.Item>(this,  android.R.layout.simple_list_item_multiple_choice, dataList)
         SongsAddListView.adapter = arrayAdapter
-        val cnt = SongsAddListView.count    // リストの中の曲の数
 
-        // リスト追加済みの曲をチェックする
+        // リストの中の曲の数をカウント
+        val cnt = SongsAddListView.count
+
+        // リストに追加済みの曲をチェックする
         for (i in 0 until cnt){
             val item = SongsAddListView.getItemAtPosition(i) as Item
             if(item.list_id == listid){
@@ -88,7 +91,7 @@ class SongAddActivity : AppCompatActivity() {
         }
     }
 
-    // データベースから "全ての" データを取り出す
+    // データベースから全てのデータを取り出す
     private fun read() : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
