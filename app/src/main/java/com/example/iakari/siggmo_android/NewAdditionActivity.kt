@@ -10,7 +10,7 @@ import java.util.*
 
 class NewAdditionActivity : AppCompatActivity() {
 
-    lateinit var mRealm: Realm
+    private lateinit var mRealm: Realm
 
     // mutableMapOf：書き込み可能なコレクションを生成する(mapOfは読み取り専用)
     private val musicInfoS: MutableMap<String, String> = mutableMapOf(
@@ -25,9 +25,9 @@ class NewAdditionActivity : AppCompatActivity() {
 
     private val musicInfoF: MutableMap<String, Float?> = mutableMapOf("sc" to null)
     private val musicInfoI: MutableMap<String, Int> = mutableMapOf("sl" to 1)
-    var insertFlg = false
-    var singing_level = 1   // 歌えるレベル(1~4)
-    var proper_key_level = 0 // 適正キー(-7~7)
+    private var insertFlg = false
+    private var singingLevel = 1   // 歌えるレベル(1~4)
+    private var properKeyLevel = 0 // 適正キー(-7~7)
     var score = ""           // スコア
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,41 +45,41 @@ class NewAdditionActivity : AppCompatActivity() {
 
         /*-------------------- 歌えるレベルのボタン --------------------*/
         singing_level_downButton.setOnClickListener {
-            if (singing_level - 1 < 1) {
-                singing_level = 1
+            if (singingLevel - 1 < 1) {
+                singingLevel = 1
             } else {
-                singing_level -= 1
+                singingLevel -= 1
             }
-            edit_singing_level.text = singing_level.toString()
+            edit_singing_level.text = singingLevel.toString()
         }
 
         singing_level_upButton.setOnClickListener{
-            if(4 < singing_level+1){
-                singing_level = 4
+            if(4 < singingLevel+1){
+                singingLevel = 4
             } else {
-                singing_level += 1
+                singingLevel += 1
             }
-            edit_singing_level.text = singing_level.toString()
+            edit_singing_level.text = singingLevel.toString()
         }
 
         /*-------------------- 適正キーのボタン --------------------*/
         proper_key_downButton.setOnClickListener{
-            if(proper_key_level-1 < -7){
-                proper_key_level = -7
+            if(properKeyLevel-1 < -7){
+                properKeyLevel = -7
             } else {
-                proper_key_level -= 1
+                properKeyLevel -= 1
             }
-            edit_proper_key.text = proper_key_level.toString()
+            edit_proper_key.text = properKeyLevel.toString()
         }
 
         proper_key_upButton.setOnClickListener{
-            if(7 < proper_key_level+1){
-                proper_key_level = 7
+            if(7 < properKeyLevel+1){
+                properKeyLevel = 7
             } else {
-                proper_key_level += 1
+                properKeyLevel += 1
             }
 
-            edit_proper_key.text = proper_key_level.toString()
+            edit_proper_key.text = properKeyLevel.toString()
         }
 
         /* 保存ボタンがクリックされたらレコードを追加する */
@@ -104,31 +104,17 @@ class NewAdditionActivity : AppCompatActivity() {
         if(!isEmpty(edit_movie_link.text))     { musicInfoS["ml"] = edit_movie_link.text.toString() }
         if(!isEmpty(edit_score.text))          { musicInfoF["sc"] = edit_score.text.toString().toFloat() }
         if(!isEmpty(edit_free_memo.text))      { musicInfoS["fm"] = edit_free_memo.text.toString() }
-        musicInfoI["sl"] = singing_level   // 表示している数字をそのまま代入するためifはいらない
+        musicInfoI["sl"] = singingLevel   // 表示している数字をそのまま代入するためifはいらない
 
-        // 入力値のチェックはここでする
+        // 入力値のチェック
         if(isEmpty(edit_music_name.text)){
+            // 曲名が入力されていない場合
             edit_music_name.error = "曲名を入力してください"
-        }else if( !isEmpty(edit_score.text) ){
-            if( scoreCheck(edit_score.text.toString().toFloat())) {
-                edit_score.error = "1~100の数字を入力してください"
-            }else {
-                // 曲名の入力があった場合
-                create( musicInfoS["mn"].toString(),
-                        musicInfoS["mp"].toString(),
-                        musicInfoS["sn"].toString(),
-                        musicInfoS["sp"].toString(),
-                        musicInfoS["fl"].toString(),
-                        musicInfoI["sl"] as Int,
-                        musicInfoS["pk"].toString(),
-                        musicInfoS["ml"].toString(),
-                        musicInfoF["sc"],
-                        musicInfoS["fm"].toString())
-                finish()    // メイン画面に戻る
-            }
+        }else if(!isEmpty(edit_score.text) && scoreCheck(edit_score.text.toString().toFloat())){
+            // 範囲外のスコアが入力された
+            edit_score.error = "1~100の数字を入力してください"
         } else {
-            // 曲名の入力があった場合
-            create( musicInfoS["mn"].toString(),
+            create(musicInfoS["mn"].toString(),
                     musicInfoS["mp"].toString(),
                     musicInfoS["sn"].toString(),
                     musicInfoS["sp"].toString(),
@@ -152,7 +138,7 @@ class NewAdditionActivity : AppCompatActivity() {
             val scoreResultDB = mRealm.createObject(ScoreResultDB::class.java, UUID.randomUUID().toString())
 
             /*-------------------- 時間の取得 --------------------*/
-            var calendar = Calendar.getInstance()
+            val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)          // 年
             val month = calendar.get(Calendar.MONTH)+1      // 月
             val day = calendar.get(Calendar.DAY_OF_MONTH)   // 日
