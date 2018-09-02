@@ -220,6 +220,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this , NewAdditionActivity::class.java)
                 startActivity(intent)
             }
+            R.id.nav_search_clear -> {
+
+            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
