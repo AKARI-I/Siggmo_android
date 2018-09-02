@@ -21,9 +21,9 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    lateinit var mRealm: Realm
+    private lateinit var mRealm: Realm
 
-    /* ここでActivityが初めて生成される。初期化は全てここに書く。 */
+    // ここでActivityが初めて生成される, 初期化は全てここに書く
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val intent = Intent(this , NewAdditionActivity::class.java)
             startActivity(intent)
         }
+
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -50,22 +51,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mRealm = Realm.getInstance(realmConfig)
     }
 
-    /* Activityが表示されたときの処理を書く(別の画面から戻った時とか) */
+    // Activityが表示されたときの処理を書く(別の画面から戻った時とか)
     override fun onResume() {
         super.onResume()
 
-        setList()   // リストの再表示
+        setList()    // リストの再表示
         searchList() // 検索ツールバー
     }
 
-    // 検索ツールバー機能
+    // 検索処理
     private fun searchList(){
         val searchView = listSearch as SearchView
         val filter = (MainListView.adapter as Filterable).filter // フィルター用オブジェクトの生成
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(text: String?): Boolean {
-                // 検索キーが押下された
-                return false
+                return false    // 検索キーが押下された
             }
             override fun onQueryTextChange(text: String?): Boolean {
                 // テキストが変更された
@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
+    // 曲の一覧を表示(デフォルト)
     private fun setList(){
         // データベースの値をすべて取り出す
         val getData = read()
@@ -97,7 +98,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val listView = parent as ListView
             val item = listView.getItemAtPosition(position) as Item    // タップした項目の要素名を取得
 
-            // idと遷移元の情報を渡す
+            // 詳細画面に遷移(idを渡す)
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("TapID", item.id)
             startActivity(intent)
@@ -133,32 +134,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    // ソートしたデータを表示する
     private fun setSortList(sortId: Int){
         // データベースの値をすべて取り出す
         Log.d("sortID", sortId.toString())
-        // 全データをdataListに取り出す
+        // 全データをdataListに取得
         val dataList: MutableList<Item> = mutableListOf()
-        // ソートしたデータをゲット
+        // ソートしたデータを取得
         readSorted(sortId)?.forEach {
             dataList.add(Item(it.id, it.music_name))
         }
         val arrayAdapter = ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, dataList)
         MainListView.adapter = arrayAdapter
-
-        // 各項目をタップしたときの処理
-        MainListView.setOnItemClickListener{parent, _, position, _ ->
-            val listView = parent as ListView
-            val item = listView.getItemAtPosition(position) as Item    // タップした項目の要素名を取得
-
-            // idを渡す
-            val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("TapID", item.id)
-            startActivity(intent)
-        }
     }
 
     override fun onBackPressed() {
-        // バックキーの編集
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
@@ -168,18 +158,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // アクションバー(ホームボタンとかある場所)のアイテムのクリックをここで処理
-        // アクションバーは、AndroidManifest.xmlで親アクティビティを指定する限り
-        // Home / Upボタンのクリックを自動的に処理する
+        // アクションバーは、AndroidManifest.xmlで親アクティビティを指定する限りHome / Upボタンのクリックを自動的に処理する
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    //ここでナビゲーションビューアイテムのクリックを処理
+    // ナビゲーションドロワーのイベント処理
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_search -> {
+                // 検索
                 val editView = EditText(this@MainActivity)
                 val dialog = AlertDialog.Builder(this@MainActivity)
 
@@ -202,18 +192,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.nav_sort -> {
-                // どの選択肢が選ばれたかを保持する変数
-                var selectedId = 0
+                // 並び変え(曲名の昇順・降順、歌手名の昇順・降順)
 
-                // 選択肢
+                var selectedId = 0  // どの選択肢が選ばれたかを保持
                 val dialogMenu = arrayOf("曲名昇順", "曲名降順", "歌手名昇順", "歌手名降順")
 
                 // ダイアログを作成して表示
                 AlertDialog.Builder(this).apply {
                     setTitle("タイトル")
                     setSingleChoiceItems(dialogMenu, 0) { _, i ->
-                        // 選択した項目を保持
-                        selectedId = i
+                        selectedId = i  // 選択した項目を保持
                     }
                     setPositiveButton("OK") { _, _ ->
                         setSortList(selectedId)
@@ -228,9 +216,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(intent)
             }
             R.id.nav_add -> {
-                // 曲の追加：新規登録画面に遷移
+                // 新規登録画面に遷移
                 val intent = Intent(this , NewAdditionActivity::class.java)
                 startActivity(intent)
+            }
+            R.id.nav_search_clear -> {
+                setList()
             }
         }
 
@@ -238,11 +229,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    // データベースから "全ての" データを取り出す
+    // データベースから全てのデータを取り出す
     private fun read() : RealmResults<SiggmoDB> {
         return mRealm.where(SiggmoDB::class.java).findAll()
     }
 
+    // 並び変え処理(0:曲名昇順, 1:曲名降順, 2:歌手名昇順, 3:歌手名降順)
     private fun readSorted(sortId: Int) : RealmResults<SiggmoDB>? {
         when(sortId){
             0 -> return mRealm.where(SiggmoDB::class.java).findAll().sort("music_phonetic")
@@ -260,7 +252,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    // Realmの削除についての定義(よくわかんない)
+    // Realmの削除についての定義
     override fun onDestroy(){
         super.onDestroy()
         mRealm.close()

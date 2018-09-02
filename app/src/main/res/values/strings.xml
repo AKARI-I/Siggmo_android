@@ -45,4 +45,11 @@
     <string name="last_update">最終更新日</string>
 
     <string name="save">保存</string>
+
+    <!-- ナビゲーションドロワーの項目 -->
+    <string name="search">検索</string>
+    <string name="sort">ソート</string>
+    <string name="lists">リスト一覧</string>
+    <string name="add_music">曲の追加</string>
+    <string name="search_clear">検索結果のクリア</string>
 </resources>

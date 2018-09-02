@@ -12,15 +12,13 @@ import java.util.*
 class EditActivity : AppCompatActivity() {
     private lateinit var mRealm: Realm
 
-    // mutableMapOf：書き込み可能なコレクションを生成する
-
-
+    // mutableMapOf："書き込み可能"なコレクションを生成する
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
-        var sLevel = 1  // 歌えるレベル
-        var pKey = 0 // 適正キー
+        var sLevel = 1  // 歌えるレベルの初期値
+        var pKey = 0    // 適正キーの初期値
 
         // Realmのセットアップ
         Realm.init(this)
@@ -89,8 +87,8 @@ class EditActivity : AppCompatActivity() {
             f_memo.setText(record.free_memo)
         }
 
-        // update処理にまわす
-        editbutton.setOnClickListener{
+        // update処理
+        editButton.setOnClickListener{
             val musicInfoS: MutableMap<String, String> = mutableMapOf(
                     "mn" to m_name_edit.text.toString(),  // 曲名
                     "mp" to m_phone.text.toString(),      // よみがな(曲名)
@@ -112,10 +110,10 @@ class EditActivity : AppCompatActivity() {
         }
     }
 
-    //id(tapid),record,曲名を渡す
+    // 更新処理
     private fun update(
-            record: SiggmoDB?,
-            s_record: ScoreResultDB?,
+            record: SiggmoDB?,                  // SiggmoDB
+            s_record: ScoreResultDB?,           // ScoreResultDB
             dataS: MutableMap<String, String>,
             dataF: MutableMap<String, Float?>,
             dataI: MutableMap<String, Int>
@@ -135,7 +133,7 @@ class EditActivity : AppCompatActivity() {
             if (record != null && s_record != null) {
 
                 // 時間の取得
-                var calendar = Calendar.getInstance()
+                val calendar = Calendar.getInstance()
                 val year = calendar.get(Calendar.YEAR)          // 年
                 val month = calendar.get(Calendar.MONTH) + 1    // 月
                 val day = calendar.get(Calendar.DAY_OF_MONTH)   // 日
@@ -145,6 +143,7 @@ class EditActivity : AppCompatActivity() {
 
                 val date = "$year/$month/$day/$hour:$minute:$second"    // 年/月/日/時:分:秒
 
+                // データの更新
                 record.music_name       = dataS["mn"].toString()
                 record.music_phonetic   = dataS["mp"].toString()
                 record.singer_name      = dataS["sn"].toString()
@@ -164,13 +163,14 @@ class EditActivity : AppCompatActivity() {
         return score == null || 0.0 <= score && score <= 100.0  // 範囲内ならtrueを返す
     }
 
+    // 該当レコードの取得
     private fun quaryById(id: String): SiggmoDB? {
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("id", id)
                 .findFirst()
     }
 
-    // scoreを参照する
+    // 最新のレコードを参照する
     private fun quaryByScore(id: String): ScoreResultDB? {
         val records = mRealm.where(ScoreResultDB::class.java)
                 .equalTo("music_id", id)
