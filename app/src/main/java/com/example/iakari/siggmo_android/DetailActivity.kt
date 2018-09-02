@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.InputType
+import android.util.Log
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
@@ -15,6 +16,7 @@ import android.widget.Toast
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
+import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_detail.*
 import java.lang.String.format
 import java.util.*
@@ -67,7 +69,7 @@ class DetailActivity : AppCompatActivity() {
     private fun setDetail(tapid:String){
         // idから曲の情報を取得
         val record = quaryById(tapid)
-        val sRecord = readScore(record!!.id)
+        val sRecord = quaryByScore(record!!.id)
 
         // レコードが返されたら曲名を表示
         music_name.text      = record.music_name
@@ -78,9 +80,9 @@ class DetailActivity : AppCompatActivity() {
         singing_level.text   = record.singing_level.toString()
         proper_key.text      = record.proper_key
         movie_link.text      = record.movie_link
-        score.text           = checkScore(sRecord.max("score") as Float?).toString()
+        score.text           = checkScore(sRecord!!.score ).toString()
         free_memo.text       = record.free_memo
-        last_update.text     = sRecord.last()!!.reg_data
+        last_update.text     = sRecord.reg_data
 
         // スコアダイアログ
         score_detail.setOnClickListener {dialogRun(tapid, record.music_count)}
@@ -107,6 +109,8 @@ class DetailActivity : AppCompatActivity() {
         editView.inputType = InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL
         detail.setView(editView)
 
+        var cntFlg = false // true:カウントする, false:カウントしない
+
         //detail.setPositiveButton("OK",null)
 
         // setPositiveButton() でリスナー指定するとダイアログが閉じる
@@ -117,19 +121,20 @@ class DetailActivity : AppCompatActivity() {
             if (editView.text != null && !editView.text.toString().isEmpty()) {
                 val score = editView.text.toString().toFloat()
                 if (score in 0.0..100.0) { // scoreの範囲チェック
-                    if (count < 100) {
-                        saveScore(tapid, score)
-                    } else {
+                    if (count == 100) {
                         // ScoreResultDBの数が100を超えると古いものから削除
                         val results: RealmResults<ScoreResultDB> = mRealm.where(ScoreResultDB::class.java)
                                 .equalTo("score_id", getData[0]!!.score_id)
                                 .findAll()
-                        mRealm.executeTransaction({
+                        mRealm.executeTransaction {
                             results.deleteFromRealm(0)
                             results.deleteLastFromRealm()
-                        })
-                        saveScore(tapid, score)
+                        }
+                    } else {
+                        cntFlg = true   // スコア数が100未満のためカウント
                     }
+                    saveScore(tapid, score, cntFlg)
+                    cntFlg = false  // カウントフラグの初期化
                 } else {
                     Toast.makeText(this, "1~100の数字を入力してください", Toast.LENGTH_SHORT).show()
                 }
@@ -158,7 +163,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     // ダイアログからのスコアの追加処理
-    private fun saveScore(musicId:String, score:Float){
+    private fun saveScore(musicId:String, score:Float, flg:Boolean){
         mRealm.executeTransaction {
             val siggmoDB = quaryById(musicId)
             val scoreResultDB = mRealm.createObject(ScoreResultDB::class.java, UUID.randomUUID().toString())
@@ -173,11 +178,20 @@ class DetailActivity : AppCompatActivity() {
 
             val date = "$year/$month/$day/$hour:$minute:$second"    // 年/月/日/時:分:秒
 
-            siggmoDB!!.music_count = siggmoDB.music_count + 1
+            if(flg){
+                siggmoDB!!.music_count = siggmoDB.music_count + 1
+            }
             scoreResultDB.music_id = musicId
             scoreResultDB.score = score
             scoreResultDB.reg_data = date
             mRealm.copyToRealm(scoreResultDB)
         }
+    }
+    // scoreを参照する
+    private fun quaryByScore(id: String): ScoreResultDB? {
+        val records = mRealm.where(ScoreResultDB::class.java)
+                .equalTo("music_id", id)
+                .findAll().sort("reg_data", Sort.DESCENDING)
+        return records[0]
     }
 }
