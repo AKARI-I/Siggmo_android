@@ -11,6 +11,7 @@ import android.text.InputType
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
@@ -91,12 +92,9 @@ class DetailActivity : AppCompatActivity() {
         // 選択した曲IDと一致する採点結果を取得
         val getData = readScore(tapid)
         val detail = AlertDialog.Builder(this@DetailActivity)
-<<<<<<< Updated upstream
 
-=======
         //val m_dig = detail.show()
         //val buttonOK: Button = m_dig.getButton(DialogInterface.BUTTON_POSITIVE)
->>>>>>> Stashed changes
         detail.setTitle("点数詳細")
         detail.setMessage("・最高得点\n" + checkScore(getData.max("score") as Float?) + "点\n" +
                 "・平均点\n" + format("%.1f", (getData.average("score"))) + "点\n" +
@@ -108,10 +106,6 @@ class DetailActivity : AppCompatActivity() {
         // editViewの小数入力の強制
         editView.inputType = InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL
         detail.setView(editView)
-<<<<<<< Updated upstream
-        detail.setPositiveButton("OK"){ _, _ ->
-            if (editView.text != null && !editView.text.toString().isEmpty()){
-=======
 
         //detail.setPositiveButton("OK",null)
 
@@ -120,7 +114,6 @@ class DetailActivity : AppCompatActivity() {
         //buttonOK.setOnClickListener{
         detail.setPositiveButton("OK"){ _, _ ->
             if (editView.text != null && !editView.text.toString().isEmpty()) {
->>>>>>> Stashed changes
                 val score = editView.text.toString().toFloat()
                 if (score in 0.0..100.0) { // scoreの範囲チェック
                     if (count < 100) {
@@ -136,13 +129,8 @@ class DetailActivity : AppCompatActivity() {
                         })
                         saveScore(tapid, score)
                     }
-<<<<<<< Updated upstream
-                }else{
-                    editView.error = "1~100の数字を入力してください"
-=======
                 } else {
                     Toast.makeText(this, "1~100の数字を入力してください", Toast.LENGTH_SHORT).show()
->>>>>>> Stashed changes
                 }
             }
         }
