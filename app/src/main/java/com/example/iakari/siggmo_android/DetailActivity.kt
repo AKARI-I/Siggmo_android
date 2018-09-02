@@ -22,7 +22,7 @@ import java.util.*
 class DetailActivity : AppCompatActivity() {
     private lateinit var mRealm: Realm
 
-    /* ここでActivityが初めて生成される。初期化は全てここに書く。 */
+    // ここでActivityが初めて生成される, 初期化は全てここに書く
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -40,6 +40,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        // idの受け取り
         val tapid = intent.getStringExtra("TapID")
 
         setDetail(tapid)     // データを表示
@@ -116,7 +117,9 @@ class DetailActivity : AppCompatActivity() {
             // 入力があった場合
             if (editView.text != null && !editView.text.toString().isEmpty()) {
                 val score = editView.text.toString().toFloat()
-                if (score in 0.0..100.0) { // scoreの範囲チェック
+
+                // scoreの範囲チェック
+                if (score in 0.0..100.0) {
                     if (count < 100) {
                         saveScore(tapid, score)
                     } else {
@@ -139,7 +142,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     // 渡されたidからデータベースを検索して曲の情報を返す
-    // select * from SiggmoDB where id = idと同じ意味
     private fun quaryById(id: String): SiggmoDB? {
         return mRealm.where(SiggmoDB::class.java)
                 .equalTo("id", id)
